@@ -39,12 +39,13 @@ $pdf->Line(50, 37, 50, 47);
 $pdf->SetFont('Arial', 'B', 11);
 $pdf->Text(4.5, 43.5, "FACTURE PROFORMA");
 $pdf->SetFont('Arial', '', 11);
-$pdf->Text(54.5, 43.5, "Numero Proforma");
+if(intval($_SESSION['id_compte'])<10) $pdf->Text(54.5, 43.5, '0'.$_SESSION['id_compte'].$_SESSION['id_proforma'].date("my"));
+else $pdf->Text(54.5, 43.5, $_SESSION['id_compte'].$_SESSION['id_proforma'].date("my"));
 $pdf->SetFont('Arial', '', 10);
-$pdf->Text(2, 50.5, "Date Proforma:   ".date("d/m/Y"));
-$pdf->Text(2, 55.5, "Date de validite:" . $_SESSION['dateValid']);
-$pdf->Text(2, 60.5, "Delai de livraison:" . $_SESSION['delaiLiv']);
-$pdf->Text(2, 65.5, "Emis et valide par:   ".$_SESSION['prenom']." ".$_SESSION['nom']);
+$pdf->Text(2, 50.5, "Date Proforma:    ".date("d/m/Y"));
+$pdf->Text(2, 55.5, "Date de validite:    " . $_SESSION['dateValid']);
+$pdf->Text(2, 60.5, "Delai de livraison:    " . $_SESSION['delaiLiv']."semaines");
+$pdf->Text(2, 65.5, "Emis et valide par:    ".$_SESSION['prenom']." ".$_SESSION['nom']);
 
 $pdf->Text(200, 35.5, $pdf->PageNo().'/{nb}');
 

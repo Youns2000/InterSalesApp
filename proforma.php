@@ -24,6 +24,11 @@
   $sql_pays ='SELECT code , alpha2 , alpha3, nom_en_gb, nom_fr_fr
           FROM pays
           ORDER BY id;';
+
+  $sql_proformas = 'SELECT id,DateCreation,DateValid,EmisPar,Client,DelaiLivraison,PortDest,Engins,Options, monnaie
+          FROM proformas
+          ORDER BY id;';
+
   $sqlEnregistrer = 'INSERT INTO `proformas` (`id`, `DateCreation`, `DateValid`, `EmisPar` , `Client`, `DelaiLivraison`, `PortDest`, `Engins`, `Options`, `monnaie`) VALUES (NULL, ?, ?, ?, ?, ?, ?, ?, ?);';
 
   $sqlAddCateg = 'INSERT INTO `others` (`CatégoriesProduits`) VALUES (?);';
@@ -38,6 +43,7 @@
           $options=array();
           $pays=array();
           $data=array();
+          $proformas=array();
           $db = include 'db_mysql.php';
 
           try {
@@ -47,7 +53,7 @@
 
              $stmt2 = $db->prepare($sql_engins);
              $stmt2->execute(array());
-             $engins= $stmt2->fetchAll();
+             $engins = $stmt2->fetchAll();
 
              $stmt3 = $db->prepare($sql_clients);
              $stmt3->execute(array());
@@ -60,6 +66,10 @@
              $stmt5 = $db->prepare($sql_pays);
              $stmt5->execute(array());
              $pays = $stmt5->fetchAll();
+
+             $stmt6 = $db->prepare($sql_proformas);
+             $stmt6->execute(array());
+             $proformas = $stmt6->fetchAll();
              unset($db);
 
             if((isset($_POST['inputClientName']) or isset($_POST['inputClientWilaya']) or isset($_POST['inputClientCode'])) and isset($_POST['visualiser'])){
@@ -81,6 +91,7 @@
                           $_SESSION['Monnaie'] = $_POST['getDevise'];
                           $_SESSION['dateValid'] = $_POST['datevalidite'];
                           $_SESSION['delaiLiv'] = $_POST['delailivraison'];
+                          $_SESSION['id_proforma'] = $proformas[count($proformas)-1]['id']+1;
                           for ($p=0; $p < count($pays); $p++) { 
                             $_SESSION['pays'][$p] = $pays[$p]['alpha2'];
                           }
@@ -727,8 +738,8 @@
                                   <option value = "<?php echo $categ[$i]['Devises']?>"><?php echo $categ[$i]['Devises']?></option>
                                 <?php }?>
                                 </select>
-                                <input id="datevalidite" class="form-control"  name="datevalidite" type="date" />
-                                <input id="delailivraison" class="form-control" name="delailivraison" type="number" />
+                                <input id="datevalidite2" class="form-control"  name="datevalidite2" type="date" />
+                                <input id="delailivraison2" class="form-control" name="delailivraison2" type="number" />
                               </div>
                               <div class="modal-footer">
                                 <button name = "enregistrer" type="submit" class="btn btn-default">OK</button>

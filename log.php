@@ -8,7 +8,7 @@ if (!isset($_SESSION['index'])){
         $sqlConnection = 'INSERT INTO `connections` (`id`, `pays`, `ville` , `nom`, `date`) VALUES (NULL, ?, ?, ?, ?);';
 
         if(isset($_POST['inputEmail']) and isset($_POST['inputPassword'])){
-          $sql_data='SELECT email , mdp , nom , prenom , Statut FROM comptes WHERE email = ? ORDER BY id;';
+          $sql_data='SELECT id, email , mdp , nom , prenom , Statut FROM comptes WHERE email = ? ORDER BY id;';
           $data=array();
           $db = include 'db_mysql.php';
 
@@ -21,10 +21,10 @@ if (!isset($_SESSION['index'])){
             //Azeddine@integral.fr
             if(count($data)==1 and password_verify($_POST['inputPassword'], $data[0]['mdp'])){
                 $ip = get_user_ip();
-                if($ip==false) echo "false"; 
+                if($ip==false) echo "false";
                 else echo "true"; 
  
-                 echo '$ip:'.$ip;
+                echo '$ip:'.$ip;
 
                 $db = include 'db_mysql.php';
                 $coords = get_user_coords();
@@ -35,7 +35,7 @@ if (!isset($_SESSION['index'])){
 
                 $_SESSION['email'] = $data[0]['email'];
                 $_SESSION['nom'] = $data[0]['nom'];
-                
+                $_SESSION['id_compte'] = $data[0]['id'];
                 $_SESSION['prenom'] = $data[0]['prenom'];
                 $_SESSION['statut'] = $data[0]['Statut'];
                 unset($db);
