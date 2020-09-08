@@ -1,0 +1,1970 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+- phpMyAdmin XML Dump
+- version 3.4.10.1deb1
+- http://www.phpmyadmin.net
+-
+- Host: localhost
+- Generation Time: Jan 07, 2013 at 09:20 PM
+- Server version: 5.5.28
+- PHP Version: 5.3.10-1ubuntu3.4
+-->
+
+<pma_xml_export version="1.0" xmlns:pma="http://www.phpmyadmin.net/some_doc_url/">
+    <!--
+    - Structure schemas
+    -->
+    <pma:structure_schemas>
+        <pma:database name="test" collation="latin1_swedish_ci" charset="latin1">
+            <pma:table name="pays">
+                CREATE TABLE `pays` (
+                  `id` smallint(5) unsigned NOT NULL AUTO_INCREMENT,
+                  `code` int(3) NOT NULL,
+                  `alpha2` varchar(2) NOT NULL,
+                  `alpha3` varchar(3) NOT NULL,
+                  `nom_fr_fr` varchar(45) NOT NULL,
+                  `nom_en_gb` varchar(45) DEFAULT NULL,
+                  PRIMARY KEY (`id`),
+                  UNIQUE KEY `alpha2` (`alpha2`),
+                  UNIQUE KEY `alpha3` (`alpha3`),
+                  UNIQUE KEY `code_unique` (`code`)
+                ) ENGINE=MyISAM AUTO_INCREMENT=242 DEFAULT CHARSET=utf8;
+            </pma:table>
+        </pma:database>
+    </pma:structure_schemas>
+
+    <!--
+    - Database: 'test'
+    -->
+    <database name="test">
+        <!-- Table pays -->
+        <table name="pays">
+            <column name="id">1</column>
+            <column name="code">4</column>
+            <column name="alpha2">AF</column>
+            <column name="alpha3">AFG</column>
+            <column name="nom_fr_fr">Afghanistan</column>
+            <column name="nom_en_gb">Afghanistan</column>
+        </table>
+        <table name="pays">
+            <column name="id">2</column>
+            <column name="code">8</column>
+            <column name="alpha2">AL</column>
+            <column name="alpha3">ALB</column>
+            <column name="nom_fr_fr">Albanie</column>
+            <column name="nom_en_gb">Albania</column>
+        </table>
+        <table name="pays">
+            <column name="id">3</column>
+            <column name="code">10</column>
+            <column name="alpha2">AQ</column>
+            <column name="alpha3">ATA</column>
+            <column name="nom_fr_fr">Antarctique</column>
+            <column name="nom_en_gb">Antarctica</column>
+        </table>
+        <table name="pays">
+            <column name="id">4</column>
+            <column name="code">12</column>
+            <column name="alpha2">DZ</column>
+            <column name="alpha3">DZA</column>
+            <column name="nom_fr_fr">Algérie</column>
+            <column name="nom_en_gb">Algeria</column>
+        </table>
+        <table name="pays">
+            <column name="id">5</column>
+            <column name="code">16</column>
+            <column name="alpha2">AS</column>
+            <column name="alpha3">ASM</column>
+            <column name="nom_fr_fr">Samoa Américaines</column>
+            <column name="nom_en_gb">American Samoa</column>
+        </table>
+        <table name="pays">
+            <column name="id">6</column>
+            <column name="code">20</column>
+            <column name="alpha2">AD</column>
+            <column name="alpha3">AND</column>
+            <column name="nom_fr_fr">Andorre</column>
+            <column name="nom_en_gb">Andorra</column>
+        </table>
+        <table name="pays">
+            <column name="id">7</column>
+            <column name="code">24</column>
+            <column name="alpha2">AO</column>
+            <column name="alpha3">AGO</column>
+            <column name="nom_fr_fr">Angola</column>
+            <column name="nom_en_gb">Angola</column>
+        </table>
+        <table name="pays">
+            <column name="id">8</column>
+            <column name="code">28</column>
+            <column name="alpha2">AG</column>
+            <column name="alpha3">ATG</column>
+            <column name="nom_fr_fr">Antigua-et-Barbuda</column>
+            <column name="nom_en_gb">Antigua and Barbuda</column>
+        </table>
+        <table name="pays">
+            <column name="id">9</column>
+            <column name="code">31</column>
+            <column name="alpha2">AZ</column>
+            <column name="alpha3">AZE</column>
+            <column name="nom_fr_fr">Azerbaïdjan</column>
+            <column name="nom_en_gb">Azerbaijan</column>
+        </table>
+        <table name="pays">
+            <column name="id">10</column>
+            <column name="code">32</column>
+            <column name="alpha2">AR</column>
+            <column name="alpha3">ARG</column>
+            <column name="nom_fr_fr">Argentine</column>
+            <column name="nom_en_gb">Argentina</column>
+        </table>
+        <table name="pays">
+            <column name="id">11</column>
+            <column name="code">36</column>
+            <column name="alpha2">AU</column>
+            <column name="alpha3">AUS</column>
+            <column name="nom_fr_fr">Australie</column>
+            <column name="nom_en_gb">Australia</column>
+        </table>
+        <table name="pays">
+            <column name="id">12</column>
+            <column name="code">40</column>
+            <column name="alpha2">AT</column>
+            <column name="alpha3">AUT</column>
+            <column name="nom_fr_fr">Autriche</column>
+            <column name="nom_en_gb">Austria</column>
+        </table>
+        <table name="pays">
+            <column name="id">13</column>
+            <column name="code">44</column>
+            <column name="alpha2">BS</column>
+            <column name="alpha3">BHS</column>
+            <column name="nom_fr_fr">Bahamas</column>
+            <column name="nom_en_gb">Bahamas</column>
+        </table>
+        <table name="pays">
+            <column name="id">14</column>
+            <column name="code">48</column>
+            <column name="alpha2">BH</column>
+            <column name="alpha3">BHR</column>
+            <column name="nom_fr_fr">Bahreïn</column>
+            <column name="nom_en_gb">Bahrain</column>
+        </table>
+        <table name="pays">
+            <column name="id">15</column>
+            <column name="code">50</column>
+            <column name="alpha2">BD</column>
+            <column name="alpha3">BGD</column>
+            <column name="nom_fr_fr">Bangladesh</column>
+            <column name="nom_en_gb">Bangladesh</column>
+        </table>
+        <table name="pays">
+            <column name="id">16</column>
+            <column name="code">51</column>
+            <column name="alpha2">AM</column>
+            <column name="alpha3">ARM</column>
+            <column name="nom_fr_fr">Arménie</column>
+            <column name="nom_en_gb">Armenia</column>
+        </table>
+        <table name="pays">
+            <column name="id">17</column>
+            <column name="code">52</column>
+            <column name="alpha2">BB</column>
+            <column name="alpha3">BRB</column>
+            <column name="nom_fr_fr">Barbade</column>
+            <column name="nom_en_gb">Barbados</column>
+        </table>
+        <table name="pays">
+            <column name="id">18</column>
+            <column name="code">56</column>
+            <column name="alpha2">BE</column>
+            <column name="alpha3">BEL</column>
+            <column name="nom_fr_fr">Belgique</column>
+            <column name="nom_en_gb">Belgium</column>
+        </table>
+        <table name="pays">
+            <column name="id">19</column>
+            <column name="code">60</column>
+            <column name="alpha2">BM</column>
+            <column name="alpha3">BMU</column>
+            <column name="nom_fr_fr">Bermudes</column>
+            <column name="nom_en_gb">Bermuda</column>
+        </table>
+        <table name="pays">
+            <column name="id">20</column>
+            <column name="code">64</column>
+            <column name="alpha2">BT</column>
+            <column name="alpha3">BTN</column>
+            <column name="nom_fr_fr">Bhoutan</column>
+            <column name="nom_en_gb">Bhutan</column>
+        </table>
+        <table name="pays">
+            <column name="id">21</column>
+            <column name="code">68</column>
+            <column name="alpha2">BO</column>
+            <column name="alpha3">BOL</column>
+            <column name="nom_fr_fr">Bolivie</column>
+            <column name="nom_en_gb">Bolivia</column>
+        </table>
+        <table name="pays">
+            <column name="id">22</column>
+            <column name="code">70</column>
+            <column name="alpha2">BA</column>
+            <column name="alpha3">BIH</column>
+            <column name="nom_fr_fr">Bosnie-Herzégovine</column>
+            <column name="nom_en_gb">Bosnia and Herzegovina</column>
+        </table>
+        <table name="pays">
+            <column name="id">23</column>
+            <column name="code">72</column>
+            <column name="alpha2">BW</column>
+            <column name="alpha3">BWA</column>
+            <column name="nom_fr_fr">Botswana</column>
+            <column name="nom_en_gb">Botswana</column>
+        </table>
+        <table name="pays">
+            <column name="id">24</column>
+            <column name="code">74</column>
+            <column name="alpha2">BV</column>
+            <column name="alpha3">BVT</column>
+            <column name="nom_fr_fr">Île Bouvet</column>
+            <column name="nom_en_gb">Bouvet Island</column>
+        </table>
+        <table name="pays">
+            <column name="id">25</column>
+            <column name="code">76</column>
+            <column name="alpha2">BR</column>
+            <column name="alpha3">BRA</column>
+            <column name="nom_fr_fr">Brésil</column>
+            <column name="nom_en_gb">Brazil</column>
+        </table>
+        <table name="pays">
+            <column name="id">26</column>
+            <column name="code">84</column>
+            <column name="alpha2">BZ</column>
+            <column name="alpha3">BLZ</column>
+            <column name="nom_fr_fr">Belize</column>
+            <column name="nom_en_gb">Belize</column>
+        </table>
+        <table name="pays">
+            <column name="id">27</column>
+            <column name="code">86</column>
+            <column name="alpha2">IO</column>
+            <column name="alpha3">IOT</column>
+            <column name="nom_fr_fr">Territoire Britannique de l'Océan Indien</column>
+            <column name="nom_en_gb">British Indian Ocean Territory</column>
+        </table>
+        <table name="pays">
+            <column name="id">28</column>
+            <column name="code">90</column>
+            <column name="alpha2">SB</column>
+            <column name="alpha3">SLB</column>
+            <column name="nom_fr_fr">Îles Salomon</column>
+            <column name="nom_en_gb">Solomon Islands</column>
+        </table>
+        <table name="pays">
+            <column name="id">29</column>
+            <column name="code">92</column>
+            <column name="alpha2">VG</column>
+            <column name="alpha3">VGB</column>
+            <column name="nom_fr_fr">Îles Vierges Britanniques</column>
+            <column name="nom_en_gb">British Virgin Islands</column>
+        </table>
+        <table name="pays">
+            <column name="id">30</column>
+            <column name="code">96</column>
+            <column name="alpha2">BN</column>
+            <column name="alpha3">BRN</column>
+            <column name="nom_fr_fr">Brunéi Darussalam</column>
+            <column name="nom_en_gb">Brunei Darussalam</column>
+        </table>
+        <table name="pays">
+            <column name="id">31</column>
+            <column name="code">100</column>
+            <column name="alpha2">BG</column>
+            <column name="alpha3">BGR</column>
+            <column name="nom_fr_fr">Bulgarie</column>
+            <column name="nom_en_gb">Bulgaria</column>
+        </table>
+        <table name="pays">
+            <column name="id">32</column>
+            <column name="code">104</column>
+            <column name="alpha2">MM</column>
+            <column name="alpha3">MMR</column>
+            <column name="nom_fr_fr">Myanmar</column>
+            <column name="nom_en_gb">Myanmar</column>
+        </table>
+        <table name="pays">
+            <column name="id">33</column>
+            <column name="code">108</column>
+            <column name="alpha2">BI</column>
+            <column name="alpha3">BDI</column>
+            <column name="nom_fr_fr">Burundi</column>
+            <column name="nom_en_gb">Burundi</column>
+        </table>
+        <table name="pays">
+            <column name="id">34</column>
+            <column name="code">112</column>
+            <column name="alpha2">BY</column>
+            <column name="alpha3">BLR</column>
+            <column name="nom_fr_fr">Bélarus</column>
+            <column name="nom_en_gb">Belarus</column>
+        </table>
+        <table name="pays">
+            <column name="id">35</column>
+            <column name="code">116</column>
+            <column name="alpha2">KH</column>
+            <column name="alpha3">KHM</column>
+            <column name="nom_fr_fr">Cambodge</column>
+            <column name="nom_en_gb">Cambodia</column>
+        </table>
+        <table name="pays">
+            <column name="id">36</column>
+            <column name="code">120</column>
+            <column name="alpha2">CM</column>
+            <column name="alpha3">CMR</column>
+            <column name="nom_fr_fr">Cameroun</column>
+            <column name="nom_en_gb">Cameroon</column>
+        </table>
+        <table name="pays">
+            <column name="id">37</column>
+            <column name="code">124</column>
+            <column name="alpha2">CA</column>
+            <column name="alpha3">CAN</column>
+            <column name="nom_fr_fr">Canada</column>
+            <column name="nom_en_gb">Canada</column>
+        </table>
+        <table name="pays">
+            <column name="id">38</column>
+            <column name="code">132</column>
+            <column name="alpha2">CV</column>
+            <column name="alpha3">CPV</column>
+            <column name="nom_fr_fr">Cap-vert</column>
+            <column name="nom_en_gb">Cape Verde</column>
+        </table>
+        <table name="pays">
+            <column name="id">39</column>
+            <column name="code">136</column>
+            <column name="alpha2">KY</column>
+            <column name="alpha3">CYM</column>
+            <column name="nom_fr_fr">Îles Caïmanes</column>
+            <column name="nom_en_gb">Cayman Islands</column>
+        </table>
+        <table name="pays">
+            <column name="id">40</column>
+            <column name="code">140</column>
+            <column name="alpha2">CF</column>
+            <column name="alpha3">CAF</column>
+            <column name="nom_fr_fr">République Centrafricaine</column>
+            <column name="nom_en_gb">Central African</column>
+        </table>
+        <table name="pays">
+            <column name="id">41</column>
+            <column name="code">144</column>
+            <column name="alpha2">LK</column>
+            <column name="alpha3">LKA</column>
+            <column name="nom_fr_fr">Sri Lanka</column>
+            <column name="nom_en_gb">Sri Lanka</column>
+        </table>
+        <table name="pays">
+            <column name="id">42</column>
+            <column name="code">148</column>
+            <column name="alpha2">TD</column>
+            <column name="alpha3">TCD</column>
+            <column name="nom_fr_fr">Tchad</column>
+            <column name="nom_en_gb">Chad</column>
+        </table>
+        <table name="pays">
+            <column name="id">43</column>
+            <column name="code">152</column>
+            <column name="alpha2">CL</column>
+            <column name="alpha3">CHL</column>
+            <column name="nom_fr_fr">Chili</column>
+            <column name="nom_en_gb">Chile</column>
+        </table>
+        <table name="pays">
+            <column name="id">44</column>
+            <column name="code">156</column>
+            <column name="alpha2">CN</column>
+            <column name="alpha3">CHN</column>
+            <column name="nom_fr_fr">Chine</column>
+            <column name="nom_en_gb">China</column>
+        </table>
+        <table name="pays">
+            <column name="id">45</column>
+            <column name="code">158</column>
+            <column name="alpha2">TW</column>
+            <column name="alpha3">TWN</column>
+            <column name="nom_fr_fr">Taïwan</column>
+            <column name="nom_en_gb">Taiwan</column>
+        </table>
+        <table name="pays">
+            <column name="id">46</column>
+            <column name="code">162</column>
+            <column name="alpha2">CX</column>
+            <column name="alpha3">CXR</column>
+            <column name="nom_fr_fr">Île Christmas</column>
+            <column name="nom_en_gb">Christmas Island</column>
+        </table>
+        <table name="pays">
+            <column name="id">47</column>
+            <column name="code">166</column>
+            <column name="alpha2">CC</column>
+            <column name="alpha3">CCK</column>
+            <column name="nom_fr_fr">Îles Cocos (Keeling)</column>
+            <column name="nom_en_gb">Cocos (Keeling) Islands</column>
+        </table>
+        <table name="pays">
+            <column name="id">48</column>
+            <column name="code">170</column>
+            <column name="alpha2">CO</column>
+            <column name="alpha3">COL</column>
+            <column name="nom_fr_fr">Colombie</column>
+            <column name="nom_en_gb">Colombia</column>
+        </table>
+        <table name="pays">
+            <column name="id">49</column>
+            <column name="code">174</column>
+            <column name="alpha2">KM</column>
+            <column name="alpha3">COM</column>
+            <column name="nom_fr_fr">Comores</column>
+            <column name="nom_en_gb">Comoros</column>
+        </table>
+        <table name="pays">
+            <column name="id">50</column>
+            <column name="code">175</column>
+            <column name="alpha2">YT</column>
+            <column name="alpha3">MYT</column>
+            <column name="nom_fr_fr">Mayotte</column>
+            <column name="nom_en_gb">Mayotte</column>
+        </table>
+        <table name="pays">
+            <column name="id">51</column>
+            <column name="code">178</column>
+            <column name="alpha2">CG</column>
+            <column name="alpha3">COG</column>
+            <column name="nom_fr_fr">République du Congo</column>
+            <column name="nom_en_gb">Republic of the Congo</column>
+        </table>
+        <table name="pays">
+            <column name="id">52</column>
+            <column name="code">180</column>
+            <column name="alpha2">CD</column>
+            <column name="alpha3">COD</column>
+            <column name="nom_fr_fr">République Démocratique du Congo</column>
+            <column name="nom_en_gb">The Democratic Republic Of The Congo</column>
+        </table>
+        <table name="pays">
+            <column name="id">53</column>
+            <column name="code">184</column>
+            <column name="alpha2">CK</column>
+            <column name="alpha3">COK</column>
+            <column name="nom_fr_fr">Îles Cook</column>
+            <column name="nom_en_gb">Cook Islands</column>
+        </table>
+        <table name="pays">
+            <column name="id">54</column>
+            <column name="code">188</column>
+            <column name="alpha2">CR</column>
+            <column name="alpha3">CRI</column>
+            <column name="nom_fr_fr">Costa Rica</column>
+            <column name="nom_en_gb">Costa Rica</column>
+        </table>
+        <table name="pays">
+            <column name="id">55</column>
+            <column name="code">191</column>
+            <column name="alpha2">HR</column>
+            <column name="alpha3">HRV</column>
+            <column name="nom_fr_fr">Croatie</column>
+            <column name="nom_en_gb">Croatia</column>
+        </table>
+        <table name="pays">
+            <column name="id">56</column>
+            <column name="code">192</column>
+            <column name="alpha2">CU</column>
+            <column name="alpha3">CUB</column>
+            <column name="nom_fr_fr">Cuba</column>
+            <column name="nom_en_gb">Cuba</column>
+        </table>
+        <table name="pays">
+            <column name="id">57</column>
+            <column name="code">196</column>
+            <column name="alpha2">CY</column>
+            <column name="alpha3">CYP</column>
+            <column name="nom_fr_fr">Chypre</column>
+            <column name="nom_en_gb">Cyprus</column>
+        </table>
+        <table name="pays">
+            <column name="id">58</column>
+            <column name="code">203</column>
+            <column name="alpha2">CZ</column>
+            <column name="alpha3">CZE</column>
+            <column name="nom_fr_fr">République Tchèque</column>
+            <column name="nom_en_gb">Czech Republic</column>
+        </table>
+        <table name="pays">
+            <column name="id">59</column>
+            <column name="code">204</column>
+            <column name="alpha2">BJ</column>
+            <column name="alpha3">BEN</column>
+            <column name="nom_fr_fr">Bénin</column>
+            <column name="nom_en_gb">Benin</column>
+        </table>
+        <table name="pays">
+            <column name="id">60</column>
+            <column name="code">208</column>
+            <column name="alpha2">DK</column>
+            <column name="alpha3">DNK</column>
+            <column name="nom_fr_fr">Danemark</column>
+            <column name="nom_en_gb">Denmark</column>
+        </table>
+        <table name="pays">
+            <column name="id">61</column>
+            <column name="code">212</column>
+            <column name="alpha2">DM</column>
+            <column name="alpha3">DMA</column>
+            <column name="nom_fr_fr">Dominique</column>
+            <column name="nom_en_gb">Dominica</column>
+        </table>
+        <table name="pays">
+            <column name="id">62</column>
+            <column name="code">214</column>
+            <column name="alpha2">DO</column>
+            <column name="alpha3">DOM</column>
+            <column name="nom_fr_fr">République Dominicaine</column>
+            <column name="nom_en_gb">Dominican Republic</column>
+        </table>
+        <table name="pays">
+            <column name="id">63</column>
+            <column name="code">218</column>
+            <column name="alpha2">EC</column>
+            <column name="alpha3">ECU</column>
+            <column name="nom_fr_fr">Équateur</column>
+            <column name="nom_en_gb">Ecuador</column>
+        </table>
+        <table name="pays">
+            <column name="id">64</column>
+            <column name="code">222</column>
+            <column name="alpha2">SV</column>
+            <column name="alpha3">SLV</column>
+            <column name="nom_fr_fr">El Salvador</column>
+            <column name="nom_en_gb">El Salvador</column>
+        </table>
+        <table name="pays">
+            <column name="id">65</column>
+            <column name="code">226</column>
+            <column name="alpha2">GQ</column>
+            <column name="alpha3">GNQ</column>
+            <column name="nom_fr_fr">Guinée Équatoriale</column>
+            <column name="nom_en_gb">Equatorial Guinea</column>
+        </table>
+        <table name="pays">
+            <column name="id">66</column>
+            <column name="code">231</column>
+            <column name="alpha2">ET</column>
+            <column name="alpha3">ETH</column>
+            <column name="nom_fr_fr">Éthiopie</column>
+            <column name="nom_en_gb">Ethiopia</column>
+        </table>
+        <table name="pays">
+            <column name="id">67</column>
+            <column name="code">232</column>
+            <column name="alpha2">ER</column>
+            <column name="alpha3">ERI</column>
+            <column name="nom_fr_fr">Érythrée</column>
+            <column name="nom_en_gb">Eritrea</column>
+        </table>
+        <table name="pays">
+            <column name="id">68</column>
+            <column name="code">233</column>
+            <column name="alpha2">EE</column>
+            <column name="alpha3">EST</column>
+            <column name="nom_fr_fr">Estonie</column>
+            <column name="nom_en_gb">Estonia</column>
+        </table>
+        <table name="pays">
+            <column name="id">69</column>
+            <column name="code">234</column>
+            <column name="alpha2">FO</column>
+            <column name="alpha3">FRO</column>
+            <column name="nom_fr_fr">Îles Féroé</column>
+            <column name="nom_en_gb">Faroe Islands</column>
+        </table>
+        <table name="pays">
+            <column name="id">70</column>
+            <column name="code">238</column>
+            <column name="alpha2">FK</column>
+            <column name="alpha3">FLK</column>
+            <column name="nom_fr_fr">Îles (malvinas) Falkland</column>
+            <column name="nom_en_gb">Falkland Islands</column>
+        </table>
+        <table name="pays">
+            <column name="id">71</column>
+            <column name="code">239</column>
+            <column name="alpha2">GS</column>
+            <column name="alpha3">SGS</column>
+            <column name="nom_fr_fr">Géorgie du Sud et les Îles Sandwich du Sud</column>
+            <column name="nom_en_gb">South Georgia and the South Sandwich Islands</column>
+        </table>
+        <table name="pays">
+            <column name="id">72</column>
+            <column name="code">242</column>
+            <column name="alpha2">FJ</column>
+            <column name="alpha3">FJI</column>
+            <column name="nom_fr_fr">Fidji</column>
+            <column name="nom_en_gb">Fiji</column>
+        </table>
+        <table name="pays">
+            <column name="id">73</column>
+            <column name="code">246</column>
+            <column name="alpha2">FI</column>
+            <column name="alpha3">FIN</column>
+            <column name="nom_fr_fr">Finlande</column>
+            <column name="nom_en_gb">Finland</column>
+        </table>
+        <table name="pays">
+            <column name="id">74</column>
+            <column name="code">248</column>
+            <column name="alpha2">AX</column>
+            <column name="alpha3">ALA</column>
+            <column name="nom_fr_fr">Îles Åland</column>
+            <column name="nom_en_gb">Åland Islands</column>
+        </table>
+        <table name="pays">
+            <column name="id">75</column>
+            <column name="code">250</column>
+            <column name="alpha2">FR</column>
+            <column name="alpha3">FRA</column>
+            <column name="nom_fr_fr">France</column>
+            <column name="nom_en_gb">France</column>
+        </table>
+        <table name="pays">
+            <column name="id">76</column>
+            <column name="code">254</column>
+            <column name="alpha2">GF</column>
+            <column name="alpha3">GUF</column>
+            <column name="nom_fr_fr">Guyane Française</column>
+            <column name="nom_en_gb">French Guiana</column>
+        </table>
+        <table name="pays">
+            <column name="id">77</column>
+            <column name="code">258</column>
+            <column name="alpha2">PF</column>
+            <column name="alpha3">PYF</column>
+            <column name="nom_fr_fr">Polynésie Française</column>
+            <column name="nom_en_gb">French Polynesia</column>
+        </table>
+        <table name="pays">
+            <column name="id">78</column>
+            <column name="code">260</column>
+            <column name="alpha2">TF</column>
+            <column name="alpha3">ATF</column>
+            <column name="nom_fr_fr">Terres Australes Françaises</column>
+            <column name="nom_en_gb">French Southern Territories</column>
+        </table>
+        <table name="pays">
+            <column name="id">79</column>
+            <column name="code">262</column>
+            <column name="alpha2">DJ</column>
+            <column name="alpha3">DJI</column>
+            <column name="nom_fr_fr">Djibouti</column>
+            <column name="nom_en_gb">Djibouti</column>
+        </table>
+        <table name="pays">
+            <column name="id">80</column>
+            <column name="code">266</column>
+            <column name="alpha2">GA</column>
+            <column name="alpha3">GAB</column>
+            <column name="nom_fr_fr">Gabon</column>
+            <column name="nom_en_gb">Gabon</column>
+        </table>
+        <table name="pays">
+            <column name="id">81</column>
+            <column name="code">268</column>
+            <column name="alpha2">GE</column>
+            <column name="alpha3">GEO</column>
+            <column name="nom_fr_fr">Géorgie</column>
+            <column name="nom_en_gb">Georgia</column>
+        </table>
+        <table name="pays">
+            <column name="id">82</column>
+            <column name="code">270</column>
+            <column name="alpha2">GM</column>
+            <column name="alpha3">GMB</column>
+            <column name="nom_fr_fr">Gambie</column>
+            <column name="nom_en_gb">Gambia</column>
+        </table>
+        <table name="pays">
+            <column name="id">83</column>
+            <column name="code">275</column>
+            <column name="alpha2">PS</column>
+            <column name="alpha3">PSE</column>
+            <column name="nom_fr_fr">Territoire Palestinien Occupé</column>
+            <column name="nom_en_gb">Occupied Palestinian Territory</column>
+        </table>
+        <table name="pays">
+            <column name="id">84</column>
+            <column name="code">276</column>
+            <column name="alpha2">DE</column>
+            <column name="alpha3">DEU</column>
+            <column name="nom_fr_fr">Allemagne</column>
+            <column name="nom_en_gb">Germany</column>
+        </table>
+        <table name="pays">
+            <column name="id">85</column>
+            <column name="code">288</column>
+            <column name="alpha2">GH</column>
+            <column name="alpha3">GHA</column>
+            <column name="nom_fr_fr">Ghana</column>
+            <column name="nom_en_gb">Ghana</column>
+        </table>
+        <table name="pays">
+            <column name="id">86</column>
+            <column name="code">292</column>
+            <column name="alpha2">GI</column>
+            <column name="alpha3">GIB</column>
+            <column name="nom_fr_fr">Gibraltar</column>
+            <column name="nom_en_gb">Gibraltar</column>
+        </table>
+        <table name="pays">
+            <column name="id">87</column>
+            <column name="code">296</column>
+            <column name="alpha2">KI</column>
+            <column name="alpha3">KIR</column>
+            <column name="nom_fr_fr">Kiribati</column>
+            <column name="nom_en_gb">Kiribati</column>
+        </table>
+        <table name="pays">
+            <column name="id">88</column>
+            <column name="code">300</column>
+            <column name="alpha2">GR</column>
+            <column name="alpha3">GRC</column>
+            <column name="nom_fr_fr">Grèce</column>
+            <column name="nom_en_gb">Greece</column>
+        </table>
+        <table name="pays">
+            <column name="id">89</column>
+            <column name="code">304</column>
+            <column name="alpha2">GL</column>
+            <column name="alpha3">GRL</column>
+            <column name="nom_fr_fr">Groenland</column>
+            <column name="nom_en_gb">Greenland</column>
+        </table>
+        <table name="pays">
+            <column name="id">90</column>
+            <column name="code">308</column>
+            <column name="alpha2">GD</column>
+            <column name="alpha3">GRD</column>
+            <column name="nom_fr_fr">Grenade</column>
+            <column name="nom_en_gb">Grenada</column>
+        </table>
+        <table name="pays">
+            <column name="id">91</column>
+            <column name="code">312</column>
+            <column name="alpha2">GP</column>
+            <column name="alpha3">GLP</column>
+            <column name="nom_fr_fr">Guadeloupe</column>
+            <column name="nom_en_gb">Guadeloupe</column>
+        </table>
+        <table name="pays">
+            <column name="id">92</column>
+            <column name="code">316</column>
+            <column name="alpha2">GU</column>
+            <column name="alpha3">GUM</column>
+            <column name="nom_fr_fr">Guam</column>
+            <column name="nom_en_gb">Guam</column>
+        </table>
+        <table name="pays">
+            <column name="id">93</column>
+            <column name="code">320</column>
+            <column name="alpha2">GT</column>
+            <column name="alpha3">GTM</column>
+            <column name="nom_fr_fr">Guatemala</column>
+            <column name="nom_en_gb">Guatemala</column>
+        </table>
+        <table name="pays">
+            <column name="id">94</column>
+            <column name="code">324</column>
+            <column name="alpha2">GN</column>
+            <column name="alpha3">GIN</column>
+            <column name="nom_fr_fr">Guinée</column>
+            <column name="nom_en_gb">Guinea</column>
+        </table>
+        <table name="pays">
+            <column name="id">95</column>
+            <column name="code">328</column>
+            <column name="alpha2">GY</column>
+            <column name="alpha3">GUY</column>
+            <column name="nom_fr_fr">Guyana</column>
+            <column name="nom_en_gb">Guyana</column>
+        </table>
+        <table name="pays">
+            <column name="id">96</column>
+            <column name="code">332</column>
+            <column name="alpha2">HT</column>
+            <column name="alpha3">HTI</column>
+            <column name="nom_fr_fr">Haïti</column>
+            <column name="nom_en_gb">Haiti</column>
+        </table>
+        <table name="pays">
+            <column name="id">97</column>
+            <column name="code">334</column>
+            <column name="alpha2">HM</column>
+            <column name="alpha3">HMD</column>
+            <column name="nom_fr_fr">Îles Heard et Mcdonald</column>
+            <column name="nom_en_gb">Heard Island and McDonald Islands</column>
+        </table>
+        <table name="pays">
+            <column name="id">98</column>
+            <column name="code">336</column>
+            <column name="alpha2">VA</column>
+            <column name="alpha3">VAT</column>
+            <column name="nom_fr_fr">Saint-Siège (état de la Cité du Vatican)</column>
+            <column name="nom_en_gb">Vatican City State</column>
+        </table>
+        <table name="pays">
+            <column name="id">99</column>
+            <column name="code">340</column>
+            <column name="alpha2">HN</column>
+            <column name="alpha3">HND</column>
+            <column name="nom_fr_fr">Honduras</column>
+            <column name="nom_en_gb">Honduras</column>
+        </table>
+        <table name="pays">
+            <column name="id">100</column>
+            <column name="code">344</column>
+            <column name="alpha2">HK</column>
+            <column name="alpha3">HKG</column>
+            <column name="nom_fr_fr">Hong-Kong</column>
+            <column name="nom_en_gb">Hong Kong</column>
+        </table>
+        <table name="pays">
+            <column name="id">101</column>
+            <column name="code">348</column>
+            <column name="alpha2">HU</column>
+            <column name="alpha3">HUN</column>
+            <column name="nom_fr_fr">Hongrie</column>
+            <column name="nom_en_gb">Hungary</column>
+        </table>
+        <table name="pays">
+            <column name="id">102</column>
+            <column name="code">352</column>
+            <column name="alpha2">IS</column>
+            <column name="alpha3">ISL</column>
+            <column name="nom_fr_fr">Islande</column>
+            <column name="nom_en_gb">Iceland</column>
+        </table>
+        <table name="pays">
+            <column name="id">103</column>
+            <column name="code">356</column>
+            <column name="alpha2">IN</column>
+            <column name="alpha3">IND</column>
+            <column name="nom_fr_fr">Inde</column>
+            <column name="nom_en_gb">India</column>
+        </table>
+        <table name="pays">
+            <column name="id">104</column>
+            <column name="code">360</column>
+            <column name="alpha2">ID</column>
+            <column name="alpha3">IDN</column>
+            <column name="nom_fr_fr">Indonésie</column>
+            <column name="nom_en_gb">Indonesia</column>
+        </table>
+        <table name="pays">
+            <column name="id">105</column>
+            <column name="code">364</column>
+            <column name="alpha2">IR</column>
+            <column name="alpha3">IRN</column>
+            <column name="nom_fr_fr">République Islamique d'Iran</column>
+            <column name="nom_en_gb">Islamic Republic of Iran</column>
+        </table>
+        <table name="pays">
+            <column name="id">106</column>
+            <column name="code">368</column>
+            <column name="alpha2">IQ</column>
+            <column name="alpha3">IRQ</column>
+            <column name="nom_fr_fr">Iraq</column>
+            <column name="nom_en_gb">Iraq</column>
+        </table>
+        <table name="pays">
+            <column name="id">107</column>
+            <column name="code">372</column>
+            <column name="alpha2">IE</column>
+            <column name="alpha3">IRL</column>
+            <column name="nom_fr_fr">Irlande</column>
+            <column name="nom_en_gb">Ireland</column>
+        </table>
+        <table name="pays">
+            <column name="id">108</column>
+            <column name="code">376</column>
+            <column name="alpha2">IL</column>
+            <column name="alpha3">ISR</column>
+            <column name="nom_fr_fr">Israël</column>
+            <column name="nom_en_gb">Israel</column>
+        </table>
+        <table name="pays">
+            <column name="id">109</column>
+            <column name="code">380</column>
+            <column name="alpha2">IT</column>
+            <column name="alpha3">ITA</column>
+            <column name="nom_fr_fr">Italie</column>
+            <column name="nom_en_gb">Italy</column>
+        </table>
+        <table name="pays">
+            <column name="id">110</column>
+            <column name="code">384</column>
+            <column name="alpha2">CI</column>
+            <column name="alpha3">CIV</column>
+            <column name="nom_fr_fr">Côte d'Ivoire</column>
+            <column name="nom_en_gb">Côte d'Ivoire</column>
+        </table>
+        <table name="pays">
+            <column name="id">111</column>
+            <column name="code">388</column>
+            <column name="alpha2">JM</column>
+            <column name="alpha3">JAM</column>
+            <column name="nom_fr_fr">Jamaïque</column>
+            <column name="nom_en_gb">Jamaica</column>
+        </table>
+        <table name="pays">
+            <column name="id">112</column>
+            <column name="code">392</column>
+            <column name="alpha2">JP</column>
+            <column name="alpha3">JPN</column>
+            <column name="nom_fr_fr">Japon</column>
+            <column name="nom_en_gb">Japan</column>
+        </table>
+        <table name="pays">
+            <column name="id">113</column>
+            <column name="code">398</column>
+            <column name="alpha2">KZ</column>
+            <column name="alpha3">KAZ</column>
+            <column name="nom_fr_fr">Kazakhstan</column>
+            <column name="nom_en_gb">Kazakhstan</column>
+        </table>
+        <table name="pays">
+            <column name="id">114</column>
+            <column name="code">400</column>
+            <column name="alpha2">JO</column>
+            <column name="alpha3">JOR</column>
+            <column name="nom_fr_fr">Jordanie</column>
+            <column name="nom_en_gb">Jordan</column>
+        </table>
+        <table name="pays">
+            <column name="id">115</column>
+            <column name="code">404</column>
+            <column name="alpha2">KE</column>
+            <column name="alpha3">KEN</column>
+            <column name="nom_fr_fr">Kenya</column>
+            <column name="nom_en_gb">Kenya</column>
+        </table>
+        <table name="pays">
+            <column name="id">116</column>
+            <column name="code">408</column>
+            <column name="alpha2">KP</column>
+            <column name="alpha3">PRK</column>
+            <column name="nom_fr_fr">République Populaire Démocratique de Corée</column>
+            <column name="nom_en_gb">Democratic People's Republic of Korea</column>
+        </table>
+        <table name="pays">
+            <column name="id">117</column>
+            <column name="code">410</column>
+            <column name="alpha2">KR</column>
+            <column name="alpha3">KOR</column>
+            <column name="nom_fr_fr">République de Corée</column>
+            <column name="nom_en_gb">Republic of Korea</column>
+        </table>
+        <table name="pays">
+            <column name="id">118</column>
+            <column name="code">414</column>
+            <column name="alpha2">KW</column>
+            <column name="alpha3">KWT</column>
+            <column name="nom_fr_fr">Koweït</column>
+            <column name="nom_en_gb">Kuwait</column>
+        </table>
+        <table name="pays">
+            <column name="id">119</column>
+            <column name="code">417</column>
+            <column name="alpha2">KG</column>
+            <column name="alpha3">KGZ</column>
+            <column name="nom_fr_fr">Kirghizistan</column>
+            <column name="nom_en_gb">Kyrgyzstan</column>
+        </table>
+        <table name="pays">
+            <column name="id">120</column>
+            <column name="code">418</column>
+            <column name="alpha2">LA</column>
+            <column name="alpha3">LAO</column>
+            <column name="nom_fr_fr">République Démocratique Populaire Lao</column>
+            <column name="nom_en_gb">Lao People's Democratic Republic</column>
+        </table>
+        <table name="pays">
+            <column name="id">121</column>
+            <column name="code">422</column>
+            <column name="alpha2">LB</column>
+            <column name="alpha3">LBN</column>
+            <column name="nom_fr_fr">Liban</column>
+            <column name="nom_en_gb">Lebanon</column>
+        </table>
+        <table name="pays">
+            <column name="id">122</column>
+            <column name="code">426</column>
+            <column name="alpha2">LS</column>
+            <column name="alpha3">LSO</column>
+            <column name="nom_fr_fr">Lesotho</column>
+            <column name="nom_en_gb">Lesotho</column>
+        </table>
+        <table name="pays">
+            <column name="id">123</column>
+            <column name="code">428</column>
+            <column name="alpha2">LV</column>
+            <column name="alpha3">LVA</column>
+            <column name="nom_fr_fr">Lettonie</column>
+            <column name="nom_en_gb">Latvia</column>
+        </table>
+        <table name="pays">
+            <column name="id">124</column>
+            <column name="code">430</column>
+            <column name="alpha2">LR</column>
+            <column name="alpha3">LBR</column>
+            <column name="nom_fr_fr">Libéria</column>
+            <column name="nom_en_gb">Liberia</column>
+        </table>
+        <table name="pays">
+            <column name="id">125</column>
+            <column name="code">434</column>
+            <column name="alpha2">LY</column>
+            <column name="alpha3">LBY</column>
+            <column name="nom_fr_fr">Jamahiriya Arabe Libyenne</column>
+            <column name="nom_en_gb">Libyan Arab Jamahiriya</column>
+        </table>
+        <table name="pays">
+            <column name="id">126</column>
+            <column name="code">438</column>
+            <column name="alpha2">LI</column>
+            <column name="alpha3">LIE</column>
+            <column name="nom_fr_fr">Liechtenstein</column>
+            <column name="nom_en_gb">Liechtenstein</column>
+        </table>
+        <table name="pays">
+            <column name="id">127</column>
+            <column name="code">440</column>
+            <column name="alpha2">LT</column>
+            <column name="alpha3">LTU</column>
+            <column name="nom_fr_fr">Lituanie</column>
+            <column name="nom_en_gb">Lithuania</column>
+        </table>
+        <table name="pays">
+            <column name="id">128</column>
+            <column name="code">442</column>
+            <column name="alpha2">LU</column>
+            <column name="alpha3">LUX</column>
+            <column name="nom_fr_fr">Luxembourg</column>
+            <column name="nom_en_gb">Luxembourg</column>
+        </table>
+        <table name="pays">
+            <column name="id">129</column>
+            <column name="code">446</column>
+            <column name="alpha2">MO</column>
+            <column name="alpha3">MAC</column>
+            <column name="nom_fr_fr">Macao</column>
+            <column name="nom_en_gb">Macao</column>
+        </table>
+        <table name="pays">
+            <column name="id">130</column>
+            <column name="code">450</column>
+            <column name="alpha2">MG</column>
+            <column name="alpha3">MDG</column>
+            <column name="nom_fr_fr">Madagascar</column>
+            <column name="nom_en_gb">Madagascar</column>
+        </table>
+        <table name="pays">
+            <column name="id">131</column>
+            <column name="code">454</column>
+            <column name="alpha2">MW</column>
+            <column name="alpha3">MWI</column>
+            <column name="nom_fr_fr">Malawi</column>
+            <column name="nom_en_gb">Malawi</column>
+        </table>
+        <table name="pays">
+            <column name="id">132</column>
+            <column name="code">458</column>
+            <column name="alpha2">MY</column>
+            <column name="alpha3">MYS</column>
+            <column name="nom_fr_fr">Malaisie</column>
+            <column name="nom_en_gb">Malaysia</column>
+        </table>
+        <table name="pays">
+            <column name="id">133</column>
+            <column name="code">462</column>
+            <column name="alpha2">MV</column>
+            <column name="alpha3">MDV</column>
+            <column name="nom_fr_fr">Maldives</column>
+            <column name="nom_en_gb">Maldives</column>
+        </table>
+        <table name="pays">
+            <column name="id">134</column>
+            <column name="code">466</column>
+            <column name="alpha2">ML</column>
+            <column name="alpha3">MLI</column>
+            <column name="nom_fr_fr">Mali</column>
+            <column name="nom_en_gb">Mali</column>
+        </table>
+        <table name="pays">
+            <column name="id">135</column>
+            <column name="code">470</column>
+            <column name="alpha2">MT</column>
+            <column name="alpha3">MLT</column>
+            <column name="nom_fr_fr">Malte</column>
+            <column name="nom_en_gb">Malta</column>
+        </table>
+        <table name="pays">
+            <column name="id">136</column>
+            <column name="code">474</column>
+            <column name="alpha2">MQ</column>
+            <column name="alpha3">MTQ</column>
+            <column name="nom_fr_fr">Martinique</column>
+            <column name="nom_en_gb">Martinique</column>
+        </table>
+        <table name="pays">
+            <column name="id">137</column>
+            <column name="code">478</column>
+            <column name="alpha2">MR</column>
+            <column name="alpha3">MRT</column>
+            <column name="nom_fr_fr">Mauritanie</column>
+            <column name="nom_en_gb">Mauritania</column>
+        </table>
+        <table name="pays">
+            <column name="id">138</column>
+            <column name="code">480</column>
+            <column name="alpha2">MU</column>
+            <column name="alpha3">MUS</column>
+            <column name="nom_fr_fr">Maurice</column>
+            <column name="nom_en_gb">Mauritius</column>
+        </table>
+        <table name="pays">
+            <column name="id">139</column>
+            <column name="code">484</column>
+            <column name="alpha2">MX</column>
+            <column name="alpha3">MEX</column>
+            <column name="nom_fr_fr">Mexique</column>
+            <column name="nom_en_gb">Mexico</column>
+        </table>
+        <table name="pays">
+            <column name="id">140</column>
+            <column name="code">492</column>
+            <column name="alpha2">MC</column>
+            <column name="alpha3">MCO</column>
+            <column name="nom_fr_fr">Monaco</column>
+            <column name="nom_en_gb">Monaco</column>
+        </table>
+        <table name="pays">
+            <column name="id">141</column>
+            <column name="code">496</column>
+            <column name="alpha2">MN</column>
+            <column name="alpha3">MNG</column>
+            <column name="nom_fr_fr">Mongolie</column>
+            <column name="nom_en_gb">Mongolia</column>
+        </table>
+        <table name="pays">
+            <column name="id">142</column>
+            <column name="code">498</column>
+            <column name="alpha2">MD</column>
+            <column name="alpha3">MDA</column>
+            <column name="nom_fr_fr">République de Moldova</column>
+            <column name="nom_en_gb">Republic of Moldova</column>
+        </table>
+        <table name="pays">
+            <column name="id">143</column>
+            <column name="code">500</column>
+            <column name="alpha2">MS</column>
+            <column name="alpha3">MSR</column>
+            <column name="nom_fr_fr">Montserrat</column>
+            <column name="nom_en_gb">Montserrat</column>
+        </table>
+        <table name="pays">
+            <column name="id">144</column>
+            <column name="code">504</column>
+            <column name="alpha2">MA</column>
+            <column name="alpha3">MAR</column>
+            <column name="nom_fr_fr">Maroc</column>
+            <column name="nom_en_gb">Morocco</column>
+        </table>
+        <table name="pays">
+            <column name="id">145</column>
+            <column name="code">508</column>
+            <column name="alpha2">MZ</column>
+            <column name="alpha3">MOZ</column>
+            <column name="nom_fr_fr">Mozambique</column>
+            <column name="nom_en_gb">Mozambique</column>
+        </table>
+        <table name="pays">
+            <column name="id">146</column>
+            <column name="code">512</column>
+            <column name="alpha2">OM</column>
+            <column name="alpha3">OMN</column>
+            <column name="nom_fr_fr">Oman</column>
+            <column name="nom_en_gb">Oman</column>
+        </table>
+        <table name="pays">
+            <column name="id">147</column>
+            <column name="code">516</column>
+            <column name="alpha2">NA</column>
+            <column name="alpha3">NAM</column>
+            <column name="nom_fr_fr">Namibie</column>
+            <column name="nom_en_gb">Namibia</column>
+        </table>
+        <table name="pays">
+            <column name="id">148</column>
+            <column name="code">520</column>
+            <column name="alpha2">NR</column>
+            <column name="alpha3">NRU</column>
+            <column name="nom_fr_fr">Nauru</column>
+            <column name="nom_en_gb">Nauru</column>
+        </table>
+        <table name="pays">
+            <column name="id">149</column>
+            <column name="code">524</column>
+            <column name="alpha2">NP</column>
+            <column name="alpha3">NPL</column>
+            <column name="nom_fr_fr">Népal</column>
+            <column name="nom_en_gb">Nepal</column>
+        </table>
+        <table name="pays">
+            <column name="id">150</column>
+            <column name="code">528</column>
+            <column name="alpha2">NL</column>
+            <column name="alpha3">NLD</column>
+            <column name="nom_fr_fr">Pays-Bas</column>
+            <column name="nom_en_gb">Netherlands</column>
+        </table>
+        <table name="pays">
+            <column name="id">151</column>
+            <column name="code">530</column>
+            <column name="alpha2">AN</column>
+            <column name="alpha3">ANT</column>
+            <column name="nom_fr_fr">Antilles Néerlandaises</column>
+            <column name="nom_en_gb">Netherlands Antilles</column>
+        </table>
+        <table name="pays">
+            <column name="id">152</column>
+            <column name="code">533</column>
+            <column name="alpha2">AW</column>
+            <column name="alpha3">ABW</column>
+            <column name="nom_fr_fr">Aruba</column>
+            <column name="nom_en_gb">Aruba</column>
+        </table>
+        <table name="pays">
+            <column name="id">153</column>
+            <column name="code">540</column>
+            <column name="alpha2">NC</column>
+            <column name="alpha3">NCL</column>
+            <column name="nom_fr_fr">Nouvelle-Calédonie</column>
+            <column name="nom_en_gb">New Caledonia</column>
+        </table>
+        <table name="pays">
+            <column name="id">154</column>
+            <column name="code">548</column>
+            <column name="alpha2">VU</column>
+            <column name="alpha3">VUT</column>
+            <column name="nom_fr_fr">Vanuatu</column>
+            <column name="nom_en_gb">Vanuatu</column>
+        </table>
+        <table name="pays">
+            <column name="id">155</column>
+            <column name="code">554</column>
+            <column name="alpha2">NZ</column>
+            <column name="alpha3">NZL</column>
+            <column name="nom_fr_fr">Nouvelle-Zélande</column>
+            <column name="nom_en_gb">New Zealand</column>
+        </table>
+        <table name="pays">
+            <column name="id">156</column>
+            <column name="code">558</column>
+            <column name="alpha2">NI</column>
+            <column name="alpha3">NIC</column>
+            <column name="nom_fr_fr">Nicaragua</column>
+            <column name="nom_en_gb">Nicaragua</column>
+        </table>
+        <table name="pays">
+            <column name="id">157</column>
+            <column name="code">562</column>
+            <column name="alpha2">NE</column>
+            <column name="alpha3">NER</column>
+            <column name="nom_fr_fr">Niger</column>
+            <column name="nom_en_gb">Niger</column>
+        </table>
+        <table name="pays">
+            <column name="id">158</column>
+            <column name="code">566</column>
+            <column name="alpha2">NG</column>
+            <column name="alpha3">NGA</column>
+            <column name="nom_fr_fr">Nigéria</column>
+            <column name="nom_en_gb">Nigeria</column>
+        </table>
+        <table name="pays">
+            <column name="id">159</column>
+            <column name="code">570</column>
+            <column name="alpha2">NU</column>
+            <column name="alpha3">NIU</column>
+            <column name="nom_fr_fr">Niué</column>
+            <column name="nom_en_gb">Niue</column>
+        </table>
+        <table name="pays">
+            <column name="id">160</column>
+            <column name="code">574</column>
+            <column name="alpha2">NF</column>
+            <column name="alpha3">NFK</column>
+            <column name="nom_fr_fr">Île Norfolk</column>
+            <column name="nom_en_gb">Norfolk Island</column>
+        </table>
+        <table name="pays">
+            <column name="id">161</column>
+            <column name="code">578</column>
+            <column name="alpha2">NO</column>
+            <column name="alpha3">NOR</column>
+            <column name="nom_fr_fr">Norvège</column>
+            <column name="nom_en_gb">Norway</column>
+        </table>
+        <table name="pays">
+            <column name="id">162</column>
+            <column name="code">580</column>
+            <column name="alpha2">MP</column>
+            <column name="alpha3">MNP</column>
+            <column name="nom_fr_fr">Îles Mariannes du Nord</column>
+            <column name="nom_en_gb">Northern Mariana Islands</column>
+        </table>
+        <table name="pays">
+            <column name="id">163</column>
+            <column name="code">581</column>
+            <column name="alpha2">UM</column>
+            <column name="alpha3">UMI</column>
+            <column name="nom_fr_fr">Îles Mineures Éloignées des États-Unis</column>
+            <column name="nom_en_gb">United States Minor Outlying Islands</column>
+        </table>
+        <table name="pays">
+            <column name="id">164</column>
+            <column name="code">583</column>
+            <column name="alpha2">FM</column>
+            <column name="alpha3">FSM</column>
+            <column name="nom_fr_fr">États Fédérés de Micronésie</column>
+            <column name="nom_en_gb">Federated States of Micronesia</column>
+        </table>
+        <table name="pays">
+            <column name="id">165</column>
+            <column name="code">584</column>
+            <column name="alpha2">MH</column>
+            <column name="alpha3">MHL</column>
+            <column name="nom_fr_fr">Îles Marshall</column>
+            <column name="nom_en_gb">Marshall Islands</column>
+        </table>
+        <table name="pays">
+            <column name="id">166</column>
+            <column name="code">585</column>
+            <column name="alpha2">PW</column>
+            <column name="alpha3">PLW</column>
+            <column name="nom_fr_fr">Palaos</column>
+            <column name="nom_en_gb">Palau</column>
+        </table>
+        <table name="pays">
+            <column name="id">167</column>
+            <column name="code">586</column>
+            <column name="alpha2">PK</column>
+            <column name="alpha3">PAK</column>
+            <column name="nom_fr_fr">Pakistan</column>
+            <column name="nom_en_gb">Pakistan</column>
+        </table>
+        <table name="pays">
+            <column name="id">168</column>
+            <column name="code">591</column>
+            <column name="alpha2">PA</column>
+            <column name="alpha3">PAN</column>
+            <column name="nom_fr_fr">Panama</column>
+            <column name="nom_en_gb">Panama</column>
+        </table>
+        <table name="pays">
+            <column name="id">169</column>
+            <column name="code">598</column>
+            <column name="alpha2">PG</column>
+            <column name="alpha3">PNG</column>
+            <column name="nom_fr_fr">Papouasie-Nouvelle-Guinée</column>
+            <column name="nom_en_gb">Papua New Guinea</column>
+        </table>
+        <table name="pays">
+            <column name="id">170</column>
+            <column name="code">600</column>
+            <column name="alpha2">PY</column>
+            <column name="alpha3">PRY</column>
+            <column name="nom_fr_fr">Paraguay</column>
+            <column name="nom_en_gb">Paraguay</column>
+        </table>
+        <table name="pays">
+            <column name="id">171</column>
+            <column name="code">604</column>
+            <column name="alpha2">PE</column>
+            <column name="alpha3">PER</column>
+            <column name="nom_fr_fr">Pérou</column>
+            <column name="nom_en_gb">Peru</column>
+        </table>
+        <table name="pays">
+            <column name="id">172</column>
+            <column name="code">608</column>
+            <column name="alpha2">PH</column>
+            <column name="alpha3">PHL</column>
+            <column name="nom_fr_fr">Philippines</column>
+            <column name="nom_en_gb">Philippines</column>
+        </table>
+        <table name="pays">
+            <column name="id">173</column>
+            <column name="code">612</column>
+            <column name="alpha2">PN</column>
+            <column name="alpha3">PCN</column>
+            <column name="nom_fr_fr">Pitcairn</column>
+            <column name="nom_en_gb">Pitcairn</column>
+        </table>
+        <table name="pays">
+            <column name="id">174</column>
+            <column name="code">616</column>
+            <column name="alpha2">PL</column>
+            <column name="alpha3">POL</column>
+            <column name="nom_fr_fr">Pologne</column>
+            <column name="nom_en_gb">Poland</column>
+        </table>
+        <table name="pays">
+            <column name="id">175</column>
+            <column name="code">620</column>
+            <column name="alpha2">PT</column>
+            <column name="alpha3">PRT</column>
+            <column name="nom_fr_fr">Portugal</column>
+            <column name="nom_en_gb">Portugal</column>
+        </table>
+        <table name="pays">
+            <column name="id">176</column>
+            <column name="code">624</column>
+            <column name="alpha2">GW</column>
+            <column name="alpha3">GNB</column>
+            <column name="nom_fr_fr">Guinée-Bissau</column>
+            <column name="nom_en_gb">Guinea-Bissau</column>
+        </table>
+        <table name="pays">
+            <column name="id">177</column>
+            <column name="code">626</column>
+            <column name="alpha2">TL</column>
+            <column name="alpha3">TLS</column>
+            <column name="nom_fr_fr">Timor-Leste</column>
+            <column name="nom_en_gb">Timor-Leste</column>
+        </table>
+        <table name="pays">
+            <column name="id">178</column>
+            <column name="code">630</column>
+            <column name="alpha2">PR</column>
+            <column name="alpha3">PRI</column>
+            <column name="nom_fr_fr">Porto Rico</column>
+            <column name="nom_en_gb">Puerto Rico</column>
+        </table>
+        <table name="pays">
+            <column name="id">179</column>
+            <column name="code">634</column>
+            <column name="alpha2">QA</column>
+            <column name="alpha3">QAT</column>
+            <column name="nom_fr_fr">Qatar</column>
+            <column name="nom_en_gb">Qatar</column>
+        </table>
+        <table name="pays">
+            <column name="id">180</column>
+            <column name="code">638</column>
+            <column name="alpha2">RE</column>
+            <column name="alpha3">REU</column>
+            <column name="nom_fr_fr">Réunion</column>
+            <column name="nom_en_gb">Réunion</column>
+        </table>
+        <table name="pays">
+            <column name="id">181</column>
+            <column name="code">642</column>
+            <column name="alpha2">RO</column>
+            <column name="alpha3">ROU</column>
+            <column name="nom_fr_fr">Roumanie</column>
+            <column name="nom_en_gb">Romania</column>
+        </table>
+        <table name="pays">
+            <column name="id">182</column>
+            <column name="code">643</column>
+            <column name="alpha2">RU</column>
+            <column name="alpha3">RUS</column>
+            <column name="nom_fr_fr">Fédération de Russie</column>
+            <column name="nom_en_gb">Russian Federation</column>
+        </table>
+        <table name="pays">
+            <column name="id">183</column>
+            <column name="code">646</column>
+            <column name="alpha2">RW</column>
+            <column name="alpha3">RWA</column>
+            <column name="nom_fr_fr">Rwanda</column>
+            <column name="nom_en_gb">Rwanda</column>
+        </table>
+        <table name="pays">
+            <column name="id">184</column>
+            <column name="code">654</column>
+            <column name="alpha2">SH</column>
+            <column name="alpha3">SHN</column>
+            <column name="nom_fr_fr">Sainte-Hélène</column>
+            <column name="nom_en_gb">Saint Helena</column>
+        </table>
+        <table name="pays">
+            <column name="id">185</column>
+            <column name="code">659</column>
+            <column name="alpha2">KN</column>
+            <column name="alpha3">KNA</column>
+            <column name="nom_fr_fr">Saint-Kitts-et-Nevis</column>
+            <column name="nom_en_gb">Saint Kitts and Nevis</column>
+        </table>
+        <table name="pays">
+            <column name="id">186</column>
+            <column name="code">660</column>
+            <column name="alpha2">AI</column>
+            <column name="alpha3">AIA</column>
+            <column name="nom_fr_fr">Anguilla</column>
+            <column name="nom_en_gb">Anguilla</column>
+        </table>
+        <table name="pays">
+            <column name="id">187</column>
+            <column name="code">662</column>
+            <column name="alpha2">LC</column>
+            <column name="alpha3">LCA</column>
+            <column name="nom_fr_fr">Sainte-Lucie</column>
+            <column name="nom_en_gb">Saint Lucia</column>
+        </table>
+        <table name="pays">
+            <column name="id">188</column>
+            <column name="code">666</column>
+            <column name="alpha2">PM</column>
+            <column name="alpha3">SPM</column>
+            <column name="nom_fr_fr">Saint-Pierre-et-Miquelon</column>
+            <column name="nom_en_gb">Saint-Pierre and Miquelon</column>
+        </table>
+        <table name="pays">
+            <column name="id">189</column>
+            <column name="code">670</column>
+            <column name="alpha2">VC</column>
+            <column name="alpha3">VCT</column>
+            <column name="nom_fr_fr">Saint-Vincent-et-les Grenadines</column>
+            <column name="nom_en_gb">Saint Vincent and the Grenadines</column>
+        </table>
+        <table name="pays">
+            <column name="id">190</column>
+            <column name="code">674</column>
+            <column name="alpha2">SM</column>
+            <column name="alpha3">SMR</column>
+            <column name="nom_fr_fr">Saint-Marin</column>
+            <column name="nom_en_gb">San Marino</column>
+        </table>
+        <table name="pays">
+            <column name="id">191</column>
+            <column name="code">678</column>
+            <column name="alpha2">ST</column>
+            <column name="alpha3">STP</column>
+            <column name="nom_fr_fr">Sao Tomé-et-Principe</column>
+            <column name="nom_en_gb">Sao Tome and Principe</column>
+        </table>
+        <table name="pays">
+            <column name="id">192</column>
+            <column name="code">682</column>
+            <column name="alpha2">SA</column>
+            <column name="alpha3">SAU</column>
+            <column name="nom_fr_fr">Arabie Saoudite</column>
+            <column name="nom_en_gb">Saudi Arabia</column>
+        </table>
+        <table name="pays">
+            <column name="id">193</column>
+            <column name="code">686</column>
+            <column name="alpha2">SN</column>
+            <column name="alpha3">SEN</column>
+            <column name="nom_fr_fr">Sénégal</column>
+            <column name="nom_en_gb">Senegal</column>
+        </table>
+        <table name="pays">
+            <column name="id">194</column>
+            <column name="code">690</column>
+            <column name="alpha2">SC</column>
+            <column name="alpha3">SYC</column>
+            <column name="nom_fr_fr">Seychelles</column>
+            <column name="nom_en_gb">Seychelles</column>
+        </table>
+        <table name="pays">
+            <column name="id">195</column>
+            <column name="code">694</column>
+            <column name="alpha2">SL</column>
+            <column name="alpha3">SLE</column>
+            <column name="nom_fr_fr">Sierra Leone</column>
+            <column name="nom_en_gb">Sierra Leone</column>
+        </table>
+        <table name="pays">
+            <column name="id">196</column>
+            <column name="code">702</column>
+            <column name="alpha2">SG</column>
+            <column name="alpha3">SGP</column>
+            <column name="nom_fr_fr">Singapour</column>
+            <column name="nom_en_gb">Singapore</column>
+        </table>
+        <table name="pays">
+            <column name="id">197</column>
+            <column name="code">703</column>
+            <column name="alpha2">SK</column>
+            <column name="alpha3">SVK</column>
+            <column name="nom_fr_fr">Slovaquie</column>
+            <column name="nom_en_gb">Slovakia</column>
+        </table>
+        <table name="pays">
+            <column name="id">198</column>
+            <column name="code">704</column>
+            <column name="alpha2">VN</column>
+            <column name="alpha3">VNM</column>
+            <column name="nom_fr_fr">Viet Nam</column>
+            <column name="nom_en_gb">Vietnam</column>
+        </table>
+        <table name="pays">
+            <column name="id">199</column>
+            <column name="code">705</column>
+            <column name="alpha2">SI</column>
+            <column name="alpha3">SVN</column>
+            <column name="nom_fr_fr">Slovénie</column>
+            <column name="nom_en_gb">Slovenia</column>
+        </table>
+        <table name="pays">
+            <column name="id">200</column>
+            <column name="code">706</column>
+            <column name="alpha2">SO</column>
+            <column name="alpha3">SOM</column>
+            <column name="nom_fr_fr">Somalie</column>
+            <column name="nom_en_gb">Somalia</column>
+        </table>
+        <table name="pays">
+            <column name="id">201</column>
+            <column name="code">710</column>
+            <column name="alpha2">ZA</column>
+            <column name="alpha3">ZAF</column>
+            <column name="nom_fr_fr">Afrique du Sud</column>
+            <column name="nom_en_gb">South Africa</column>
+        </table>
+        <table name="pays">
+            <column name="id">202</column>
+            <column name="code">716</column>
+            <column name="alpha2">ZW</column>
+            <column name="alpha3">ZWE</column>
+            <column name="nom_fr_fr">Zimbabwe</column>
+            <column name="nom_en_gb">Zimbabwe</column>
+        </table>
+        <table name="pays">
+            <column name="id">203</column>
+            <column name="code">724</column>
+            <column name="alpha2">ES</column>
+            <column name="alpha3">ESP</column>
+            <column name="nom_fr_fr">Espagne</column>
+            <column name="nom_en_gb">Spain</column>
+        </table>
+        <table name="pays">
+            <column name="id">204</column>
+            <column name="code">732</column>
+            <column name="alpha2">EH</column>
+            <column name="alpha3">ESH</column>
+            <column name="nom_fr_fr">Sahara Occidental</column>
+            <column name="nom_en_gb">Western Sahara</column>
+        </table>
+        <table name="pays">
+            <column name="id">205</column>
+            <column name="code">736</column>
+            <column name="alpha2">SD</column>
+            <column name="alpha3">SDN</column>
+            <column name="nom_fr_fr">Soudan</column>
+            <column name="nom_en_gb">Sudan</column>
+        </table>
+        <table name="pays">
+            <column name="id">206</column>
+            <column name="code">740</column>
+            <column name="alpha2">SR</column>
+            <column name="alpha3">SUR</column>
+            <column name="nom_fr_fr">Suriname</column>
+            <column name="nom_en_gb">Suriname</column>
+        </table>
+        <table name="pays">
+            <column name="id">207</column>
+            <column name="code">744</column>
+            <column name="alpha2">SJ</column>
+            <column name="alpha3">SJM</column>
+            <column name="nom_fr_fr">Svalbard etÎle Jan Mayen</column>
+            <column name="nom_en_gb">Svalbard and Jan Mayen</column>
+        </table>
+        <table name="pays">
+            <column name="id">208</column>
+            <column name="code">748</column>
+            <column name="alpha2">SZ</column>
+            <column name="alpha3">SWZ</column>
+            <column name="nom_fr_fr">Swaziland</column>
+            <column name="nom_en_gb">Swaziland</column>
+        </table>
+        <table name="pays">
+            <column name="id">209</column>
+            <column name="code">752</column>
+            <column name="alpha2">SE</column>
+            <column name="alpha3">SWE</column>
+            <column name="nom_fr_fr">Suède</column>
+            <column name="nom_en_gb">Sweden</column>
+        </table>
+        <table name="pays">
+            <column name="id">210</column>
+            <column name="code">756</column>
+            <column name="alpha2">CH</column>
+            <column name="alpha3">CHE</column>
+            <column name="nom_fr_fr">Suisse</column>
+            <column name="nom_en_gb">Switzerland</column>
+        </table>
+        <table name="pays">
+            <column name="id">211</column>
+            <column name="code">760</column>
+            <column name="alpha2">SY</column>
+            <column name="alpha3">SYR</column>
+            <column name="nom_fr_fr">République Arabe Syrienne</column>
+            <column name="nom_en_gb">Syrian Arab Republic</column>
+        </table>
+        <table name="pays">
+            <column name="id">212</column>
+            <column name="code">762</column>
+            <column name="alpha2">TJ</column>
+            <column name="alpha3">TJK</column>
+            <column name="nom_fr_fr">Tadjikistan</column>
+            <column name="nom_en_gb">Tajikistan</column>
+        </table>
+        <table name="pays">
+            <column name="id">213</column>
+            <column name="code">764</column>
+            <column name="alpha2">TH</column>
+            <column name="alpha3">THA</column>
+            <column name="nom_fr_fr">Thaïlande</column>
+            <column name="nom_en_gb">Thailand</column>
+        </table>
+        <table name="pays">
+            <column name="id">214</column>
+            <column name="code">768</column>
+            <column name="alpha2">TG</column>
+            <column name="alpha3">TGO</column>
+            <column name="nom_fr_fr">Togo</column>
+            <column name="nom_en_gb">Togo</column>
+        </table>
+        <table name="pays">
+            <column name="id">215</column>
+            <column name="code">772</column>
+            <column name="alpha2">TK</column>
+            <column name="alpha3">TKL</column>
+            <column name="nom_fr_fr">Tokelau</column>
+            <column name="nom_en_gb">Tokelau</column>
+        </table>
+        <table name="pays">
+            <column name="id">216</column>
+            <column name="code">776</column>
+            <column name="alpha2">TO</column>
+            <column name="alpha3">TON</column>
+            <column name="nom_fr_fr">Tonga</column>
+            <column name="nom_en_gb">Tonga</column>
+        </table>
+        <table name="pays">
+            <column name="id">217</column>
+            <column name="code">780</column>
+            <column name="alpha2">TT</column>
+            <column name="alpha3">TTO</column>
+            <column name="nom_fr_fr">Trinité-et-Tobago</column>
+            <column name="nom_en_gb">Trinidad and Tobago</column>
+        </table>
+        <table name="pays">
+            <column name="id">218</column>
+            <column name="code">784</column>
+            <column name="alpha2">AE</column>
+            <column name="alpha3">ARE</column>
+            <column name="nom_fr_fr">Émirats Arabes Unis</column>
+            <column name="nom_en_gb">United Arab Emirates</column>
+        </table>
+        <table name="pays">
+            <column name="id">219</column>
+            <column name="code">788</column>
+            <column name="alpha2">TN</column>
+            <column name="alpha3">TUN</column>
+            <column name="nom_fr_fr">Tunisie</column>
+            <column name="nom_en_gb">Tunisia</column>
+        </table>
+        <table name="pays">
+            <column name="id">220</column>
+            <column name="code">792</column>
+            <column name="alpha2">TR</column>
+            <column name="alpha3">TUR</column>
+            <column name="nom_fr_fr">Turquie</column>
+            <column name="nom_en_gb">Turkey</column>
+        </table>
+        <table name="pays">
+            <column name="id">221</column>
+            <column name="code">795</column>
+            <column name="alpha2">TM</column>
+            <column name="alpha3">TKM</column>
+            <column name="nom_fr_fr">Turkménistan</column>
+            <column name="nom_en_gb">Turkmenistan</column>
+        </table>
+        <table name="pays">
+            <column name="id">222</column>
+            <column name="code">796</column>
+            <column name="alpha2">TC</column>
+            <column name="alpha3">TCA</column>
+            <column name="nom_fr_fr">Îles Turks et Caïques</column>
+            <column name="nom_en_gb">Turks and Caicos Islands</column>
+        </table>
+        <table name="pays">
+            <column name="id">223</column>
+            <column name="code">798</column>
+            <column name="alpha2">TV</column>
+            <column name="alpha3">TUV</column>
+            <column name="nom_fr_fr">Tuvalu</column>
+            <column name="nom_en_gb">Tuvalu</column>
+        </table>
+        <table name="pays">
+            <column name="id">224</column>
+            <column name="code">800</column>
+            <column name="alpha2">UG</column>
+            <column name="alpha3">UGA</column>
+            <column name="nom_fr_fr">Ouganda</column>
+            <column name="nom_en_gb">Uganda</column>
+        </table>
+        <table name="pays">
+            <column name="id">225</column>
+            <column name="code">804</column>
+            <column name="alpha2">UA</column>
+            <column name="alpha3">UKR</column>
+            <column name="nom_fr_fr">Ukraine</column>
+            <column name="nom_en_gb">Ukraine</column>
+        </table>
+        <table name="pays">
+            <column name="id">226</column>
+            <column name="code">807</column>
+            <column name="alpha2">MK</column>
+            <column name="alpha3">MKD</column>
+            <column name="nom_fr_fr">L'ex-République Yougoslave de Macédoine</column>
+            <column name="nom_en_gb">The Former Yugoslav Republic of Macedonia</column>
+        </table>
+        <table name="pays">
+            <column name="id">227</column>
+            <column name="code">818</column>
+            <column name="alpha2">EG</column>
+            <column name="alpha3">EGY</column>
+            <column name="nom_fr_fr">Égypte</column>
+            <column name="nom_en_gb">Egypt</column>
+        </table>
+        <table name="pays">
+            <column name="id">228</column>
+            <column name="code">826</column>
+            <column name="alpha2">GB</column>
+            <column name="alpha3">GBR</column>
+            <column name="nom_fr_fr">Royaume-Uni</column>
+            <column name="nom_en_gb">United Kingdom</column>
+        </table>
+        <table name="pays">
+            <column name="id">229</column>
+            <column name="code">833</column>
+            <column name="alpha2">IM</column>
+            <column name="alpha3">IMN</column>
+            <column name="nom_fr_fr">Île de Man</column>
+            <column name="nom_en_gb">Isle of Man</column>
+        </table>
+        <table name="pays">
+            <column name="id">230</column>
+            <column name="code">834</column>
+            <column name="alpha2">TZ</column>
+            <column name="alpha3">TZA</column>
+            <column name="nom_fr_fr">République-Unie de Tanzanie</column>
+            <column name="nom_en_gb">United Republic Of Tanzania</column>
+        </table>
+        <table name="pays">
+            <column name="id">231</column>
+            <column name="code">840</column>
+            <column name="alpha2">US</column>
+            <column name="alpha3">USA</column>
+            <column name="nom_fr_fr">États-Unis</column>
+            <column name="nom_en_gb">United States</column>
+        </table>
+        <table name="pays">
+            <column name="id">232</column>
+            <column name="code">850</column>
+            <column name="alpha2">VI</column>
+            <column name="alpha3">VIR</column>
+            <column name="nom_fr_fr">Îles Vierges des États-Unis</column>
+            <column name="nom_en_gb">U.S. Virgin Islands</column>
+        </table>
+        <table name="pays">
+            <column name="id">233</column>
+            <column name="code">854</column>
+            <column name="alpha2">BF</column>
+            <column name="alpha3">BFA</column>
+            <column name="nom_fr_fr">Burkina Faso</column>
+            <column name="nom_en_gb">Burkina Faso</column>
+        </table>
+        <table name="pays">
+            <column name="id">234</column>
+            <column name="code">858</column>
+            <column name="alpha2">UY</column>
+            <column name="alpha3">URY</column>
+            <column name="nom_fr_fr">Uruguay</column>
+            <column name="nom_en_gb">Uruguay</column>
+        </table>
+        <table name="pays">
+            <column name="id">235</column>
+            <column name="code">860</column>
+            <column name="alpha2">UZ</column>
+            <column name="alpha3">UZB</column>
+            <column name="nom_fr_fr">Ouzbékistan</column>
+            <column name="nom_en_gb">Uzbekistan</column>
+        </table>
+        <table name="pays">
+            <column name="id">236</column>
+            <column name="code">862</column>
+            <column name="alpha2">VE</column>
+            <column name="alpha3">VEN</column>
+            <column name="nom_fr_fr">Venezuela</column>
+            <column name="nom_en_gb">Venezuela</column>
+        </table>
+        <table name="pays">
+            <column name="id">237</column>
+            <column name="code">876</column>
+            <column name="alpha2">WF</column>
+            <column name="alpha3">WLF</column>
+            <column name="nom_fr_fr">Wallis et Futuna</column>
+            <column name="nom_en_gb">Wallis and Futuna</column>
+        </table>
+        <table name="pays">
+            <column name="id">238</column>
+            <column name="code">882</column>
+            <column name="alpha2">WS</column>
+            <column name="alpha3">WSM</column>
+            <column name="nom_fr_fr">Samoa</column>
+            <column name="nom_en_gb">Samoa</column>
+        </table>
+        <table name="pays">
+            <column name="id">239</column>
+            <column name="code">887</column>
+            <column name="alpha2">YE</column>
+            <column name="alpha3">YEM</column>
+            <column name="nom_fr_fr">Yémen</column>
+            <column name="nom_en_gb">Yemen</column>
+        </table>
+        <table name="pays">
+            <column name="id">240</column>
+            <column name="code">891</column>
+            <column name="alpha2">CS</column>
+            <column name="alpha3">SCG</column>
+            <column name="nom_fr_fr">Serbie-et-Monténégro</column>
+            <column name="nom_en_gb">Serbia and Montenegro</column>
+        </table>
+        <table name="pays">
+            <column name="id">241</column>
+            <column name="code">894</column>
+            <column name="alpha2">ZM</column>
+            <column name="alpha3">ZMB</column>
+            <column name="nom_fr_fr">Zambie</column>
+            <column name="nom_en_gb">Zambia</column>
+        </table>
+    </database>
+</pma_xml_export>

@@ -1,0 +1,47 @@
+.bd-placeholder-img {
+  font-size: 1.125rem;
+  text-anchor: middle;
+  padding-top:100px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none; 
+}
+
+@media (min-width: 768px) {
+  .bd-placeholder-img-lg {
+    font-size: 3.5rem;
+  }
+}
+#promptCompat{ 
+  display: none; 
+} 
+#promptCompat.no_dialog{ 
+  box-shadow: 0 0 5px 2px red; 
+  padding: 10px; 
+  display: block; 
+  text-align: center; 
+  font-weight: bold; 
+} 
+.boutons{ 
+  padding: 10px; 
+} 
+dialog{ 
+  border-radius: 10px; 
+  box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3); 
+} 
+dialog::backdrop{ 
+  background-color: rgba(0, 0, 0, 0.6); 
+}       
+.sidebar{
+  min-height: : 330px;
+  max-height: 330px;
+}
+
+body{
+  margin:0;
+  padding:0;
+  background: url(../logos/fond_site.jpg) no-repeat center fixed;
+  -webkit-background-size: cover; /* pour anciens Chrome et Safari */
+  background-size: cover; /* version standardisée */
+}
