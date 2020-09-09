@@ -175,9 +175,13 @@
                   <span data-feather="users"></span>
                   <br/>Nouveau Client
                 </a>
-                <a class="nav-link" href="proforma.php?categ=Postes%20Premium">
+                <!-- <a class="nav-link" href="proforma.php?categ=Postes%20Premium">
                   <span data-feather="file"></span>
                   <br/>Proforma <span align="center"class="sr-only">(current)</span>
+                </a> -->
+                <a class="nav-link" href="projets.php">
+                  <span data-feather="file"></span>
+                  <br/>Projets <span align="center"class="sr-only">(current)</span>
                 </a>
                 <a class="nav-link" href="bon_de_commande.php">
                   <span data-feather="file-text"></span>
