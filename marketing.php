@@ -179,9 +179,9 @@
                   <span data-feather="file"></span>
                   <br/>Proforma <span align="center"class="sr-only">(current)</span>
                 </a> -->
-                <a class="nav-link" href="projets.php">
+                <a class="nav-link" href="projets.php?pr=0">
                   <span data-feather="file"></span>
-                  <br/>Projets <span align="center"class="sr-only">(current)</span>
+                  <br/>Projets <span align="center"class="sr-ony"></span>
                 </a>
                 <a class="nav-link" href="bon_de_commande.php">
                   <span data-feather="file-text"></span>

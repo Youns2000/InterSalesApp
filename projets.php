@@ -25,8 +25,16 @@
           FROM pays
           ORDER BY id;';
 
-  $sql_proformas = 'SELECT id,DateCreation,DateValid,EmisPar,Client,DelaiLivraison,PortDest,Engins,Options, monnaie
+  $sql_proformas = 'SELECT id,code,DateCreation,DateValid,EmisPar,Client,projet,DelaiLivraison,PortDest,Engins,Options, monnaie
           FROM proformas
+          ORDER BY id;';
+
+  $sql_projets = 'SELECT id,nom,code,client,bft,dateCreation
+          FROM projets
+          ORDER BY id;';
+
+  $sql_rapports = 'SELECT id,projet,commande,visiteClient,offres,remarques
+          FROM rapports
           ORDER BY id;';
 
   $sqlEnregistrer = 'INSERT INTO `proformas` (`id`, `DateCreation`, `DateValid`, `EmisPar` , `Client`, `DelaiLivraison`, `PortDest`, `Engins`, `Options`, `monnaie`) VALUES (NULL, ?, ?, ?, ?, ?, ?, ?, ?);';
@@ -44,6 +52,8 @@
           $pays=array();
           $data=array();
           $proformas=array();
+          $projets=array();
+          $rapports=array();
           $db = include 'db_mysql.php';
 
           try {
@@ -70,6 +80,14 @@
              $stmt6 = $db->prepare($sql_proformas);
              $stmt6->execute(array());
              $proformas = $stmt6->fetchAll();
+
+             $stmt7 = $db->prepare($sql_projets);
+             $stmt7->execute(array());
+             $projets = $stmt7->fetchAll();
+
+             $stmt8 = $db->prepare($sql_rapports);
+             $stmt8->execute(array());
+             $rapports = $stmt8->fetchAll();
              unset($db);
 
             if((isset($_POST['inputClientName']) or isset($_POST['inputClientWilaya']) or isset($_POST['inputClientCode'])) and isset($_POST['visualiser'])){
@@ -290,26 +308,6 @@
         return false;
       }
 
-      function checkpass()
-      {
-      var ClientName = document.getElementById("inputClientName");
-      var ClientWilaya = document.getElementById("inputClientWilaya");
-      var ClientCode = document.getElementById("inputClientCode");
-      var tab = <?php echo json_encode($clients); ?>;
-
-        if(in_array(ClientName.value,ClientWilaya.value,ClientCode.value,tab))
-        {
-          document.getElementById("inputClientName").style.backgroundColor="51FE0C";
-          document.getElementById("inputClientWilaya").style.backgroundColor="51FE0C";
-          document.getElementById("inputClientCode").style.backgroundColor="51FE0C";
-        }
-        else
-        {
-          document.getElementById("inputClientName").style.backgroundColor="E13535";
-          document.getElementById("inputClientWilaya").style.backgroundColor="E13535";
-          document.getElementById("inputClientCode").style.backgroundColor="E13535";
-        }
-      }
     </script>   
   </head>
 
@@ -373,9 +371,9 @@
                   <br/>Nouveau Client
                 </a>
                 <ul class="navbar-nav px-3">
-                <a class="nav-link" href="proforma.php?categ=Postes%20Premium">
+                <a class="nav-link" href="projets.php?pr=0">
                   <span data-feather="file"></span>
-                  <br/>Proforma <span align="center"class="sr-only">(current)</span>
+                  <br/>Projets <span align="center"class="sr-only">(current)</span>
                 </a>
                 </ul>
                 <a class="nav-link" href="bon_de_commande.php">
@@ -386,10 +384,10 @@
                   <span data-feather="calendar"></span>
                   <br/>Agenda
                 </a>
-               <a class="nav-link" href="objectifs.php">
+               <!-- <a class="nav-link" href="objectifs.php">
                   <span data-feather="bar-chart-2"></span>
                   <br/>Objectifs
-                </a> 
+                </a>  -->
                 <a class="nav-link" href="rapports.php">
                   <span data-feather="file-text"></span>
                   <br/>Rapports
@@ -411,21 +409,21 @@
 <form method="post">
 <div class="container-fluid">
   <div class="row">
-    <nav class="col-md-2 d-none d-md-block bg-light sidebar">
+    <nav class="col-md-2 d-none d-md-block sidebar">
       <div class="sidebar-sticky">
         <ul class="nav flex-column">
               <?php
               $i=0;
-              while ($i<count($categ)) {
+              while ($i<count($projets)) {
                 ?>
-                <button class="nav-item" type=""><a class="nav-link" href="proforma.php?categ=<?php echo htmlspecialchars($categ[$i][0]); ?>" name=<?php echo str_replace(' ', '-',$categ[$i][0]) ?> ><?php echo $categ[$i][0] ?></a></button>
+                <button class="nav-item" type=""><a class="nav-link" href="projets.php?pr=<?php echo strval(intval($projets[$i]['id'])-1); ?>" name=<?php echo str_replace(' ', '-',$projets[$i]['nom']) ?> ><?php echo $projets[$i]['nom'] ?></a></button>
                 <?php
                 $i++;
               }
               ?>
         </ul>
 
- 
+
         <?php if($_SESSION['statut']=="admin"){ ?>
         <div>
         <button type="button" data-backdrop="false" data-toggle="modal" data-target="#ajouter_c" class="btn btn-light btn-sm"><span data-feather="plus-circle"></button>
@@ -441,11 +439,11 @@
               </div>
 
               <div class="modal-body">
-                <p>Nouvelle Catégorie : <input id="newCateg" name="newCateg" type="text"/></p>
+                <p>Nouveau projet : <input id="newProjet" name="newProjet" type="text"/></p>
               </div>
 
               <div class="modal-footer">
-                <button name = "ajouterCateg" type="submit" class="btn btn-default">OK</button>
+                <button name = "ajouterProjet" type="submit" class="btn btn-default">OK</button>
               </div>
             </div>
           </div>
@@ -471,18 +469,35 @@
             <div class="card mb-4 text-white bg-danger shadow-sm">
               <div class="card-header">
                 <h5 class="card-title">Client</h5>
-              </div> 
+              </div>
+              <?php 
+              $z=0;
+              for (; $z < count($clients) and $clients[$z]['CodeClient']!=$projets[$_GET['pr']]['client']; $z++);
+              ?>
+                <p>Nom du client : <B><?php echo $clients[$z]['NomSociete']?></B></p>
+                <p>Wilaya : <B><?php echo $clients[$z]['Wilaya']?></B></p>
+                <p>Code client : <B><?php echo $clients[$z]['CodeClient']?></B></p>
+                <p>Code Projet : <B><?php echo $projets[$_GET['pr']]['code']?></B></p>
+                <p>BFT du projet : <B><?php echo $projets[$_GET['pr']]['bft']?></B></p>
+
             </div>
            </form>
           </div>  
 
-<!----------------------------------------------------------------------PROJETS_DU_CLIENT-------------------------------------------------------------------------------------->
+<!----------------------------------------------------------------------PROJETS_DU_CLIENT------------------------------------------------------------------------------->
           <div class="col-lg-4">
             <form method="post">
             <div class="card mb-4 text-white bg-success shadow-sm">
               <div class="card-header">
-                <h5 class="card-title">Projet du client</h5>
+                <h5 class="card-title">Projets du client</h5>
               </div> 
+              <?php 
+              $p=0;
+              for (; $p < count($projets); $p++){
+                if($clients[$z]['CodeClient']==$projets[$p]['client']){
+              ?>
+                <p><?php echo $projets[$_GET['pr']]['nom']."  ".$projets[$_GET['pr']]['dateCreation']?></p>
+              <?php }} ?>
             </div>
            </form>
           </div>  
@@ -513,6 +528,15 @@
               <div class="card-header">
                 <h5 class="card-title">Proformas</h5>
               </div> 
+              <?php for($prof=0;$prof<count($proformas);$prof++){
+                if($proformas[$prof]['projet']==$projets[$_GET['pr']]['code']){
+               ?>
+               <p><?php echo "Proforma "."N°".$proformas[$prof]['code']?></p>
+            <?php }}?>
+              <div class="btn-group" role="group">
+                <button type="button" class="btn btn-primary">Nouveau</button>
+                <button type="button" class="btn btn-primary">Editer</button>
+              </div>
             </div>
            </form>
           </div>  
@@ -522,8 +546,17 @@
             <form method="post">
             <div class="card mb-4 text-white bg-secondary shadow-sm">
               <div class="card-header">
-                <h5 class="card-title">Bons de commande</h5>
+                <h5 class="card-title">Bon de commande</h5>
               </div> 
+              <?php for($prof=0;$prof<count($proformas);$prof++){
+                if($proformas[$prof]['projet']==$projets[$_GET['pr']]['code']){
+               ?>
+               <p><?php echo "Bon de commande "."N°".$proformas[$prof]['code']?></p>
+            <?php }}?>
+              <div class="btn-group" role="group">
+                <button type="button" class="btn btn-secondary">Nouveau</button>
+                <button type="button" class="btn btn-secondary">Editer</button>
+              </div>
             </div>
            </form>
           </div>  
