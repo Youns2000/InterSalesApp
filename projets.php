@@ -29,7 +29,7 @@
           FROM proformas
           ORDER BY id;';
 
-  $sql_projets = 'SELECT id,nom,code,client,bft,dateCreation
+  $sql_projets = 'SELECT id,nom,code,client,bft,dateCreation,description
           FROM projets
           ORDER BY id;';
 
@@ -478,7 +478,14 @@
                 <p>Wilaya : <B><?php echo $clients[$z]['Wilaya']?></B></p>
                 <p>Code client : <B><?php echo $clients[$z]['CodeClient']?></B></p>
                 <p>Code Projet : <B><?php echo $projets[$_GET['pr']]['code']?></B></p>
+                
                 <p>BFT du projet : <B><?php echo $projets[$_GET['pr']]['bft']?></B></p>
+                <div class="input-group-sm ">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">B</span>
+                    </div>
+                    <input type="text" class="form-control" id="username" placeholder="Username" required>
+                </div>
 
             </div>
            </form>
@@ -508,12 +515,12 @@
             <div class="card mb-4 text-white bg-warning shadow-sm">
               <div class="card-header">
                 <h5 class="card-title">Le projet</h5>
-              </div> 
+              </div>
+              
+              <?php echo $projets[$_GET['pr']]['description']?>
             </div>
            </form>
           </div> 
-
-
        </div>    
       </div>
 
@@ -527,7 +534,7 @@
             <div class="card mb-4 text-white bg-primary shadow-sm">
               <div class="card-header">
                 <h5 class="card-title">Proformas</h5>
-              </div> 
+              </div>
               <?php for($prof=0;$prof<count($proformas);$prof++){
                 if($proformas[$prof]['projet']==$projets[$_GET['pr']]['code']){
                ?>
