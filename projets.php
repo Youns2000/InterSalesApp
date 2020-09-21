@@ -29,11 +29,11 @@
           FROM proformas
           ORDER BY id;';
 
-  $sql_projets = 'SELECT id,nom,code,client,bft,dateCreation,description
+  $sql_projets = 'SELECT id,nom,code,client,bft,dateCreation,description,etat
           FROM projets
           ORDER BY id;';
 
-  $sql_rapports = 'SELECT id,projet,commande,visiteClient,offres,remarques
+  $sql_rapports = 'SELECT id,projet,commandes,visitesClient,offres,remarques
           FROM rapports
           ORDER BY id;';
 
@@ -285,10 +285,38 @@
     <link rel="icon" href="logos/logo.JPG">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <meta name="msapplication-config" content="favicons/browserconfig.xml">
     <meta name="theme-color" content="#563d7c">
     <link href="css/style_menu.css" rel="stylesheet">
     <link href="css/dashboard.css" rel="stylesheet">
+
+    <style type="text/css">
+      .form-group input[type="checkbox"] {
+          display: none;
+      }
+
+      .form-group input[type="checkbox"] + .btn-group > label span {
+          width: 20px;
+      }
+
+      .form-group input[type="checkbox"] + .btn-group > label span:first-child {
+          display: none;
+      }
+      .form-group input[type="checkbox"] + .btn-group > label span:last-child {
+          display: inline-block;   
+      }
+
+      .form-group input[type="checkbox"]:checked + .btn-group > label span:first-child {
+          display: inline-block;
+      }
+      .form-group input[type="checkbox"]:checked + .btn-group > label span:last-child {
+          display: none;   
+      }
+    </style>
 
     <script type="text/javascript">
       function qteProduit(id){
@@ -316,14 +344,15 @@
 
 
   <body>
-  <header>
-   <nav class="navbar navbar-dark fixed-top bg-dark  p-0 shadow navbar-expand-md">
-          <a class="navbar col-sm-0 col-md-0 mr-0" href=""></a> 
-          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="true" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-              </button>
+  
+<header>
+   <nav class="navbar navbar-dark fixed-top bg-dark  p-2 shadow navbar-expand-md">
+    <div class="row">
+          
+            
 
-          <div class="collapse navbar-collapse col-md-0" id="navbarCollapse">
+          <!-- <div class="collapse navbar-collapse col-md-0" id="navbarCollapse"> -->
+            <div class="col-md-4 mr-auto">
             <!-- <ul class="navbar p-0"> -->
               <div class="dropdown">
                 <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -359,11 +388,12 @@
                     </div>
                   </form>
                   <!-- /////////////////END_MODAL/////////////////////// -->
-                  <a class="navbar col-sm-0 col-md-2 mr-0" href=""></a> 
+                </div>
+                  <div class="col-md-4 ">
                 
                   <a class="nav-link" href="marketing.php?categ=Postes%20Premium">
                     <span data-feather="shopping-cart" align="center"></span>
-                    <br/>Marketing 
+                    <br/>Marketing
                   </a>
                 
                 <a class="nav-link" href="newClient.php">
@@ -376,10 +406,10 @@
                   <br/>Projets <span align="center"class="sr-only">(current)</span>
                 </a>
                 </ul>
-                <a class="nav-link" href="bon_de_commande.php">
+                <!-- <a class="nav-link" href="bon_de_commande.php">
                   <span data-feather="file-text"></span>
                   <br/>Bon de Commande
-                </a>
+                </a> -->
                 <a class="nav-link" href="calendrier.php">
                   <span data-feather="calendar"></span>
                   <br/>Agenda
@@ -388,10 +418,12 @@
                   <span data-feather="bar-chart-2"></span>
                   <br/>Objectifs
                 </a>  -->
-                <a class="nav-link" href="rapports.php">
+                <!-- <a class="nav-link" href="rapports.php">
                   <span data-feather="file-text"></span>
                   <br/>Rapports
-                </a>
+                </a> -->
+              </div>
+                <div class="col-md-4">
                 <ul class="navbar-nav px-3">
                   <li class="nav-item text-nowrap">
                     <br/><p style="color:#49FF00">Session Ouverte<br/>
@@ -401,6 +433,7 @@
                 </ul>
     
           </div>
+        
   </nav>
 </header>
 
@@ -478,15 +511,14 @@
                 <p>Wilaya : <B><?php echo $clients[$z]['Wilaya']?></B></p>
                 <p>Code client : <B><?php echo $clients[$z]['CodeClient']?></B></p>
                 <p>Code Projet : <B><?php echo $projets[$_GET['pr']]['code']?></B></p>
-                
                 <p>BFT du projet : <B><?php echo $projets[$_GET['pr']]['bft']?></B></p>
+                <!-- BFT du projet :
                 <div class="input-group-sm ">
                     <div class="input-group-prepend">
-                        <span class="input-group-text">B</span>
+                      <span class="input-group-text">B</span>
+                      <FONT size="4pt"><B><?php echo $projets[$_GET['pr']]['bft']?></B></FONT>
                     </div>
-                    <input type="text" class="form-control" id="username" placeholder="Username" required>
-                </div>
-
+                </div> -->
             </div>
            </form>
           </div>  
@@ -501,9 +533,9 @@
               <?php 
               $p=0;
               for (; $p < count($projets); $p++){
-                if($clients[$z]['CodeClient']==$projets[$p]['client']){
-              ?>
-                <p><?php echo $projets[$_GET['pr']]['nom']."  ".$projets[$_GET['pr']]['dateCreation']?></p>
+                if($clients[$z]['CodeClient']==$projets[$p]['client']){ ?>
+                   <button type="button" class="btn btn-success" onclick="window.location.href='projets.php?pr=<?php echo strval(intval($projets[$p]['id'])-1)?>';" ><?php echo $projets[$_GET['pr']]['nom']."  ".$projets[$_GET['pr']]['dateCreation']?></button>
+                <!-- <p><?php echo $projets[$_GET['pr']]['nom']."  ".$projets[$_GET['pr']]['dateCreation']?></p> -->
               <?php }} ?>
             </div>
            </form>
@@ -516,7 +548,11 @@
               <div class="card-header">
                 <h5 class="card-title">Le projet</h5>
               </div>
-              
+              <span>
+              <input type="checkbox" <?php if($projets[$_GET['pr']]['etat']==0) echo 'checked="checked"'?> name="box0">En Cours&nbsp;
+              <input type="checkbox" <?php if($projets[$_GET['pr']]['etat']==1) echo 'checked="checked"'?> name="box1">Reporté&nbsp;
+              <input type="checkbox" <?php if($projets[$_GET['pr']]['etat']==2) echo 'checked="checked"'?> name="box2">Terminé&nbsp;
+              </span>
               <?php echo $projets[$_GET['pr']]['description']?>
             </div>
            </form>
@@ -538,7 +574,7 @@
               <?php for($prof=0;$prof<count($proformas);$prof++){
                 if($proformas[$prof]['projet']==$projets[$_GET['pr']]['code']){
                ?>
-               <p><?php echo "Proforma "."N°".$proformas[$prof]['code']?></p>
+               <p><input type="checkbox" name="<?php echo "boxProforma".$proformas[$prof]['code'] ?>"><?php echo "Proforma "."N°".$proformas[$prof]['code']?></p>
             <?php }}?>
               <div class="btn-group" role="group">
                 <button type="button" class="btn btn-primary">Nouveau</button>
@@ -558,7 +594,7 @@
               <?php for($prof=0;$prof<count($proformas);$prof++){
                 if($proformas[$prof]['projet']==$projets[$_GET['pr']]['code']){
                ?>
-               <p><?php echo "Bon de commande "."N°".$proformas[$prof]['code']?></p>
+               <p><input type="checkbox" name="<?php echo "boxBon".$proformas[$prof]['code'] ?>"><?php echo "Bon de commande "."N°".$proformas[$prof]['code']?></p>
             <?php }}?>
               <div class="btn-group" role="group">
                 <button type="button" class="btn btn-secondary">Nouveau</button>
@@ -574,10 +610,19 @@
             <div class="card mb-4 text-white bg-dark shadow-sm">
               <div class="card-header">
                 <h5 class="card-title">Rapports</h5>
-              </div> 
+              </div>
+              <?php for($rap=0;$rap<count($rapports);$rap++){
+                if($rapports[$rap]['projet']==$projets[$_GET['pr']]['code']){
+               ?>
+               <p><input type="checkbox" name="<?php echo "boxRapport".$rapports[$rap]['id'] ?>"><?php echo "Rapport "."N°".($rap+1)?></p>
+            <?php }}?>
+              <div class="btn-group" role="group">
+                <button type="button" class="btn btn-dark">Nouveau</button>
+                <button type="button" class="btn btn-dark">Editer</button>
+              </div>
             </div>
            </form>
-          </div> 
+          </div>
 
 
        </div>    

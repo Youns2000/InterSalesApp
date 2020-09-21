@@ -59,7 +59,7 @@
   </head>
   <body>
 
-<!----------------------------------------------------------- NAVBAR-HAUT--------------------------------------------------------------------->
+<!----------------------------------------------------------- NAVBAR-HAUT --------------------------------------------------------------------->
    <nav class="navbar navbar-dark fixed-top bg-dark  p-0 shadow navbar-expand-md">
           <a class="navbar col-sm-0 col-md-0 mr-0" href=""></a> 
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="true" aria-label="Toggle navigation">
@@ -76,7 +76,7 @@
                   <button type="button" data-backdrop="false" data-toggle="modal" data-target="#modal_modif_mdp" class="dropdown-item">Modifier mot de passe</button>
                 </div>
               </div>
-            <!-- /////////////////MODAL/////////////////////// -->
+            <!-- ///////////////////MODAL/////////////////////// -->
               <form method="post">
                     <div class="modal fade" id="modal_modif_mdp" role="dialog">
                       <div class="modal-dialog modal-dialog-centered">
@@ -106,35 +106,35 @@
                 
                   <a class="nav-link" href="marketing.php?categ=Postes%20Premium">
                     <span data-feather="shopping-cart" align="center"></span>
-                    <br/>Marketing 
+                    <br/>Marketing
                   </a>
                 
                 <a class="nav-link" href="newClient.php">
                   <span data-feather="users"></span>
                   <br/>Nouveau Client
                 </a>
-                <a class="nav-link" href="proforma.php?categ=Postes%20Premium">
+                <a class="nav-link" href="projets.php?pr=0">
                   <span data-feather="file"></span>
-                  <br/>Proforma <span align="center"class="sr-only">(current)</span>
+                  <br/>Projets <span align="center"class="sr-only">(current)</span>
                 </a>
-                <a class="nav-link" href="bon_de_commande.php">
+                <!-- <a class="nav-link" href="bon_de_commande.php">
                   <span data-feather="file-text"></span>
                   <br/>Bon de Commande
-                </a>
+                </a> -->
                 <ul class="navbar-nav px-3">
                 <a class="nav-link" href="calendrier.php">
                   <span data-feather="calendar"></span>
                   <br/>Agenda
                 </a>
                 </ul>
-                <!-- <a class="nav-link" href="objectifs.php">
+               <!-- <a class="nav-link" href="objectifs.php">
                   <span data-feather="bar-chart-2"></span>
                   <br/>Objectifs
-                </a> -->
-                <a class="nav-link" href="rapports.php">
+                </a>  -->
+                <!-- <a class="nav-link" href="rapports.php">
                   <span data-feather="file-text"></span>
                   <br/>Rapports
-                </a>
+                </a> -->
                 <ul class="navbar-nav px-3">
                   <li class="nav-item text-nowrap">
                     <br/><p style="color:#49FF00">Session Ouverte<br/>

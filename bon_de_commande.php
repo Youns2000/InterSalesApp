@@ -354,37 +354,35 @@
                 
                   <a class="nav-link" href="marketing.php?categ=Postes%20Premium">
                     <span data-feather="shopping-cart" align="center"></span>
-                    <br/>Marketing 
+                    <br/>Marketing
                   </a>
                 
                 <a class="nav-link" href="newClient.php">
                   <span data-feather="users"></span>
                   <br/>Nouveau Client
                 </a>
-                
-                <a class="nav-link" href="proforma.php?categ=Postes%20Premium">
-                  <span data-feather="file"></span>
-                  <br/>Proforma <span align="center"class="sr-only">(current)</span>
-                </a>
-                
                 <ul class="navbar-nav px-3">
-                <a class="nav-link" href="bon_de_commande.php">
-                  <span data-feather="file-text"></span>
-                  <br/>Bon de Commande
+                <a class="nav-link" href="projets.php?pr=0">
+                  <span data-feather="file"></span>
+                  <br/>Projets <span align="center"class="sr-only">(current)</span>
                 </a>
                 </ul>
+                <!-- <a class="nav-link" href="bon_de_commande.php">
+                  <span data-feather="file-text"></span>
+                  <br/>Bon de Commande
+                </a> -->
                 <a class="nav-link" href="calendrier.php">
                   <span data-feather="calendar"></span>
                   <br/>Agenda
                 </a>
-                <!-- <a class="nav-link" href="objectifs.php">
+               <!-- <a class="nav-link" href="objectifs.php">
                   <span data-feather="bar-chart-2"></span>
                   <br/>Objectifs
-                </a> -->
-                <a class="nav-link" href="rapports.php">
+                </a>  -->
+                <!-- <a class="nav-link" href="rapports.php">
                   <span data-feather="file-text"></span>
                   <br/>Rapports
-                </a>
+                </a> -->
                 <ul class="navbar-nav px-3">
                   <li class="nav-item text-nowrap">
                     <br/><p style="color:#49FF00">Session Ouverte<br/>
