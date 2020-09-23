@@ -18,7 +18,7 @@
   $sql_options='SELECT Engin, Nom, Prix, prix_transport
           FROM options
           ORDER BY id;';
-  $sql_clients='SELECT NomSociete,CodeClient,Adresse,CodePostal,Ville,Wilaya,Pays,NIF,EmailResp1,EmailResp2
+  $sql_clients='SELECT NomSociete,CodeClient,Adresse,CodePostal,Ville,Wilaya,Pays,NIF,EmailResp1,EmailResp2,commercial
           FROM clients
           ORDER BY id;';
   $sql_pays ='SELECT code , alpha2 , alpha3, nom_en_gb, nom_fr_fr
@@ -42,6 +42,8 @@
   $sqlAddCateg = 'INSERT INTO `others` (`CatégoriesProduits`) VALUES (?);';
 
   $sqlAddEng = 'INSERT INTO `engins` (`Categorie`, `Marque`, `Type`, `Ref`, `Prix`, `prix_transport`, `Origine`, `Numero_serie`, `Annee_Fabrication`, `Type_Moteur`, `Numero_Serie_Moteur`, `ConfBase`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?);';
+  
+  $sqlAddProjet = 'INSERT INTO `projets` (`nom`, `code`, `client`, `bft`, `dateCreation`, `description`, `etat`) VALUES (?,?,?,?,?,?,?);';
 
   $sql_data='SELECT email , mdp , nom , prenom , Statut FROM comptes WHERE email = ? ORDER BY id;';
 
@@ -202,7 +204,6 @@
                     $db = include 'db_mysql.php';
                      $stmtenr = $db->prepare($sqlAddEng);
                      $stmtenr->execute(array( $_GET['categ'], $_POST['marqueNew'], $_POST['typeNew'],$_POST['referenceNew'],$_POST['prixNew'],$_POST['prix_transportNew'],$_POST['origineNew'],$_POST['numserieNew'],$_POST['anneefabNew'],$_POST['typemoteurNew'],$_POST['numseriemoteurNew'],$_POST['configNew']));
-
                      $nb_insert = $stmtenr->rowCount();
                      unset($db);
                   }
@@ -212,6 +213,20 @@
               
           }
             
+          else if(isset($_POST['ajouterProjet'])){
+            try {
+                    $db = include 'db_mysql.php';
+                     $stmtenr = $db->prepare($sqlAddProjet);
+                     $stmtenr->execute(array( $_POST['newProjetName'], $_POST['newProjetCode'],$_POST['newProjetClient'],$_POST['newProjetB'].$_POST['newProjetF'].$_POST['newProjetT'],date("d/m/Y"),$_POST['newProjetText'],$_POST['newProjetEtat']));
+
+                     $nb_insert = $stmtenr->rowCount();
+                     unset($db);
+                  }
+                  catch (Exception $e){
+                     print "Erreur ! " . $e->getMessage() . "<br/>";
+                  }
+          }
+
 
             else if(isset($_POST['nbConfBase'])){
               if(creationPanier()){
@@ -316,6 +331,14 @@
       .form-group input[type="checkbox"]:checked + .btn-group > label span:last-child {
           display: none;   
       }
+      .custom-select {
+          width: 50px !important;
+          display: inline-flex !important; 
+      }
+      .custom-select-2 {
+          width: 150px !important;
+          display: inline-flex !important; 
+      }
     </style>
 
     <script type="text/javascript">
@@ -346,13 +369,13 @@
   <body>
   
 <header>
-   <nav class="navbar navbar-dark fixed-top bg-dark  p-2 shadow navbar-expand-md">
-    <div class="row">
-          
-            
+   <nav class="navbar navbar-dark fixed-top bg-dark  p-0 shadow navbar-expand-md">
+          <a class="navbar col-sm-0 col-md-0 mr-0" href=""></a> 
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="true" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
 
-          <!-- <div class="collapse navbar-collapse col-md-0" id="navbarCollapse"> -->
-            <div class="col-md-4 mr-auto">
+          <div class="collapse navbar-collapse col-md-0" id="navbarCollapse">
             <!-- <ul class="navbar p-0"> -->
               <div class="dropdown">
                 <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -388,8 +411,7 @@
                     </div>
                   </form>
                   <!-- /////////////////END_MODAL/////////////////////// -->
-                </div>
-                  <div class="col-md-4 ">
+                  <a class="navbar col-sm-0 col-md-2 mr-0" href=""></a> 
                 
                   <a class="nav-link" href="marketing.php?categ=Postes%20Premium">
                     <span data-feather="shopping-cart" align="center"></span>
@@ -422,8 +444,6 @@
                   <span data-feather="file-text"></span>
                   <br/>Rapports
                 </a> -->
-              </div>
-                <div class="col-md-4">
                 <ul class="navbar-nav px-3">
                   <li class="nav-item text-nowrap">
                     <br/><p style="color:#49FF00">Session Ouverte<br/>
@@ -433,7 +453,6 @@
                 </ul>
     
           </div>
-        
   </nav>
 </header>
 
@@ -457,7 +476,6 @@
         </ul>
 
 
-        <?php if($_SESSION['statut']=="admin"){ ?>
         <div>
         <button type="button" data-backdrop="false" data-toggle="modal" data-target="#ajouter_c" class="btn btn-light btn-sm"><span data-feather="plus-circle"></button>
 
@@ -472,7 +490,43 @@
               </div>
 
               <div class="modal-body">
-                <p>Nouveau projet : <input id="newProjet" name="newProjet" type="text"/></p>
+                <p><B>CLIENT</B></p>
+                <p>Code Client : <input id="newProjetClient" name="newProjetClient" type="text"/></p>
+
+                <hr width="100%" color="grey">
+
+                <p><B>PROJET</B></p>
+                <p>Nom : <input id="newProjetName" name="newProjetName" type="text"/></p>
+                <p>Code : <input id="newProjetCode" name="newProjetCode" type="text"/></p>
+                <p>B : <select class="custom-select d-block w-50" name="newProjetB" required>
+                          <option selected value>...</option>
+                          <option value ="1" >1</option>
+                          <option value ="2" >2</option>
+                          <option value ="3" >3</option>
+                  </select>
+                  F : <select class="custom-select d-block w-100" name="newProjetF" required>
+                          <option selected value>...</option>
+                          <option value ="1" >1</option>
+                          <option value ="2" >2</option>
+                          <option value ="3" >3</option>
+                  </select>
+                  T : <select class="custom-select d-block w-100" name="newProjetT" required>
+                          <option selected value>...</option>
+                          <option value ="1" >1</option>
+                          <option value ="2" >2</option>
+                          <option value ="3" >3</option>
+                  </select></p>
+
+                  <p><select class="custom-select-2 d-block w-100" name="newProjetEtat" required>
+                                            <option selected value>Choisir un état...</option>
+                                            <option value ="0" >En cours</option>
+                                            <option value ="1" >Reporté</option>
+                                            <option value ="2" >Terminé</option>
+                  </select></p>
+                
+                <textarea class="form-control" id="newProjetText" name="newProjetText" rows="3"></textarea>
+                
+                <!-- <hr width="100%" color="grey"> -->
               </div>
 
               <div class="modal-footer">
@@ -482,7 +536,6 @@
           </div>
         </div>
       </div>
-    <?php } ?>
       </div>
     </nav>
   </div>
