@@ -117,6 +117,13 @@
     <link href="css/style_menu.css" rel="stylesheet">
     <link href="css/dashboard.css" rel="stylesheet">
     <link href="css/carousel.css" rel="stylesheet">
+
+    <style type="text/css">
+      .nav-link-clicked {
+        color : #000000e6;
+      }
+    </style>
+
   </head>
   <body>
 
@@ -272,7 +279,7 @@
                 while($j<count($engins)){
                   if($engins[$j]['Categorie']==$_GET['categ']){
                     ?>
-                    <a class="nav-link" href="marketing.php?categ=<?php echo htmlspecialchars($_GET['categ']);?>&enginM= <?php echo htmlspecialchars($engins[$j]['Marque']); ?>&enginT=<?php echo htmlspecialchars($engins[$j]['Type']);?>"> <?php echo $engins[$j]['Marque'].' '.$engins[$j]['Type']; ?> </a>
+                      <a class="<?php  if(isset($_GET['enginM'] ) and htmlspecialchars($engins[$j]['Marque'])." ".htmlspecialchars($engins[$j]['Type']) == $_GET['enginM']." ".$_GET['enginT']){ echo "nav-link-clicked";} else{ echo "nav-link";} ?> " href="marketing.php?categ=<?php echo htmlspecialchars($_GET['categ']);?>&enginM=<?php echo htmlspecialchars($engins[$j]['Marque']);?>&enginT=<?php echo htmlspecialchars($engins[$j]['Type']);?>"> <?php echo $engins[$j]['Marque'].' '.$engins[$j]['Type']; ?> </a>
                     <?php
                   }
                   $j++;
@@ -366,4 +373,6 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.9.0/feather.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script>
         <script src="dashboard.js"></script></body>
+        <script type="text/javascript" src="js/jquery.min.js"></script>
+    <script type="text/javascript" src="js/main.js"></script>
 </html>

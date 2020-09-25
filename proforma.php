@@ -25,11 +25,15 @@
           FROM pays
           ORDER BY id;';
 
-  $sql_proformas = 'SELECT id,DateCreation,DateValid,EmisPar,Client,DelaiLivraison,PortDest,Engins,Options, monnaie
+  $sql_proformas = 'SELECT id,DateCreation,DateValid,EmisPar,Client,projet,DelaiLivraison,PortDest,Engins,Options, monnaie
           FROM proformas
           ORDER BY id;';
 
-  $sqlEnregistrer = 'INSERT INTO `proformas` (`id`, `DateCreation`, `DateValid`, `EmisPar` , `Client`, `DelaiLivraison`, `PortDest`, `Engins`, `Options`, `monnaie`) VALUES (NULL, ?, ?, ?, ?, ?, ?, ?, ?);';
+  $sql_projets = 'SELECT id,nom,code,client,bft,dateCreation,description,etat
+          FROM projets
+          ORDER BY id;';
+
+  $sqlEnregistrer = 'INSERT INTO `proformas` (`id`, `code`, `DateCreation`, `DateValid`, `EmisPar` , `Client`, `projet` ,`DelaiLivraison`, `PortDest`, `Engins`, `Options`, `monnaie`) VALUES (NULL, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);';
 
   $sqlAddCateg = 'INSERT INTO `others` (`CatégoriesProduits`) VALUES (?);';
 
@@ -44,6 +48,7 @@
           $pays=array();
           $data=array();
           $proformas=array();
+          $projets=array();
           $db = include 'db_mysql.php';
 
           try {
@@ -70,6 +75,10 @@
              $stmt6 = $db->prepare($sql_proformas);
              $stmt6->execute(array());
              $proformas = $stmt6->fetchAll();
+
+             $stmt7 = $db->prepare($sql_projets);
+             $stmt7->execute(array());
+             $projets = $stmt7->fetchAll();
              unset($db);
 
             if((isset($_POST['inputClientName']) or isset($_POST['inputClientWilaya']) or isset($_POST['inputClientCode'])) and isset($_POST['visualiser'])){
@@ -113,7 +122,7 @@
             else if((isset($_POST['inputClientName']) or isset($_POST['inputClientWilaya']) or isset($_POST['inputClientCode'])) and isset($_POST['enregistrer'])){
               if (compterArticles()>0) {
                   try {
-                    $db = include 'db_mysql.php';
+                     $db = include 'db_mysql.php';
                      $stmtenr = $db->prepare($sqlEnregistrer);
                      $str = "";
                      $opt = "";
@@ -121,10 +130,16 @@
                         $str = $str."(".$_SESSION['panier']['libelleProduit'][$i]."//".$_SESSION['panier']['qteProduit'][$i].")";
                         $opt = $opt."(".$_SESSION['panier']['options'][$i].")";
                      }
-                     $stmtenr->execute(array(date("d/m/Y"),"100j",$_SESSION['email'],$_SESSION['CodeClient'],"100j",$_POST['getPortsEnr'],$str,$opt,$_POST['getDeviseEnr']));
+                     $p = 0;
+                     for (; $p < count($projets) and $projets[$p]['id']!=$_GET['pr']; $p++);
+                     if(intval($_SESSION['id_compte'])<10) $code_proforma = '0'.$_SESSION['id_compte'].$_SESSION['id_proforma'].date("my");
+                     else $code_proforma = $_SESSION['id_compte'].$_SESSION['id_proforma'].date("my");
+                      
+                     $stmtenr->execute(array($code_proforma,date("d/m/Y"),$_SESSION['dateValid'],$_SESSION['email'],$_SESSION['CodeClient'],$projets[$p]['code'],$_SESSION['delaiLiv'],$_POST['getPortsEnr'],$str,$opt,$_POST['getDeviseEnr']));
 
                      $nb_insert = $stmtenr->rowCount();
                      unset($db);
+                     unset($_SESSION['panier']);
                   }
                   catch (Exception $e){
                      print "Erreur ! " . $e->getMessage() . "<br/>";
@@ -158,6 +173,21 @@
                 $_SESSION['EmailResp1'] = $clients[$i]['EmailResp1'];
                 $_SESSION['EmailResp2'] = $clients[$i]['EmailResp2'];
                 sendmail($str,'Proforma','proforma.pdf',true,getProforma(true));
+                $db = include 'db_mysql.php';
+                       $stmtenr = $db->prepare($sqlEnregistrer);
+                       $str = "";
+                       $opt = "";
+                       for ($i=0; $i < compterArticles(); $i++) {
+                          $str = $str."(".$_SESSION['panier']['libelleProduit'][$i]."//".$_SESSION['panier']['qteProduit'][$i].")";
+                          $opt = $opt."(".$_SESSION['panier']['options'][$i].")";
+                       }
+                       $p = 0;
+                       for (; $p < count($projets) and $projets[$p]['id']!=$_GET['pr']; $p++);
+                       $stmtenr->execute(array(date("d/m/Y"),$_SESSION['dateValid'],$_SESSION['email'],$_SESSION['CodeClient'],$projets[$p]['code'],$_SESSION['delaiLiv'],$_POST['getPortsEnr'],$str,$opt,$_POST['getDeviseEnr']));
+
+                       $nb_insert = $stmtenr->rowCount();
+                       unset($db);
+                       unset($_SESSION['panier']);
                 
               }
               }
@@ -272,6 +302,12 @@
     <link href="css/style_menu.css" rel="stylesheet">
     <link href="css/dashboard.css" rel="stylesheet">
 
+    <style type="text/css">
+      .nav-link-clicked {
+        color : #000000e6;
+      }
+    </style>
+
     <script type="text/javascript">
       function qteProduit(id){
         return document.getElementById(id).value;
@@ -299,6 +335,7 @@
 
         if(in_array(ClientName.value,ClientWilaya.value,ClientCode.value,tab))
         {
+          /*<?php $_SESSION['NomSociete'] = $_POST['inputClientName'] ?>;*/  
           document.getElementById("inputClientName").style.backgroundColor="51FE0C";
           document.getElementById("inputClientWilaya").style.backgroundColor="51FE0C";
           document.getElementById("inputClientCode").style.backgroundColor="51FE0C";
@@ -418,7 +455,7 @@
               $i=0;
               while ($i<count($categ)) {
                 ?>
-                <button class="nav-item" type=""><a class="nav-link" href="proforma.php?categ=<?php echo htmlspecialchars($categ[$i][0]); ?>" name=<?php echo str_replace(' ', '-',$categ[$i][0]) ?> ><?php echo $categ[$i][0] ?></a></button>
+                <button class="nav-item" type=""><a class="nav-link" href="proforma.php?pr=<?php echo $_GET['pr']; ?>&categ=<?php echo htmlspecialchars($categ[$i][0]); ?>" name=<?php echo str_replace(' ', '-',$categ[$i][0]) ?> ><?php echo $categ[$i][0] ?></a></button>
                 <?php
                 $i++;
               }
@@ -476,8 +513,10 @@
                 $j=0;
                 while($j<count($engins)){
                   if($engins[$j]['Categorie']==$_GET['categ']){
-                    ?>
-                    <a class="nav-link" href="proforma.php?categ=<?php echo htmlspecialchars($_GET['categ']);?>&enginM=<?php echo htmlspecialchars($engins[$j]['Marque']);?>&enginT=<?php echo htmlspecialchars($engins[$j]['Type']);?>"> <?php echo $engins[$j]['Marque'].' '.$engins[$j]['Type']; ?> </a>
+                   ?>
+
+                      <a class="<?php  if(isset($_GET['enginM'] ) and htmlspecialchars($engins[$j]['Marque'])." ".htmlspecialchars($engins[$j]['Type']) == $_GET['enginM']." ".$_GET['enginT']){ echo "nav-link-clicked";} else{ echo "nav-link";} ?> " href="proforma.php?pr=<?php echo $_GET['pr']; ?>&categ=<?php echo htmlspecialchars($_GET['categ']);?>&enginM=<?php echo htmlspecialchars($engins[$j]['Marque']);?>&enginT=<?php echo htmlspecialchars($engins[$j]['Type']);?>"> <?php echo $engins[$j]['Marque'].' '.$engins[$j]['Type']; ?> </a>
+
                     <?php
                   }
                   $j++;
@@ -615,7 +654,7 @@
                               <h5 class="card-title">Nom</h5>
                             </div>
                             <label for="inputClientName" class="sr-only">Nom</label>
-                            <input type="text" name="inputClientName" id="inputClientName" class="form-control" placeholder="" onkeyup="checkpass();" value="<?php if(isset($_SESSION['NomSociete'])) { echo $_SESSION['NomSociete']; }?>" />
+                            <input type="text" name="inputClientName" id="inputClientName" class="form-control" placeholder="" onkeyup="checkpass();" value="<?php if(isset($_SESSION['NomSociete'])) { echo $_SESSION['NomSociete']; } ?>" />
                         </div>
                         <!-- <p><?php if(isset($_SESSION['NomSociete'])) { echo $_SESSION['NomSociete']; } ?></p> -->
                         <div class="card mb-4 shadow-sm">

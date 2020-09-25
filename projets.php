@@ -213,7 +213,7 @@
               
           }
             
-          else if(isset($_POST['ajouterProjet'])){
+          else if(isset($_POST['ajouterProjet']) and !in_array($_POST['newProjetName'], $projets)){
             try {
                     $db = include 'db_mysql.php';
                      $stmtenr = $db->prepare($sqlAddProjet);
@@ -298,7 +298,6 @@
     <link rel="manifest" href="favicons/manifest.json">
     <link rel="mask-icon" href="favicons/safari-pinned-tab.svg" color="#563d7c">
     <link rel="icon" href="logos/logo.JPG">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -366,8 +365,7 @@
 <!------------------------------------------------------------------------MENU_HAUT--------------------------------------------------------------------------------->
 
 
-  <body>
-  
+<body>
 <header>
    <nav class="navbar navbar-dark fixed-top bg-dark  p-0 shadow navbar-expand-md">
           <a class="navbar col-sm-0 col-md-0 mr-0" href=""></a> 
@@ -468,7 +466,7 @@
               $i=0;
               while ($i<count($projets)) {
                 ?>
-                <button class="nav-item" type=""><a class="nav-link" href="projets.php?pr=<?php echo strval(intval($projets[$i]['id'])-1); ?>" name=<?php echo str_replace(' ', '-',$projets[$i]['nom']) ?> ><?php echo $projets[$i]['nom'] ?></a></button>
+                <button class="nav-item" type=""><a class="nav-link" href="projets.php?pr=<?php echo $i; ?>" name=<?php echo str_replace(' ', '-',$projets[$i]['nom']) ?> ><?php echo $projets[$i]['nom'] ?></a></button>
                 <?php
                 $i++;
               }
@@ -586,9 +584,8 @@
               <?php 
               $p=0;
               for (; $p < count($projets); $p++){
-                if($clients[$z]['CodeClient']==$projets[$p]['client']){ ?>
-                   <button type="button" class="btn btn-success" onclick="window.location.href='projets.php?pr=<?php echo strval(intval($projets[$p]['id'])-1)?>';" ><?php echo $projets[$_GET['pr']]['nom']."  ".$projets[$_GET['pr']]['dateCreation']?></button>
-                <!-- <p><?php echo $projets[$_GET['pr']]['nom']."  ".$projets[$_GET['pr']]['dateCreation']?></p> -->
+                if($projets[$_GET['pr']]['client']==$projets[$p]['client']){ ?>
+                   <button type="button" class="btn btn-success" onclick="window.location.href='projets.php?pr=<?php echo $p;?>';" ><?php echo $projets[$p]['nom']."  ".$projets[$p]['dateCreation']?></button>
               <?php }} ?>
             </div>
            </form>
@@ -630,7 +627,7 @@
                <p><input type="checkbox" name="<?php echo "boxProforma".$proformas[$prof]['code'] ?>"><?php echo "Proforma "."N°".$proformas[$prof]['code']?></p>
             <?php }}?>
               <div class="btn-group" role="group">
-                <button type="button" class="btn btn-primary">Nouveau</button>
+                <button type="button" class="btn btn-primary" onclick="window.location.href='proforma.php?pr=<?php echo $projets[$_GET['pr']]['id'];?>&categ=Postes%20Premium'">Nouveau</button>
                 <button type="button" class="btn btn-primary">Editer</button>
               </div>
             </div>
@@ -688,4 +685,6 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.9.0/feather.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script>
         <script src="dashboard.js"></script></body>
+        <script type="text/javascript" src="js/jquery.min.js"></script>
+    <script type="text/javascript" src="js/main.js"></script>
 </html>

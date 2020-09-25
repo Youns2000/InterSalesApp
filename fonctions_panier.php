@@ -17,7 +17,6 @@ function creationPanier(){
    return true;
 }
 
-
 /**
  * Ajoute un article dans le panier
  * @param string $libelleProduit

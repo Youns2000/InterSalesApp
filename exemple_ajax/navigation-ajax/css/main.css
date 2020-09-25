@@ -1,0 +1,30 @@
+html, body {
+	margin: 0;
+	padding: 0;
+}
+
+#header {
+	background: #141414;
+	color: white;
+	padding: 8px 0;
+	margin-bottom: 15px;
+}
+#header ul { list-style-type: none; }
+#header ul li { display: inline; margin-right: 25px; }
+#header ul li a { text-decoration: none; color: white; }
+#header ul li a:hover { color: #2D8DBE; }
+
+#content { margin: 1% 2%; }
+#content audio {
+	display: block;
+	margin: auto;
+	width: 600px;
+}
+.article img { display: block; margin-left: auto; margin-right: auto }
+.article p {
+	font-family: 'PT Sans', Georgia, Verdana, sans-serif;
+	color: #767676;
+	line-height: 22px;
+	letter-spacing: 0.5px;
+	font-size: 18px;
+}

@@ -22,7 +22,7 @@
   $sql_clients='SELECT NomSociete,CodeClient,Adresse,CodePostal,Ville,Wilaya,Pays,NIF,EmailResp1,EmailResp2
           FROM clients
           ORDER BY id;';
-  $sql_proformas = 'SELECT id,DateCreation,DateValid,EmisPar,Client,DelaiLivraison,PortDest,Engins,Options, monnaie
+  $sql_proformas = 'SELECT id,code,DateCreation,DateValid,EmisPar,Client,projet,DelaiLivraison,PortDest,Engins,Options, monnaie
           FROM proformas
           ORDER BY id;';
    $sql_pays ='SELECT code , alpha2 , alpha3, nom_en_gb, nom_fr_fr
