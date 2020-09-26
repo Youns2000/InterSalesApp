@@ -598,12 +598,29 @@
               <div class="card-header">
                 <h5 class="card-title">Le projet</h5>
               </div>
-              <span>
-              <input type="checkbox" <?php if($projets[$_GET['pr']]['etat']==0) echo 'checked="checked"'?> name="box0">En Cours&nbsp;
-              <input type="checkbox" <?php if($projets[$_GET['pr']]['etat']==1) echo 'checked="checked"'?> name="box1">Reporté&nbsp;
-              <input type="checkbox" <?php if($projets[$_GET['pr']]['etat']==2) echo 'checked="checked"'?> name="box2">Terminé&nbsp;
-              </span>
-              <?php echo $projets[$_GET['pr']]['description']?>
+             <span>
+              <!--  <label class="radio-inline"><input type="radio" <?php if($projets[$_GET['pr']]['etat']==0) echo 'checked'?> name="box0">En Cours</label>
+              <label class="radio-inline"><input type="radio" <?php if($projets[$_GET['pr']]['etat']==1) echo 'checked'?> name="box1">Reporté</label>
+              <label class="radio-inline"><input type="radio" <?php if($projets[$_GET['pr']]['etat']==2) echo 'checked'?> name="box2">Terminé</label>  -->
+
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1" <?php if($projets[$_GET['pr']]['etat']==0) echo 'checked'?>>
+                <label class="form-check-label" for="inlineRadio1">En Cours</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2" <?php if($projets[$_GET['pr']]['etat']==1) echo 'checked'?>>
+                <label class="form-check-label" for="inlineRadio2">Reporté</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio3" value="option3" <?php if($projets[$_GET['pr']]['etat']==2) echo 'checked'?>>
+                <label class="form-check-label" for="inlineRadio3">Terminé</label>
+              </div> 
+            </span>
+              <!-- <?php echo $projets[$_GET['pr']]['description']?> -->
+              <textarea class="form-control" id="projetText" name="projetText" rows="3"><?php echo $projets[$_GET['pr']]['description']?></textarea>
+              <div class="btn-group" role="group">
+                <button type="button" id="okprojetModif" name="okprojetModif" class="btn btn-warning">OK</button>
+              </div>
             </div>
            </form>
           </div> 
@@ -646,10 +663,6 @@
                ?>
                <p><input type="checkbox" name="<?php echo "boxBon".$proformas[$prof]['code'] ?>"><?php echo "Bon de commande "."N°".$proformas[$prof]['code']?></p>
             <?php }}?>
-              <div class="btn-group" role="group">
-                <button type="button" class="btn btn-secondary">Nouveau</button>
-                <button type="button" class="btn btn-secondary">Editer</button>
-              </div>
             </div>
            </form>
           </div>  
@@ -667,7 +680,7 @@
                <p><input type="checkbox" name="<?php echo "boxRapport".$rapports[$rap]['id'] ?>"><?php echo "Rapport "."N°".($rap+1)?></p>
             <?php }}?>
               <div class="btn-group" role="group">
-                <button type="button" class="btn btn-dark">Nouveau</button>
+                <button type="button" class="btn btn-dark" onclick="window.location.href='rapports.php?pr=<?php echo $projets[$_GET['pr']]['id'];?>'">Nouveau</button>
                 <button type="button" class="btn btn-dark">Editer</button>
               </div>
             </div>

@@ -33,6 +33,11 @@
           FROM projets
           ORDER BY id;';
 
+  $modifProforma = "UPDATE Users
+                  SET mail='v.durand@edhec.com'
+                  WHERE id=2";
+  /*$sth = $dbco->prepare(*/
+
   $sqlEnregistrer = 'INSERT INTO `proformas` (`id`, `code`, `DateCreation`, `DateValid`, `EmisPar` , `Client`, `projet` ,`DelaiLivraison`, `PortDest`, `Engins`, `Options`, `monnaie`) VALUES (NULL, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);';
 
   $sqlAddCateg = 'INSERT INTO `others` (`CatégoriesProduits`) VALUES (?);';

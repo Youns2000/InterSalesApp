@@ -14,10 +14,17 @@
           FROM engins
           ORDER BY id;';
   $sql_data='SELECT email , mdp , nom , prenom , Statut FROM comptes WHERE email = ? ORDER BY id;';
+
+  $sql_projets = 'SELECT id,nom,code,client,bft,dateCreation,description,etat
+          FROM projets
+          ORDER BY id;';
+
+  $sqlRapportEnregistrer = 'INSERT INTO `rapports` (`id`, `projet`, `commandes`, `visitesClient`, `offres` , `remarques`) VALUES (NULL, ?, ?, ?, ?, ?);';
     
           $data=array();
           $categ=array();
           $engins=array();
+          $projets=array();
           $db = include 'db_mysql.php';
 
           try {
@@ -28,6 +35,10 @@
              $stmt2 = $db->prepare($sql_engins);
              $stmt2->execute(array());
              $engins= $stmt2->fetchAll();
+
+             $stmt7 = $db->prepare($sql_projets);
+             $stmt7->execute(array());
+             $projets = $stmt7->fetchAll(); 
              unset($db);
 
             if(isset($_POST['visualiserButton'])){
@@ -50,6 +61,13 @@
                 $_SESSION['offres'] = $_POST['offres'];
                 $_SESSION['remarques'] = $_POST['remarques'];
                 sendmail($str,'Rapport','rapport.pdf',true,getRapportCode());
+                $db = include 'db_mysql.php';
+                $stmtenr = $db->prepare($sqlRapportEnregistrer);
+                $p = 0;
+                for (; $p < count($projets) and $projets[$p]['id']!=$_GET['pr']; $p++);
+                $stmtenr->execute(array($projets[$p]['code'],$_POST['commandes'],$_POST['visites'],$_POST['offres'],$_POST['remarques']));
+                unset($db);
+                
               }
             } 
 
@@ -131,35 +149,35 @@
                 
                   <a class="nav-link" href="marketing.php?categ=Postes%20Premium">
                     <span data-feather="shopping-cart" align="center"></span>
-                    <br/>Marketing 
+                    <br/>Marketing
                   </a>
                 
                 <a class="nav-link" href="newClient.php">
                   <span data-feather="users"></span>
                   <br/>Nouveau Client
                 </a>
-                <a class="nav-link" href="proforma.php?categ=Postes%20Premium">
+                <ul class="navbar-nav px-3">
+                <a class="nav-link" href="projets.php?pr=0">
                   <span data-feather="file"></span>
-                  <br/>Proforma <span align="center"class="sr-only">(current)</span>
+                  <br/>Projets <span align="center"class="sr-only">(current)</span>
                 </a>
-                <a class="nav-link" href="bon_de_commande.php">
+                </ul>
+                <!-- <a class="nav-link" href="bon_de_commande.php">
                   <span data-feather="file-text"></span>
                   <br/>Bon de Commande
-                </a>
+                </a> -->
                 <a class="nav-link" href="calendrier.php">
                   <span data-feather="calendar"></span>
                   <br/>Agenda
                 </a>
-                <!-- <a class="nav-link" href="objectifs.php">
+               <!-- <a class="nav-link" href="objectifs.php">
                   <span data-feather="bar-chart-2"></span>
                   <br/>Objectifs
-                </a> -->
-                <ul class="navbar-nav px-3">
-                <a class="nav-link" href="rapports.php">
+                </a>  -->
+                <!-- <a class="nav-link" href="rapports.php">
                   <span data-feather="file-text"></span>
                   <br/>Rapports
-                </a>
-                </ul>
+                </a> -->
                 <ul class="navbar-nav px-3">
                   <li class="nav-item text-nowrap">
                     <br/><p style="color:#49FF00">Session Ouverte<br/>
