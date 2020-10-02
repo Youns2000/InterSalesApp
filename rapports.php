@@ -145,7 +145,7 @@
                     </div>
                   </form>
                   <!-- /////////////////END_MODAL/////////////////////// -->
-                  <a class="navbar col-sm-0 col-md-2 mr-0" href=""></a> 
+                  <a class="navbar col-sm-0 col-md-4 mr-0" href=""></a> 
                 
                   <a class="nav-link" href="marketing.php?categ=Postes%20Premium">
                     <span data-feather="shopping-cart" align="center"></span>
@@ -178,6 +178,7 @@
                   <span data-feather="file-text"></span>
                   <br/>Rapports
                 </a> -->
+                <a class="navbar col-sm-0 col-md-4 mr-0" href=""></a> 
                 <ul class="navbar-nav px-3">
                   <li class="nav-item text-nowrap">
                     <br/><p style="color:#49FF00">Session Ouverte<br/>

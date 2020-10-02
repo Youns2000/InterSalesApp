@@ -308,6 +308,18 @@
     <link href="css/style_menu.css" rel="stylesheet">
     <link href="css/dashboard.css" rel="stylesheet">
 
+    <!-- <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+    <meta name="keywords" content="navigation, menu, responsive, border, overlay, css transition" />
+    <meta name="author" content="Codrops" />
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" type="text/css" href="css/normalize.css" />
+    <link rel="stylesheet" type="text/css" href="css/demo.css" />
+    <link rel="stylesheet" type="text/css" href="css/icons.css" />
+    <link rel="stylesheet" type="text/css" href="css/style3.css" />
+    <script src="js/modernizr.custom.js"></script> -->
+
     <style type="text/css">
       .form-group input[type="checkbox"] {
           display: none;
@@ -367,7 +379,7 @@
 
 <body>
 <header>
-   <nav class="navbar navbar-dark fixed-top bg-dark  p-0 shadow navbar-expand-md">
+  <nav class="navbar navbar-dark fixed-top bg-dark  p-0 shadow navbar-expand-md">
           <a class="navbar col-sm-0 col-md-0 mr-0" href=""></a> 
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="true" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -409,7 +421,7 @@
                     </div>
                   </form>
                   <!-- /////////////////END_MODAL/////////////////////// -->
-                  <a class="navbar col-sm-0 col-md-2 mr-0" href=""></a> 
+                  <a class="navbar col-sm-0 col-md-4 mr-0" href=""></a> 
                 
                   <a class="nav-link" href="marketing.php?categ=Postes%20Premium">
                     <span data-feather="shopping-cart" align="center"></span>
@@ -442,6 +454,7 @@
                   <span data-feather="file-text"></span>
                   <br/>Rapports
                 </a> -->
+                <a class="navbar col-sm-0 col-md-4 mr-0" href=""></a> 
                 <ul class="navbar-nav px-3">
                   <li class="nav-item text-nowrap">
                     <br/><p style="color:#49FF00">Session Ouverte<br/>
@@ -541,6 +554,19 @@
 </form>
 
     <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+      <!-- <div class="container">
+      <nav id="bt-menu" class="bt-menu">
+        <a href="#" class="bt-menu-trigger"><span>Menu</span></a>
+        <ul>
+          <li><a href="#" class="bt-icon icon-user-outline">About</a></li>
+          <li><a href="#" class="bt-icon icon-sun">Skills</a></li>
+          <li><a href="#" class="bt-icon icon-windows">Work</a></li>
+          <li><a href="#" class="bt-icon icon-speaker">Blog</a></li>
+          <li><a href="#" class="bt-icon icon-star">Clients</a></li>
+          <li><a href="#" class="bt-icon icon-bubble">Contact</a></li>
+        </ul>
+      </nav>
+    </div> -->
 
 
       <div class="container">
@@ -599,10 +625,6 @@
                 <h5 class="card-title">Le projet</h5>
               </div>
              <span>
-              <!--  <label class="radio-inline"><input type="radio" <?php if($projets[$_GET['pr']]['etat']==0) echo 'checked'?> name="box0">En Cours</label>
-              <label class="radio-inline"><input type="radio" <?php if($projets[$_GET['pr']]['etat']==1) echo 'checked'?> name="box1">Reporté</label>
-              <label class="radio-inline"><input type="radio" <?php if($projets[$_GET['pr']]['etat']==2) echo 'checked'?> name="box2">Terminé</label>  -->
-
               <div class="form-check form-check-inline">
                 <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1" <?php if($projets[$_GET['pr']]['etat']==0) echo 'checked'?>>
                 <label class="form-check-label" for="inlineRadio1">En Cours</label>
@@ -616,7 +638,6 @@
                 <label class="form-check-label" for="inlineRadio3">Terminé</label>
               </div> 
             </span>
-              <!-- <?php echo $projets[$_GET['pr']]['description']?> -->
               <textarea class="form-control" id="projetText" name="projetText" rows="3"><?php echo $projets[$_GET['pr']]['description']?></textarea>
               <div class="btn-group" role="group">
                 <button type="button" id="okprojetModif" name="okprojetModif" class="btn btn-warning">OK</button>
@@ -641,11 +662,15 @@
               <?php for($prof=0;$prof<count($proformas);$prof++){
                 if($proformas[$prof]['projet']==$projets[$_GET['pr']]['code']){
                ?>
-               <p><input type="checkbox" name="<?php echo "boxProforma".$proformas[$prof]['code'] ?>"><?php echo "Proforma "."N°".$proformas[$prof]['code']?></p>
+               <p><input type="radio" name="radioProforma" id="<?php echo "radioProforma".$proformas[$prof]['code'] ?>"><?php echo "Proforma "."N°".$proformas[$prof]['code']?></p>
+               <!-- <div class="form-check">
+                <input class="form-check-input" type="radio" name="radioProforma" id="<?php echo "radioProforma".$proformas[$prof]['code'] ?>" value="<?php echo $proformas[$prof]['code'] ?>" >
+                <label class="form-check-label" for="<?php echo "radioProforma".$proformas[$prof]['code'] ?>"><?php echo "Proforma "."N°".$proformas[$prof]['code']?></label>
+              </div> -->
             <?php }}?>
               <div class="btn-group" role="group">
                 <button type="button" class="btn btn-primary" onclick="window.location.href='proforma.php?pr=<?php echo $projets[$_GET['pr']]['id'];?>&categ=Postes%20Premium'">Nouveau</button>
-                <button type="button" class="btn btn-primary">Editer</button>
+                <button type="button" class="btn btn-primary" onclick="window.location.href='proforma.php?pf=<?php if(isset($_POST['radioProforma'])) echo $_POST['radioProforma']; ?>&pr=<?php echo $projets[$_GET['pr']]['id'];?>&categ=Postes%20Premium'">Editer</button>
               </div>
             </div>
            </form>
@@ -661,7 +686,7 @@
               <?php for($prof=0;$prof<count($proformas);$prof++){
                 if($proformas[$prof]['projet']==$projets[$_GET['pr']]['code']){
                ?>
-               <p><input type="checkbox" name="<?php echo "boxBon".$proformas[$prof]['code'] ?>"><?php echo "Bon de commande "."N°".$proformas[$prof]['code']?></p>
+               <p><input type="radio" name="boxBon" id="<?php echo "boxBon".$proformas[$prof]['code'] ?>"><?php echo "Bon de commande "."N°".$proformas[$prof]['code']?></p>
             <?php }}?>
             </div>
            </form>
@@ -677,7 +702,7 @@
               <?php for($rap=0;$rap<count($rapports);$rap++){
                 if($rapports[$rap]['projet']==$projets[$_GET['pr']]['code']){
                ?>
-               <p><input type="checkbox" name="<?php echo "boxRapport".$rapports[$rap]['id'] ?>"><?php echo "Rapport "."N°".($rap+1)?></p>
+               <p><input type="radio" name = "boxRapport" id="<?php echo "boxRapport".$rapports[$rap]['id'] ?>"><?php echo "Rapport "."N°".($rap+1)?></p>
             <?php }}?>
               <div class="btn-group" role="group">
                 <button type="button" class="btn btn-dark" onclick="window.location.href='rapports.php?pr=<?php echo $projets[$_GET['pr']]['id'];?>'">Nouveau</button>
@@ -694,10 +719,12 @@
   </div>
 </div>
 <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-      <script>window.jQuery || document.write('<script src="js/vendor/jquery.slim.min.js"><\/script>')</script><script src="/docs/4.4/dist/js/bootstrap.bundle.min.js" integrity="sha384-6khuMg9gaYr5AxOqhkVIODVIvm9ynTT5J4V1cfthmT+emCG6yVmEZsRHdxlotUnm" crossorigin="anonymous"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.9.0/feather.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script>
-        <script src="dashboard.js"></script></body>
-        <script type="text/javascript" src="js/jquery.min.js"></script>
-    <script type="text/javascript" src="js/main.js"></script>
+<script>window.jQuery || document.write('<script src="js/vendor/jquery.slim.min.js"><\/script>')</script><script src="/docs/4.4/dist/js/bootstrap.bundle.min.js" integrity="sha384-6khuMg9gaYr5AxOqhkVIODVIvm9ynTT5J4V1cfthmT+emCG6yVmEZsRHdxlotUnm" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.9.0/feather.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script>
+<script src="dashboard.js"></script></body>
+<script type="text/javascript" src="js/jquery.min.js"></script>
+<script type="text/javascript" src="js/main.js"></script>
+<script src="js/classie.js"></script>
+<script src="js/borderMenu.js"></script>
 </html>

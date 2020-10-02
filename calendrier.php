@@ -102,7 +102,7 @@
                     </div>
                   </form>
                   <!-- /////////////////END_MODAL/////////////////////// -->
-                  <a class="navbar col-sm-0 col-md-2 mr-0" href=""></a> 
+                  <a class="navbar col-sm-0 col-md-4 mr-0" href=""></a> 
                 
                   <a class="nav-link" href="marketing.php?categ=Postes%20Premium">
                     <span data-feather="shopping-cart" align="center"></span>
@@ -135,6 +135,7 @@
                   <span data-feather="file-text"></span>
                   <br/>Rapports
                 </a> -->
+                <a class="navbar col-sm-0 col-md-4 mr-0" href=""></a> 
                 <ul class="navbar-nav px-3">
                   <li class="nav-item text-nowrap">
                     <br/><p style="color:#49FF00">Session Ouverte<br/>
@@ -146,24 +147,18 @@
           </div>
   </nav>
 
+</br></br></br></br></br></br>
 
-<div class="container-fluid">
-  <div class="row"><!--<span class="sr-only">(current)</span>-->
-    
+      <iframe src="younes_benreguieg.pdf" width="800" height="600" align="middle"></iframe>
 
-
-   
-      	<br/>
-      	<br/>
-      	<br/>
-      	<br/>
-      	<br/>
-
-    	<iframe src="https://calendar.google.com/calendar/embed?height=600&amp;wkst=1&amp;bgcolor=%23ffffff&amp;ctz=Europe%2FParis&amp;src=MGtyZHIyZTZnYXVtY2IydHU4Z2V0ZGFxcG9AZ3JvdXAuY2FsZW5kYXIuZ29vZ2xlLmNvbQ&amp;color=%23402175" style="border:solid 1px #777" width="1300" height="810" frameborder="0" scrolling="yes"></iframe>
+<!-- <div class="container-fluid">
+    <main role="main" class="col-md-auto ml-sm-auto col-lg-15 ">
+    </br></br></br>
+    	<iframe src="https://calendar.google.com/calendar/embed?height=600&amp;wkst=1&amp;bgcolor=%23ffffff&amp;ctz=Europe%2FParis&amp;src=MGtyZHIyZTZnYXVtY2IydHU4Z2V0ZGFxcG9AZ3JvdXAuY2FsZW5kYXIuZ29vZ2xlLmNvbQ&amp;color=%23402175" style="border:solid 1px #777" width="100%" height="88%" frameborder="5" scrolling="yes"></iframe>
 
     
-  </div>
-</div>
+    </main>
+</div> -->
 
 <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
       <script>window.jQuery || document.write('<script src="js/vendor/jquery.slim.min.js"><\/script>')</script><script src="/docs/4.4/dist/js/bootstrap.bundle.min.js" integrity="sha384-6khuMg9gaYr5AxOqhkVIODVIvm9ynTT5J4V1cfthmT+emCG6yVmEZsRHdxlotUnm" crossorigin="anonymous"></script>
