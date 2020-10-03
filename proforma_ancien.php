@@ -722,77 +722,9 @@
                           </div>
                         </div>
                       </div>
-                      <div class="col-lg-4">
-                        <button type="button" data-toggle="modal" data-target="#myModal" class="btn btn-lg btn-block btn-primary">Envoyer</button>
-                        <!-- Modal -->
-                        <div class="modal fade" id="myModal" role="dialog">
-                          <div class="modal-dialog modal-dialog-centered">
-                          
-                            <!-- Modal content-->
-                            <div class="modal-content">
-                              <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                              </div>
-                              <div class="modal-body">
-                                <?php
-                                if(isset($_SESSION['EmailResp1']) and $_SESSION['EmailResp1']!=""){ ?>
-                                <p><input type="checkbox" value="boxmailemail1" id="boxmail_email1" name="boxmail_email1"><?php echo $_SESSION['EmailResp1'] ?></p>
-                                <?php
-                                }
-                                if(isset($_SESSION['EmailResp2']) and $_SESSION['EmailResp2']!=""){?>
-                                <p><input type="checkbox" value="boxmailemail2" id="boxmail_email2" name="boxmail_email2"><?php echo $_SESSION['EmailResp2'] ?></p>
-                                <?php }?>
-                                <p><input type="checkbox" value="boxmail1" id="boxmail_1" name="boxmail_1">Azeddine@integral.fr</p>
-                                <p><input type="checkbox" value="boxmail2" id="boxmail_2" name="boxmail_2"> <input id="text2" name="text2" type="text" /></p>
-                                <p><input type="checkbox" value="boxmail3" id="boxmail_3" name="boxmail_3"> <input id="text3" name="text3" type="text" /></p>
-                                <p><input type="checkbox" value="boxmail4" id="boxmail_4" name="boxmail_4"> <input id="text4" name="text4" type="text" /></p>
-                              </div>
-                              <div class="modal-footer">
-                                <button name = "envoyermail" type="submit" class="btn btn-default">Envoyer</button>
-                                <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                        <!-- Modal -->
-                      </div>
-                      <div class="col-lg-4">
-                        <button type="button" data-toggle="modal" data-target="#myModal_enr" class="btn btn-lg btn-block btn-primary">Enregistrer</button>
-                        <div class="modal fade" id="myModal_enr" role="dialog">
-                          <div class="modal-dialog modal-dialog-centered">
-                          
-                            <!-- Modal content-->
-                            <div class="modal-content">
-                              <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                              </div>
-                              <div class="modal-body">
-                                <select class="custom-select d-block w-100" id="getPortsEnr" name="getPortsEnr">
-                                  <option selected value>Choisir le port de destination...</option>
-                                  <?php
-                                  for ($i=0; $categ[$i]['Ports']!=""; $i++) {
-                                  ?>
-                                  <option value = "<?php echo $categ[$i]['Ports']?>"><?php echo $categ[$i]['Ports']?></option>
-                                <?php }?>
-                                </select>
-                                <select class="custom-select d-block w-100" id="getDeviseEnr" name="getDeviseEnr">
-                                  <option selected value>Choisir la devise du proforma...</option>
-                                  <?php
-                                  for ($i=0; $categ[$i]['Devises']!=""; $i++) {
-                                  ?>
-                                  <option value = "<?php echo $categ[$i]['Devises']?>"><?php echo $categ[$i]['Devises']?></option>
-                                <?php }?>
-                                </select>
-                                <input id="datevalidite2" class="form-control"  name="datevalidite2" type="date" />
-                                <input id="delailivraison2" class="form-control" name="delailivraison2" type="number" />
-                              </div>
-                              <div class="modal-footer">
-                                <button name = "enregistrer" type="submit" class="btn btn-default">OK</button>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
+
+                      
+                      
                     </div>
                   </div>
                   </form>
