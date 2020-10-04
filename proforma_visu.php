@@ -148,7 +148,7 @@
 
   <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
       <div class="container">
-        <iframe src="<?php echo chunk_split(base64_encode($_GET['p_tmp']))?>" width="700" height="800" align="middle"></iframe>
+        <iframe src="<?php echo chunk_split(base64_encode(getProforma(true)))?>" width="700" height="800" align="middle"></iframe>
         <!-- <?php echo $_SESSION['pdf_temp']?> -->
       </br></br></br></br>
 

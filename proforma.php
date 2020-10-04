@@ -118,7 +118,8 @@
                           //getProforma(false);
                           //header('Location: pdf_proforma.php');
                           //exit();
-                          $_SESSION['pdf_temp'] = getProforma(true);
+                          //$_SESSION['pdf_temp'] = getProforma(true);
+                          getProforma(true);
                           header('Location: proforma_visu.php');
                           exit();
                       }
