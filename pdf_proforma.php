@@ -222,8 +222,11 @@ $pdf->Text(2, 289, "Code APE :");
 if($code == true)
   return $pdf->Output('S');
 
-else if($code == false)
-  $pdf->Output('I',"proforma");
+else if($code == false){
+  if(intval($_SESSION['id_compte'])<10) $pdf->Output('F',"proformas/".'0'.$_SESSION['id_compte'].$_SESSION['id_proforma'].date("my").".pdf");
+  else $pdf->Output('F',"proformas/".$_SESSION['id_compte'].$_SESSION['id_proforma'].date("my").".pdf"); 
+  
+}
 
 
 }

@@ -106,7 +106,7 @@
                           $_SESSION['dateValid'] = $_POST['datevalidite'];
                           $_SESSION['delaiLiv'] = $_POST['delailivraison'];
                           $_SESSION['id_proforma'] = $proformas[count($proformas)-1]['id']+1;
-                          for ($p=0; $p < count($pays); $p++) { 
+                          for ($p=0; $p < count($pays); $p++) {
                             $_SESSION['pays'][$p] = $pays[$p]['alpha2'];
                           }
                           for ($o=0; $o < count($options); $o++) { 
@@ -119,7 +119,9 @@
                           //header('Location: pdf_proforma.php');
                           //exit();
                           //$_SESSION['pdf_temp'] = getProforma(true);
-                          getProforma(true);
+                          getProforma(false);
+                         if(intval($_SESSION['id_compte'])<10) $_SESSION['currentProforma'] = '0'.$_SESSION['id_compte'].$_SESSION['id_proforma'].date("my");
+                          else $_SESSION['currentProforma'] = $_SESSION['id_compte'].$_SESSION['id_proforma'].date("my");
                           header('Location: proforma_visu.php');
                           exit();
                       }
