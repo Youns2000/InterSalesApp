@@ -1,0 +1,146 @@
+<!-- 
+/**
+
+  The Initial Developer of the Original Code is
+  Matthieu  - http://www.programmation-facile.com/
+  Portions created by the Initial Developer are Copyright (C) 2013
+  the Initial Developer. All Rights Reserved.
+
+  Contributor(s) :
+
+ */
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+ --> 
+
+<!DOCTYPE html> 
+<html lang="fr"> 
+<head> 
+<title>BootStrap 3 - Developpement Facile</title> 
+<meta charset="UTF-8">
+
+<!-- permet au CSS de déterminer la résolution de l'écran en fonction du périphérique -->
+<meta name="viewport" content="width=device-width, initial-scale=1"> 
+
+
+<link rel="stylesheet" href="bootstrap-3.2.0-dist/css/bootstrap.css"> 
+<link href="font-awesome-4.1.0/css/font-awesome.min.css" rel="stylesheet">
+
+<script src="bootstrap-3.2.0-dist/js/jquery-1.10.2.js"></script> 
+<script src="bootstrap-3.2.0-dist/js/bootstrap.js"></script> 
+
+
+
+<style>
+body{
+	font-size: 12px;
+	font-family: Arial;
+    padding-top: 70px;/* décalage pour le menu de navigation */
+}
+
+footer{
+  margin-top: 30px;
+}
+
+
+/* affiche les zones en couleurs */
+#content > div {
+      background-color: #A9BCF5;
+      box-shadow: inset 2px -2px 2px #DF3A01, inset -2px 2px 2px #DF3A01;
+      height: 1024px;
+}
+
+
+/*.row > div {
+      background-color: #BEF781;
+      box-shadow: inset 2px -2px 2px #DBA901, inset -2px 2px 2px #DBA901;
+}*/
+
+</style>
+
+</head>
+
+<body>
+
+<!-- le menu de navigation
+la classe navbar-fixed-top permet de laisser le menu toujours en haut de la page
+navbar-fixed-bottom en bas de la page -->
+<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <!-- container permet d'aligner le contenu du menu avec le contenu de la page --> 
+   <div class="container"> 
+        <div class="navbar-header"> 
+            <a class="navbar-brand" href="#">Développement Facile</a> 
+        </div> 
+    
+    <!-- ajout possible de texte --> 
+    <p class="navbar-text">Informations</p>
+
+        <!-- pull-right décale les éléments du menu sur la droite
+             pull-left sur la gauche --> 
+        <ul class="nav navbar-nav pull-left"> 
+             <li class="active"><a href="#">Tutoriels</a></li> 
+             <li><a href="#">Nos Formations</a></li> 
+             <li><a href="#">Vos Questions</a></li> 
+             <li><a href="#">Nous contacter</a></li> 
+        </ul> 
+    
+    <!-- ajout d'un bouton
+    <button type="button" class="btn btn-default navbar-btn pull-right">Se Connecter</button> --> 
+    
+    <!-- une zone de recherche --> 
+    <form class="navbar-form navbar-right" role="search">  
+        <div class="form-group">  
+        <input type="text" class="form-control" placeholder="Rechercher"> 
+        </div>  
+        <button type="submit" class="btn btn-default">Rechercher</button> 
+    </form>
+
+    <!-- ajout d'un menu déroulant --> 
+    <ul class="nav navbar-nav pull-right"> 
+        <li class="dropdown"> 
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Type de cours <b class="caret"></b></a> 
+        <ul class="dropdown-menu"> 
+            <li><a href="#">PHP</a></li> 
+            <li><a href="#">JavaScript</a></li> 
+            <li><a href="#">HTML5</a></li> 
+            <li class="divider"></li> 
+            <li><a href="#">Développement</a></li> 
+        </ul> 
+        </li> 
+    </ul>
+
+
+
+    </div>
+</nav> 
+
+<!-- La mise en forme du contenu de la div via la classe .container
+La classe .container permet de définir la largeur et la disposition du canevas de la page. -->
+<div class="container"> 
+      
+    <div class="row" id="content"> 
+        <!-- occupe  9 colonnes sur 12 de la grille -->
+
+        <div class="col-md-9"> 
+            <h1>Titre de niveau 1</h1> 
+            <h2>Zone ocupant 9 colonnes</h2>  
+
+
+            <!-- formulaire avec une zone de texte -->
+            <p>Du texte dans la description du contenu.</p>
+
+
+        </div>      
+         
+    </div> 
+  
+</div> 
+
+
+<footer> 
+	<hr> 
+	<p>Copyright www.Developpement-Facile.com 2014</p>  
+</footer> 
+
+</body> 
+</html>

@@ -254,6 +254,11 @@
                 //echo $_SESSION['panier']['options'][0];
               }
             }
+
+            else if(isset($_POST['editerProformaProjet'])){
+              $_SESSION['currentProforma'] = $_POST['radioProforma'];
+              header('Location: proforma_visu.php?pr='.$_GET['pr']);
+            }
             else if(isset($_POST['modifmdp'])){
               $db = include 'db_mysql.php';
                 $mail = $_SESSION['email'];
@@ -307,6 +312,8 @@
     <meta name="theme-color" content="#563d7c">
     <link href="css/style_menu.css" rel="stylesheet">
     <link href="css/dashboard.css" rel="stylesheet">
+    <link href="css/simple-sidebar.css" rel="stylesheet">
+    <link href="css/navbar-top.css" rel="stylesheet">
 
     <!-- <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
@@ -350,6 +357,10 @@
           width: 150px !important;
           display: inline-flex !important; 
       }
+      .container-fluid{
+        padding-top: 30px;
+      }
+
     </style>
 
     <script type="text/javascript">
@@ -379,14 +390,15 @@
 
 <body>
 <header>
+  <!---------------------------------------------------------------------------------------------------------------
   <nav class="navbar navbar-dark fixed-top bg-dark  p-0 shadow navbar-expand-md">
+
           <a class="navbar col-sm-0 col-md-0 mr-0" href=""></a> 
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="true" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
               </button>
 
           <div class="collapse navbar-collapse col-md-0" id="navbarCollapse">
-            <!-- <ul class="navbar p-0"> -->
               <div class="dropdown">
                 <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   <span class="navbar-toggler-icon"></span>
@@ -395,12 +407,11 @@
                   <button type="button" data-backdrop="false" data-toggle="modal" data-target="#modal_modif_mdp" class="dropdown-item">Modifier mot de passe</button>
                 </div>
               </div>
-            <!-- /////////////////MODAL/////////////////////// -->
+            
               <form method="post">
                     <div class="modal fade" id="modal_modif_mdp" role="dialog">
                       <div class="modal-dialog modal-dialog-centered">
                       
-                        <!-- Modal content-->
                         <div class="modal-content">
 
                           <div class="modal-header">
@@ -420,7 +431,7 @@
                       </div>
                     </div>
                   </form>
-                  <!-- /////////////////END_MODAL/////////////////////// -->
+                  
                   <a class="navbar col-sm-0 col-md-4 mr-0" href=""></a> 
                 
                   <a class="nav-link" href="marketing.php?categ=Postes%20Premium">
@@ -438,22 +449,10 @@
                   <br/>Projets <span align="center"class="sr-only">(current)</span>
                 </a>
                 </ul>
-                <!-- <a class="nav-link" href="bon_de_commande.php">
-                  <span data-feather="file-text"></span>
-                  <br/>Bon de Commande
-                </a> -->
                 <a class="nav-link" href="calendrier.php">
                   <span data-feather="calendar"></span>
                   <br/>Agenda
                 </a>
-               <!-- <a class="nav-link" href="objectifs.php">
-                  <span data-feather="bar-chart-2"></span>
-                  <br/>Objectifs
-                </a>  -->
-                <!-- <a class="nav-link" href="rapports.php">
-                  <span data-feather="file-text"></span>
-                  <br/>Rapports
-                </a> -->
                 <a class="navbar col-sm-0 col-md-4 mr-0" href=""></a> 
                 <ul class="navbar-nav px-3">
                   <li class="nav-item text-nowrap">
@@ -462,121 +461,92 @@
                     <a style="color:#FF0000" href="deconnection.php">Déconnection</a></p>
                   </li>
                 </ul>
-    
           </div>
-  </nav>
+          </nav>
+          --------------------------------------------------------------------------------------------------------------------------------------------------------->
+
+          <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <a class="navbar-brand" href="#">Navbar</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+              <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                  <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#">Link</a>
+                </li>
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Dropdown
+                  </a>
+                  <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="#">Action</a>
+                    <a class="dropdown-item" href="#">Another action</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="#">Something else here</a>
+                  </div>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link disabled" href="#">Disabled</a>
+                </li>
+
+              </ul>
+              <li class="dropdown notification-list">
+                                    <a class="nav-link dropdown-toggle " data-toggle="dropdown" id="topbar-userdrop" href="#" role="button" aria-haspopup="true"
+                                        aria-expanded="false">
+                                        <span class="account-user-avatar"> 
+                                            <img src="logos/profil.png" alt="user-image" class="rounded-circle">
+                                        </span>
+                                        <span>
+                                            <span class="account-user-name">Dominic Keller</span>
+                                            <span class="account-position">Founder</span>
+                                        </span>
+                                    </a>
+                                    <div class="dropdown-menu dropdown-menu-right dropdown-menu-animated topbar-dropdown-menu profile-dropdown" aria-labelledby="topbar-userdrop">
+                                    
+    
+                                        <!-- item-->
+                                        <a href="javascript:void(0);" class="dropdown-item notify-item">
+                                            <i class="mdi mdi-logout mr-1"></i>
+                                            <span>Logout</span>
+                                        </a>
+    
+                                    </div>
+                                </li>
+              <!-- <ul class="navbar-nav px-3">
+                  <li class="nav-item text-nowrap">
+                    <br/><p style="color:#49FF00">Session Ouverte<br/>
+                    <?php echo $_SESSION['prenom'] ." ".$_SESSION['nom']?><br/>
+                    <a style="color:#FF0000" href="deconnection.php">Déconnection</a></p>
+                  </li>
+                </ul> -->
+            </div>
+          </nav>
+
+  
 </header>
 
 <!------------------------------------------------------------------------MENU_GAUCHE------------------------------------------------------------------------------------>
 
-<form method="post">
-<div class="container-fluid">
-  <div class="row">
-    <nav class="col-md-2 d-none d-md-block sidebar">
-      <div class="sidebar-sticky">
-        <ul class="nav flex-column">
-              <?php
-              $i=0;
-              while ($i<count($projets)) {
-                ?>
-                <button class="nav-item" type=""><a class="nav-link" href="projets.php?pr=<?php echo $i; ?>" name=<?php echo str_replace(' ', '-',$projets[$i]['nom']) ?> ><?php echo $projets[$i]['nom'] ?></a></button>
-                <?php
-                $i++;
-              }
-              ?>
-        </ul>
 
-
-        <div>
-        <button type="button" data-backdrop="false" data-toggle="modal" data-target="#ajouter_c" class="btn btn-light btn-sm"><span data-feather="plus-circle"></button>
-
-        <div class="modal fade" id="ajouter_c" role="dialog">
-          <div class="modal-dialog modal-dialog-centered">
-          
-            <!-- Modal content-->
-            <div class="modal-content">
-
-              <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-              </div>
-
-              <div class="modal-body">
-                <p><B>CLIENT</B></p>
-                <p>Code Client : <input id="newProjetClient" name="newProjetClient" type="text"/></p>
-
-                <hr width="100%" color="grey">
-
-                <p><B>PROJET</B></p>
-                <p>Nom : <input id="newProjetName" name="newProjetName" type="text"/></p>
-                <p>Code : <input id="newProjetCode" name="newProjetCode" type="text"/></p>
-                <p>B : <select class="custom-select d-block w-50" name="newProjetB" required>
-                          <option selected value>...</option>
-                          <option value ="1" >1</option>
-                          <option value ="2" >2</option>
-                          <option value ="3" >3</option>
-                  </select>
-                  F : <select class="custom-select d-block w-100" name="newProjetF" required>
-                          <option selected value>...</option>
-                          <option value ="1" >1</option>
-                          <option value ="2" >2</option>
-                          <option value ="3" >3</option>
-                  </select>
-                  T : <select class="custom-select d-block w-100" name="newProjetT" required>
-                          <option selected value>...</option>
-                          <option value ="1" >1</option>
-                          <option value ="2" >2</option>
-                          <option value ="3" >3</option>
-                  </select></p>
-
-                  <p><select class="custom-select-2 d-block w-100" name="newProjetEtat" required>
-                                            <option selected value>Choisir un état...</option>
-                                            <option value ="0" >En cours</option>
-                                            <option value ="1" >Reporté</option>
-                                            <option value ="2" >Terminé</option>
-                  </select></p>
-                
-                <textarea class="form-control" id="newProjetText" name="newProjetText" rows="3"></textarea>
-                
-                <!-- <hr width="100%" color="grey"> -->
-              </div>
-
-              <div class="modal-footer">
-                <button name = "ajouterProjet" type="submit" class="btn btn-default">OK</button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      </div>
-    </nav>
-  </div>
-</div>
-</form>
-
-    <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
-      <!-- <div class="container">
-      <nav id="bt-menu" class="bt-menu">
-        <a href="#" class="bt-menu-trigger"><span>Menu</span></a>
-        <ul>
-          <li><a href="#" class="bt-icon icon-user-outline">About</a></li>
-          <li><a href="#" class="bt-icon icon-sun">Skills</a></li>
-          <li><a href="#" class="bt-icon icon-windows">Work</a></li>
-          <li><a href="#" class="bt-icon icon-speaker">Blog</a></li>
-          <li><a href="#" class="bt-icon icon-star">Clients</a></li>
-          <li><a href="#" class="bt-icon icon-bubble">Contact</a></li>
-        </ul>
-      </nav>
-    </div> -->
-
-
-      <div class="container">
-        <div class="row">
 
 
 <!----------------------------------------------------------------------CLIENT-------------------------------------------------------------------------------------->
+
+
+<main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+
+      <div class="container-fluid content-row">
+
+        <div class="row">
+
           <div class="col-lg-4">
             <form method="post">
-            <div class="card mb-4 text-white bg-danger shadow-sm">
+            <div class="card mb-4 text-white bg-danger shadow-sm h-100">
               <div class="card-header">
                 <h5 class="card-title">Client</h5>
               </div>
@@ -603,7 +573,7 @@
 <!----------------------------------------------------------------------PROJETS_DU_CLIENT------------------------------------------------------------------------------->
           <div class="col-lg-4">
             <form method="post">
-            <div class="card mb-4 text-white bg-success shadow-sm">
+            <div class="card mb-4 text-white bg-success shadow-sm h-100">
               <div class="card-header">
                 <h5 class="card-title">Projets du client</h5>
               </div> 
@@ -620,7 +590,7 @@
 <!----------------------------------------------------------------------LE_PROJET-------------------------------------------------------------------------------------->
           <div class="col-lg-4">
             <form method="post">
-            <div class="card mb-4 text-white bg-warning shadow-sm">
+            <div class="card mb-4 text-white bg-warning shadow-sm h-100">
               <div class="card-header">
                 <h5 class="card-title">Le projet</h5>
               </div>
@@ -638,9 +608,11 @@
                 <label class="form-check-label" for="inlineRadio3">Terminé</label>
               </div> 
             </span>
-              <textarea class="form-control" id="projetText" name="projetText" rows="3"><?php echo $projets[$_GET['pr']]['description']?></textarea>
-              <div class="btn-group" role="group">
-                <button type="button" id="okprojetModif" name="okprojetModif" class="btn btn-warning">OK</button>
+              <textarea class="form-control" id="projetText" name="projetText" rows="7"><?php echo $projets[$_GET['pr']]['description']?></textarea>
+              <div class="d-flex flex-column mt-auto">
+                <div class="btn-group" role="group">
+                  <button type="button" id="okprojetModif" name="okprojetModif" class="btn btn-warning">OK</button>
+                </div>
               </div>
             </div>
            </form>
@@ -648,30 +620,32 @@
        </div>    
       </div>
 
-      <div class="container">
+      <div class="container-fluid content-row">
         <div class="row">
 
 
 <!----------------------------------------------------------------------PROFORMAS-------------------------------------------------------------------------------------->
           <div class="col-lg-4">
             <form method="post">
-            <div class="card mb-4 text-white bg-primary shadow-sm">
+            <div class="card mb-4 text-white bg-primary shadow-sm h-100">
               <div class="card-header">
                 <h5 class="card-title">Proformas</h5>
               </div>
               <?php for($prof=0;$prof<count($proformas);$prof++){
                 if($proformas[$prof]['projet']==$projets[$_GET['pr']]['code']){
                ?>
-               <p><input type="radio" name="radioProforma" id="<?php echo "radioProforma".$proformas[$prof]['code'] ?>"><?php echo "Proforma "."N°".$proformas[$prof]['code']?></p>
+               <p><input type="radio" name="radioProforma" value="<?php echo $proformas[$prof]['code'] ?>"><?php echo "Proforma "."N°".$proformas[$prof]['code']?></p>
                <!-- <div class="form-check">
                 <input class="form-check-input" type="radio" name="radioProforma" id="<?php echo "radioProforma".$proformas[$prof]['code'] ?>" value="<?php echo $proformas[$prof]['code'] ?>" >
                 <label class="form-check-label" for="<?php echo "radioProforma".$proformas[$prof]['code'] ?>"><?php echo "Proforma "."N°".$proformas[$prof]['code']?></label>
               </div> -->
             <?php }}?>
+            <div class="d-flex flex-column mt-auto">
               <div class="btn-group" role="group">
                 <button type="button" class="btn btn-primary" onclick="window.location.href='proforma.php?pr=<?php echo $projets[$_GET['pr']]['id'];?>&categ=Postes%20Premium'">Nouveau</button>
-                <button type="button" class="btn btn-primary" onclick="window.location.href='proforma.php?pf=<?php if(isset($_POST['radioProforma'])) echo $_POST['radioProforma']; ?>&pr=<?php echo $projets[$_GET['pr']]['id'];?>&categ=Postes%20Premium'">Editer</button>
+                <button type="submit" class="btn btn-primary" name="editerProformaProjet">Editer</button>
               </div>
+            </div>
             </div>
            </form>
           </div>  
@@ -679,7 +653,7 @@
 <!----------------------------------------------------------------------BONS_DE_COMMANDE-------------------------------------------------------------------------------------->
           <div class="col-lg-4">
             <form method="post">
-            <div class="card mb-4 text-white bg-secondary shadow-sm">
+            <div class="card mb-4 text-white bg-secondary shadow-sm h-100">
               <div class="card-header">
                 <h5 class="card-title">Bon de commande</h5>
               </div> 
@@ -688,6 +662,12 @@
                ?>
                <p><input type="radio" name="boxBon" id="<?php echo "boxBon".$proformas[$prof]['code'] ?>"><?php echo "Bon de commande "."N°".$proformas[$prof]['code']?></p>
             <?php }}?>
+
+              <div class="d-flex flex-column mt-auto">
+                <div class="btn-group" role="group">
+                  <button type="submit" class="btn btn-secondary" name="editerBonProjet">Editer</button>
+                </div>
+              </div>
             </div>
            </form>
           </div>  
@@ -695,7 +675,7 @@
 <!----------------------------------------------------------------------RAPPORTS-------------------------------------------------------------------------------------->
           <div class="col-lg-4">
             <form method="post">
-            <div class="card mb-4 text-white bg-dark shadow-sm">
+            <div class="card mb-4 text-white bg-dark shadow-sm h-100">
               <div class="card-header">
                 <h5 class="card-title">Rapports</h5>
               </div>
@@ -704,10 +684,12 @@
                ?>
                <p><input type="radio" name = "boxRapport" id="<?php echo "boxRapport".$rapports[$rap]['id'] ?>"><?php echo "Rapport "."N°".($rap+1)?></p>
             <?php }}?>
+            <div class="d-flex flex-column mt-auto">
               <div class="btn-group" role="group">
                 <button type="button" class="btn btn-dark" onclick="window.location.href='rapports.php?pr=<?php echo $projets[$_GET['pr']]['id'];?>'">Nouveau</button>
                 <button type="button" class="btn btn-dark">Editer</button>
               </div>
+            </div>
             </div>
            </form>
           </div>
@@ -727,4 +709,5 @@
 <script type="text/javascript" src="js/main.js"></script>
 <script src="js/classie.js"></script>
 <script src="js/borderMenu.js"></script>
+<script src="js/navbar-top.js"></script>
 </html>

@@ -1,0 +1,174 @@
+<!-- 
+/**
+
+  The Initial Developer of the Original Code is
+  Matthieu  - http://www.programmation-facile.com/
+  Portions created by the Initial Developer are Copyright (C) 2013
+  the Initial Developer. All Rights Reserved.
+
+  Contributor(s) :
+
+ */
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+ --> 
+
+<!DOCTYPE html> 
+<html lang="fr"> 
+<head> 
+<title>BootStrap 3 - Developpement Facile</title> 
+<meta charset="UTF-8">
+
+<!-- permet au CSS de déterminer la résolution de l'écran en fonction du périphérique -->
+<meta name="viewport" content="width=device-width, initial-scale=1"> 
+
+
+<link rel="stylesheet" href="bootstrap-3.2.0-dist/css/bootstrap.css"> 
+<link href="font-awesome-4.1.0/css/font-awesome.min.css" rel="stylesheet">
+
+<script src="bootstrap-3.2.0-dist/js/jquery-1.10.2.js"></script> 
+<script src="bootstrap-3.2.0-dist/js/bootstrap.js"></script> 
+
+
+
+<style>
+body{
+	font-size: 12px;
+	font-family: Arial;
+  padding-top: 70px;/* décalage pour le menu de navigation */
+}
+
+footer{
+  margin-top: 30px;
+}
+
+
+/* affiche les zones en couleurs */
+#content > div {
+      background-color: #A9BCF5;
+      box-shadow: inset 2px -2px 2px #DF3A01, inset -2px 2px 2px #DF3A01;
+      height: 2024px;
+}
+
+
+/*.row > div {
+      background-color: #BEF781;
+      box-shadow: inset 2px -2px 2px #DBA901, inset -2px 2px 2px #DBA901;
+}*/
+
+</style>
+
+</head>
+
+<!-- ajout des attributs pour créer une page web défilante via le menu -->
+<body data-spy="scroll" data-target="#navbar-defile">
+
+<!-- le menu de navigation pour mobile avec la classe navbar-toggle 
+
+la classe navbar-fixed-top permet de laisser le menu toujours en haut de la page
+navbar-fixed-bottom en bas de la page -->
+<nav class="navbar navbar-default navbar-fixed-top" role="navigation" id="navbar-defile">
+    <!-- container permet d'aligner le contenu du menu avec le contenu de la page --> 
+   <div class="container"> 
+        <div class="navbar-header">
+            <!-- pour le menu déroulant sur mobile --> 
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#menu-navigation"> 
+            <span class="sr-only"></span> 
+            <span class="icon-bar"></span> 
+            <span class="icon-bar"></span> 
+            <span class="icon-bar"></span> 
+            </button> 
+  
+            <!-- le titre du menu visible --> 
+            <a class="navbar-brand" href="#">Développement Facile</a> 
+        </div> 
+
+    <!-- le menu déroulant pour mobile --> 
+    <div class="collapse navbar-collapse"  id="menu-navigation"> 
+        
+
+        <!-- ajout possible de texte --> 
+        <p class="navbar-text">Informations</p>
+
+
+        <!-- pull-right décale les éléments du menu sur la droite
+             pull-left sur la gauche --> 
+        <ul class="nav navbar-nav"> 
+             <li class="active"><a href="#tutos">Tutoriels</a></li> 
+             <li><a href="#formations">Nos Formations</a></li> 
+             <li><a href="#questions">Vos Questions</a></li> 
+             <li><a href="#contact">Nous contacter</a></li> 
+        </ul> 
+    
+        
+        <!-- une zone de recherche --> 
+        <form class="navbar-form navbar-right" role="search">  
+            <div class="form-group">  
+            <input type="text" class="form-control" placeholder="Rechercher"> 
+            </div>  
+            <button type="submit" class="btn btn-default">Rechercher</button> 
+        </form>
+
+    </div>
+
+
+    </div>
+</nav> 
+
+<!-- La mise en forme du contenu de la div via la classe .container
+La classe .container permet de définir la largeur et la disposition du canevas de la page. -->
+<div class="container"> 
+      
+    <div class="row" id="content"> 
+        <!-- occupe  9 colonnes sur 12 de la grille -->
+
+        <div class="col-md-9"> 
+            <h1>Titre de niveau 1</h1> 
+            <h2>Zone ocupant 9 colonnes</h2>  
+
+
+            <!-- formulaire avec une zone de texte -->
+            <div id="tutos"></div> 
+            <h1>Les Tutoriels Vidéos</h1> 
+            <p class="lead">Choisissez vos tutoriels vidéos en fonction du langage de programmation</p> 
+            <p>Le Lorem Ipsum est simplement du faux texte employé dans la composition et la mise en page avant impression. Le Lorem Ipsum est le faux texte standard de l'imprimerie depuis les années 1500, quand un peintre anonyme assembla ensemble des morceaux de texte pour réaliser un livre spécimen de polices de texte. Il n'a pas fait que survivre cinq siècles, mais s'est aussi adapté à la bureautique informatique, sans que son contenu n'en soit modifié. Il a été popularisé dans les années 1960 grâce à la vente de feuilles Letraset contenant des passages du Lorem Ipsum, et, plus récemment, par son inclusion dans des applications de mise en page de texte, comme Aldus PageMaker...</p> 
+
+            <p>Contrairement à une opinion répandue, le Lorem Ipsum n'est pas simplement du texte aléatoire. Il trouve ses racines dans une oeuvre de la littérature latine classique datant de 45 av. J.-C., le rendant vieux de 2000 ans. Un professeur du Hampden-Sydney College, en Virginie, s'est intéressé à un des mots latins les plus obscurs, consectetur, extrait d'un passage du Lorem Ipsum, et en étudiant tous les usages de ce mot dans la littérature classique, découvrit la source incontestable du Lorem Ipsum. Il provient en fait des sections 1.10.32 et 1.10.33 du "De Finibus Bonorum et Malorum" (Des Suprêmes Biens et des Suprêmes Maux) de Cicéron. Cet ouvrage, très populaire pendant la Renaissance, est un traité sur la théorie de l'éthique. Les premières lignes du Lorem Ipsum, "Lorem ipsum dolor sit amet....</p> 
+
+
+            <div id="formations"></div> 
+            <h1>Nos Formations Développement Facile</h1> 
+            <p class="lead">Perfectionnez rapidement votre développement web grâce à nos formations professionnelles</p> 
+            <p>Contrairement à une opinion répandue, le Lorem Ipsum n'est pas simplement du texte aléatoire. Il trouve ses racines dans une oeuvre de la littérature latine classique datant de 45 av. J.-C., le rendant vieux de 2000 ans. Un professeur du Hampden-Sydney College, en Virginie, s'est intéressé à un des mots latins les plus obscurs, consectetur, extrait d'un passage du Lorem Ipsum, et en étudiant tous les usages de ce mot dans la littérature classique, découvrit la source incontestable du Lorem Ipsum. Il provient en fait des sections 1.10.32 et 1.10.33 du "De Finibus Bonorum et Malorum" (Des Suprêmes Biens et des Suprêmes Maux) de Cicéron. Cet ouvrage, très populaire pendant la Renaissance, est un traité sur la théorie de l'éthique. Les premières lignes du Lorem Ipsum, "Lorem ipsum dolor sit amet....</p>
+            <p>L'extrait standard de Lorem Ipsum utilisé depuis le XVIè siècle est reproduit ci-dessous pour les curieux. Les sections 1.10.32 et 1.10.33 du "De Finibus Bonorum et Malorum" de Cicéron sont aussi reproduites dans leur version originale, accompagnée de la traduction anglaise de H. Rackham (1914)....</p> 
+
+
+            <div id="questions"></div> 
+            <h1>Vos Questions</h1> 
+            <p class="lead">Voici vos questions les plus courantes avec les réponses détaillées</p> 
+            <p>L'extrait standard de Lorem Ipsum utilisé depuis le XVIè siècle est reproduit ci-dessous pour les curieux. Les sections 1.10.32 et 1.10.33 du "De Finibus Bonorum et Malorum" de Cicéron sont aussi reproduites dans leur version originale, accompagnée de la traduction anglaise de H. Rackham (1914)....</p> 
+            <p>Plusieurs variations de Lorem Ipsum peuvent être trouvées ici ou là, mais la majeure partie d'entre elles a été altérée par l'addition d'humour ou de mots aléatoires qui ne ressemblent pas une seconde à du texte standard. Si vous voulez utiliser un passage du Lorem Ipsum, vous devez être sûr qu'il n'y a rien d'embarrassant caché dans le texte. Tous les générateurs de Lorem Ipsum sur Internet tendent à reproduire le même extrait sans fin, ce qui fait de lipsum.com le seul vrai générateur de Lorem Ipsum. Iil utilise un dictionnaire de plus de 200 mots latins, en combinaison de plusieurs structures de phrases, pour générer un Lorem Ipsum irréprochable. Le Lorem Ipsum ainsi obtenu ne contient aucune répétition, ni ne contient des mots farfelus, ou des touches d'humour....</p>     
+
+
+            <div id="contact"></div> 
+            <h1>Nous contacter</h1> 
+            <p class="lead">Utilisez le formulaire ci-dessous pour nous contacter</p> 
+            <p>Plusieurs variations de Lorem Ipsum peuvent être trouvées ici ou là, mais la majeure partie d'entre elles a été altérée par l'addition d'humour ou de mots aléatoires qui ne ressemblent pas une seconde à du texte standard. Si vous voulez utiliser un passage du Lorem Ipsum, vous devez être sûr qu'il n'y a rien d'embarrassant caché dans le texte. Tous les générateurs de Lorem Ipsum sur Internet tendent à reproduire le même extrait sans fin, ce qui fait de lipsum.com le seul vrai générateur de Lorem Ipsum. Iil utilise un dictionnaire de plus de 200 mots latins, en combinaison de plusieurs structures de phrases, pour générer un Lorem Ipsum irréprochable. Le Lorem Ipsum ainsi obtenu ne contient aucune répétition, ni ne contient des mots farfelus, ou des touches d'humour....</p>  
+            <p>Contrairement à une opinion répandue, le Lorem Ipsum n'est pas simplement du texte aléatoire. Il trouve ses racines dans une oeuvre de la littérature latine classique datant de 45 av. J.-C., le rendant vieux de 2000 ans. Un professeur du Hampden-Sydney College, en Virginie, s'est intéressé à un des mots latins les plus obscurs, consectetur, extrait d'un passage du Lorem Ipsum, et en étudiant tous les usages de ce mot dans la littérature classique, découvrit la source incontestable du Lorem Ipsum. Il provient en fait des sections 1.10.32 et 1.10.33 du "De Finibus Bonorum et Malorum" (Des Suprêmes Biens et des Suprêmes Maux) de Cicéron. Cet ouvrage, très populaire pendant la Renaissance, est un traité sur la théorie de l'éthique. Les premières lignes du Lorem Ipsum, "Lorem ipsum dolor sit amet....</p>
+            <p>L'extrait standard de Lorem Ipsum utilisé depuis le XVIè siècle est reproduit ci-dessous pour les curieux. Les sections 1.10.32 et 1.10.33 du "De Finibus Bonorum et Malorum" de Cicéron sont aussi reproduites dans leur version originale, accompagnée de la traduction anglaise de H. Rackham (1914)....</p>    
+
+
+        </div>      
+         
+    </div> 
+  
+</div> 
+
+
+<footer> 
+	<hr> 
+	<p>Copyright www.Developpement-Facile.com 2014</p>  
+</footer> 
+
+</body> 
+</html>

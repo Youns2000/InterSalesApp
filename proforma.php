@@ -122,7 +122,7 @@
                           getProforma(false);
                          if(intval($_SESSION['id_compte'])<10) $_SESSION['currentProforma'] = '0'.$_SESSION['id_compte'].$_SESSION['id_proforma'].date("my");
                           else $_SESSION['currentProforma'] = $_SESSION['id_compte'].$_SESSION['id_proforma'].date("my");
-                          header('Location: proforma_visu.php');
+                          header('Location: proforma_visu.php?pr='.$_GET['pr']);
                           exit();
                       }
                       else{
@@ -158,52 +158,7 @@
                 }
             }
 
-            else if((isset($_POST['inputClientName']) or isset($_POST['inputClientWilaya']) or isset($_POST['inputClientCode'])) and isset($_POST['envoyermail'])){
-              $i = 0;
-              while($i<count($clients) and ($clients[$i]['NomSociete']!=$_POST['inputClientName'] or $clients[$i]['Wilaya']!=$_POST['inputClientWilaya']) and $clients[$i]['NomSociete']!=$_POST['inputClientCode']){
-                $i++;
-              }
-
-              if( ($clients[$i]['NomSociete']==$_POST['inputClientName'] and $clients[$i]['Wilaya']==$_POST['inputClientWilaya']) or $clients[$i]['NomSociete']==$_POST['inputClientCode']){
-              $str = "";
-              if(isset($_POST['boxmailemail1'])) $str = $str.",".$_POST['boxmail_email1']; 
-              if(isset($_POST['boxmailemail2'])) $str = $str.",".$_POST['boxmail_email2'];
-              if(isset($_POST['boxmail_1'])) $str = $str.","."Azeddine@integral.fr"; 
-              if(isset($_POST['boxmail_2'])) $str = $str.",".$_POST['text2'];
-              if(isset($_POST['boxmail_3'])) $str = $str.",".$_POST['text3'];
-              if(isset($_POST['boxmail_4'])) $str = $str.",".$_POST['text4'];
-              if(isset($_POST['boxmail_email1']) or isset($_POST['boxmail_email2']) or isset($_POST['boxmail_1']) or isset($_POST['boxmail_2']) or isset($_POST['boxmail_3']) or isset($_POST['boxmail_4'])){
-                $_SESSION['CodeClient'] = $clients[$i]['CodeClient'];
-                $_SESSION['NomClient'] = $clients[$i]['NomSociete'];
-                $_SESSION['AdresseClient'] = $clients[$i]['Adresse'];
-                $_SESSION['WilayaClient'] = $clients[$i]['Wilaya'];
-                $_SESSION['VilleClient'] = $clients[$i]['Ville'];
-                $_SESSION['CodePostalClient'] = $clients[$i]['CodePostal'];
-                $_SESSION['PaysClient'] = $clients[$i]['Pays'];
-                $_SESSION['NIF'] = $clients[$i]['NIF'];
-                $_SESSION['EmailResp1'] = $clients[$i]['EmailResp1'];
-                $_SESSION['EmailResp2'] = $clients[$i]['EmailResp2'];
-                sendmail($str,'Proforma','proforma.pdf',true,getProforma(true));
-                $db = include 'db_mysql.php';
-                       $stmtenr = $db->prepare($sqlEnregistrer);
-                       $str = "";
-                       $opt = "";
-                       for ($i=0; $i < compterArticles(); $i++) {
-                          $str = $str."(".$_SESSION['panier']['libelleProduit'][$i]."//".$_SESSION['panier']['qteProduit'][$i].")";
-                          $opt = $opt."(".$_SESSION['panier']['options'][$i].")";
-                       }
-                       $p = 0;
-                       for (; $p < count($projets) and $projets[$p]['id']!=$_GET['pr']; $p++);
-                       $stmtenr->execute(array(date("d/m/Y"),$_SESSION['dateValid'],$_SESSION['email'],$_SESSION['CodeClient'],$projets[$p]['code'],$_SESSION['delaiLiv'],$_POST['getPortsEnr'],$str,$opt,$_POST['getDeviseEnr']));
-
-                       $nb_insert = $stmtenr->rowCount();
-                       unset($db);
-                       unset($_SESSION['panier']);
-                
-              }
-              }
             
-          }
           else if(isset($_POST['ajouterCateg'])){
             if($_POST['newCateg']!="" && $_POST['newCateg'][0]!=" "){
             try {
@@ -688,8 +643,8 @@
                 </div>
 
                   <div class="form-group">
-                    <div class="row">
-                      <div class="col-lg-4">
+                    <div class="row justify-content-center">
+                      <div class="col-lg-5">
                         <!--onclick="window.location.href = 'pdf_proforma.php';"-->
                         <!--<button name="visualiserButton" class="btn btn-lg btn-block btn-primary" type="submit">Visualiser</button>-->
                         <button type="button" data-toggle="modal" data-target="#myModal_visu" class="btn btn-lg btn-block btn-primary">Visualiser</button>
