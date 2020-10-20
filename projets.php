@@ -221,6 +221,7 @@
 
                      $nb_insert = $stmtenr->rowCount();
                      unset($db);
+                     header('Refresh: 0');
                   }
                   catch (Exception $e){
                      print "Erreur ! " . $e->getMessage() . "<br/>";
@@ -251,7 +252,6 @@
                 }
                 $optionsCode=$optionsCode."/";
                 modifierQTeArticle($engins[$x]['Ref']."/".$engins[$x]['Categorie']."/".$engins[$x]['Marque']."/".$engins[$x]['Type']."/".$engins[$x]['Origine']."/".$engins[$x]['ConfBase'],$_POST['nbConfBase'],$engins[$x]['Prix'],$engins[$x]['prix_transport'],$optionsCode);
-                //echo $_SESSION['panier']['options'][0];
               }
             }
 
@@ -315,18 +315,6 @@
     <link href="css/simple-sidebar.css" rel="stylesheet">
     <link href="css/navbar-top.css" rel="stylesheet">
 
-    <!-- <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
-    <meta name="keywords" content="navigation, menu, responsive, border, overlay, css transition" />
-    <meta name="author" content="Codrops" />
-    <link rel="shortcut icon" href="../favicon.ico">
-    <link rel="stylesheet" type="text/css" href="css/normalize.css" />
-    <link rel="stylesheet" type="text/css" href="css/demo.css" />
-    <link rel="stylesheet" type="text/css" href="css/icons.css" />
-    <link rel="stylesheet" type="text/css" href="css/style3.css" />
-    <script src="js/modernizr.custom.js"></script> -->
-
     <style type="text/css">
       .form-group input[type="checkbox"] {
           display: none;
@@ -360,6 +348,55 @@
       .container-fluid{
         padding-top: 30px;
       }
+      .special-menu{
+        font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+        font-size: 15;
+        background-color: rgba(52,58,64,0.8)
+      }
+      .color-menu:hover{
+        background-color: #303234!important;
+          border-color: #303234!important;
+      }
+      .color-menu,
+      .color-menu:active,
+      .color-menu:visited,
+      .color-menu:focus {
+          background-color: #50575D!important;
+          border-color: #50575D!important;
+      }
+      li{
+        margin-left: 20px;
+      }
+      .ul-special{
+        margin-left: 290px;
+      }
+      .sidebar{
+        margin-top:100px;
+      }
+      .navbar{
+        padding-top: 0px;
+        padding-bottom: 0px;
+        padding-left: 0px;
+      }
+
+      .padding-top-0{
+        padding-top: 0px;
+      }
+      .list-group{
+        padding-top: 10px;
+      }
+      .btn-lg{
+        width: 250px;
+      }
+      .bg-clair{
+        background-color: #f8f9fa85;
+      }
+      .list-group-item.active {
+          z-index: 2;
+          color: #fff;
+          background-color: #1d2124;
+          border-color: #1d2124;
+      }
 
     </style>
 
@@ -390,6 +427,7 @@
 
 <body>
 <header>
+
   <!---------------------------------------------------------------------------------------------------------------
   <nav class="navbar navbar-dark fixed-top bg-dark  p-0 shadow navbar-expand-md">
 
@@ -465,65 +503,93 @@
           </nav>
           --------------------------------------------------------------------------------------------------------------------------------------------------------->
 
-          <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-            <a class="navbar-brand" href="#">Navbar</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-              <span class="navbar-toggler-icon"></span>
-            </button>
+          <nav class="navbar navbar-expand-lg navbar-dark">
+
+          <!-------------------------------------------------------------------MODIFIER MOT DE PASSE DEROULANT--------------------------------------------------------------------
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="true" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+
+          <div class="collapse navbar-collapse col-md-0" id="navbarCollapse">
+              <div class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                  <button type="button" data-backdrop="false" data-toggle="modal" data-target="#modal_modif_mdp" class="dropdown-item">Modifier mot de passe</button>
+                </div>
+              </div>
+            
+              <form method="post">
+                    <div class="modal fade" id="modal_modif_mdp" role="dialog">
+                      <div class="modal-dialog modal-dialog-centered">
+                      
+                        <div class="modal-content">
+
+                          <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                          </div>
+
+                          <div class="modal-body">
+                            <p>Mot de passe actuel : <input type="password" id="mdpactu" name="mdpactu" type="text"/></p>
+                            <p>Nouveau mot de passe : <input type="password" id="newmdp" name="newmdp" type="text"/></p>
+                            <p>confirmer mot de passe : <input type="password" id="confirm" name="confirm" type="text"/></p>
+                          </div>
+
+                          <div class="modal-footer">
+                            <button name = "modifmdp" type="submit" class="btn btn-default">OK</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </form>
+            --------------------------------------------------------------------------------------------------------------------------------------->
+
+            <!-- <img src="logos/logo integral_origin" width="241"> -->
 
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
-              <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
-                  <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+              <ul class="navbar-nav mr-auto ul-special">
+                <li class="nav-item">
+                  <!-- <a class="special-menu btn btn-primary color-menu " href="#"><span data-feather="shopping-cart"></span>Home <span class="sr-only">(current)</span></a> -->
+                  <a class="btn btn-dark btn-lg special-menu" href="marketing.php?categ=Postes%20Premium">
+                    <svg width="1.5em" height="1.5em" viewBox="0.5 1.5 16 16" class="bi bi-cart3" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                      <path fill-rule="evenodd" d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .49.598l-1 5a.5.5 0 0 1-.465.401l-9.397.472L4.415 11H13a.5.5 0 0 1 0 1H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l.84 4.479 9.144-.459L13.89 4H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm7 0a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"/>
+                    </svg> PRODUITS </a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="#">Link</a>
-                </li>
-                <li class="nav-item dropdown">
-                  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Dropdown
-                  </a>
-                  <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="#">Action</a>
-                    <a class="dropdown-item" href="#">Another action</a>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="#">Something else here</a>
-                  </div>
+                  <a class="btn btn-dark btn-lg special-menu active" href="projets.php?pr=0">
+                  <svg width="1.5em" height="1.5em" viewBox="0 1 16 16" class="bi bi-folder-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" d="M9.828 3h3.982a2 2 0 0 1 1.992 2.181l-.637 7A2 2 0 0 1 13.174 14H2.826a2 2 0 0 1-1.991-1.819l-.637-7a1.99 1.99 0 0 1 .342-1.31L.5 3a2 2 0 0 1 2-2h3.672a2 2 0 0 1 1.414.586l.828.828A2 2 0 0 0 9.828 3zm-8.322.12C1.72 3.042 1.95 3 2.19 3h5.396l-.707-.707A1 1 0 0 0 6.172 2H2.5a1 1 0 0 0-1 .981l.006.139z"/>
+                  </svg> PROJETS <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link disabled" href="#">Disabled</a>
+                  <a class="btn btn-dark btn-lg special-menu" href="calendrier.php">
+                  <svg width="1.5em" height="1.5em" viewBox="0 0 16 16" class="bi bi-calendar-date" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"/>
+                    <path d="M6.445 11.688V6.354h-.633A12.6 12.6 0 0 0 4.5 7.16v.695c.375-.257.969-.62 1.258-.777h.012v4.61h.675zm1.188-1.305c.047.64.594 1.406 1.703 1.406 1.258 0 2-1.066 2-2.871 0-1.934-.781-2.668-1.953-2.668-.926 0-1.797.672-1.797 1.809 0 1.16.824 1.77 1.676 1.77.746 0 1.23-.376 1.383-.79h.027c-.004 1.316-.461 2.164-1.305 2.164-.664 0-1.008-.45-1.05-.82h-.684zm2.953-2.317c0 .696-.559 1.18-1.184 1.18-.601 0-1.144-.383-1.144-1.2 0-.823.582-1.21 1.168-1.21.633 0 1.16.398 1.16 1.23z"/>
+                  </svg> AGENDA </a>
+                </li>
+                <li class="nav-item">
+                  <a class="btn btn-dark btn-lg special-menu" href="newClient.php">
+                  <svg width="1.5em" height="1.5em" viewBox="0 1 16 16" class="bi bi-people-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" d="M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1H7zm4-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm-5.784 6A2.238 2.238 0 0 1 5 13c0-1.355.68-2.75 1.936-3.72A6.325 6.325 0 0 0 5 9c-4 0-5 3-5 4s1 1 1 1h4.216zM4.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5z"/>
+                  </svg> CONTACTS </a>
+                </li>
+                <li class="nav-item">
+                  <a class="btn btn-dark btn-lg special-menu" href="marques.php">
+                  <svg width="1.5em" height="1.5em" viewBox="0 0 16 16" class="bi bi-bag-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" d="M8 1a2.5 2.5 0 0 0-2.5 2.5V4h5v-.5A2.5 2.5 0 0 0 8 1zm3.5 3v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4h-3.5z"/>
+                  </svg> MARQUES </a>
                 </li>
 
               </ul>
-              <li class="dropdown notification-list">
-                                    <a class="nav-link dropdown-toggle " data-toggle="dropdown" id="topbar-userdrop" href="#" role="button" aria-haspopup="true"
-                                        aria-expanded="false">
-                                        <span class="account-user-avatar"> 
-                                            <img src="logos/profil.png" alt="user-image" class="rounded-circle">
-                                        </span>
-                                        <span>
-                                            <span class="account-user-name">Dominic Keller</span>
-                                            <span class="account-position">Founder</span>
-                                        </span>
-                                    </a>
-                                    <div class="dropdown-menu dropdown-menu-right dropdown-menu-animated topbar-dropdown-menu profile-dropdown" aria-labelledby="topbar-userdrop">
-                                    
-    
-                                        <!-- item-->
-                                        <a href="javascript:void(0);" class="dropdown-item notify-item">
-                                            <i class="mdi mdi-logout mr-1"></i>
-                                            <span>Logout</span>
-                                        </a>
-    
-                                    </div>
-                                </li>
-              <!-- <ul class="navbar-nav px-3">
+              <ul class="navbar-nav px-3">
                   <li class="nav-item text-nowrap">
                     <br/><p style="color:#49FF00">Session Ouverte<br/>
                     <?php echo $_SESSION['prenom'] ." ".$_SESSION['nom']?><br/>
                     <a style="color:#FF0000" href="deconnection.php">Déconnection</a></p>
                   </li>
-                </ul> -->
+                </ul>
             </div>
           </nav>
 
@@ -532,13 +598,92 @@
 
 <!------------------------------------------------------------------------MENU_GAUCHE------------------------------------------------------------------------------------>
 
+<form method="post">
+  
+    <div class="row">
+      <nav class="col-md-0 d-md-block sidebar">
+        <div class="d-flex" id="wrapper">
+            <div class="" id="sidebar-wrapper">
+              <div class="list-group list-group-flush">
+                <?php
+                $i=0;
+                while ($i<count($projets)) { 
+                  if($_GET['pr']==$i) echo '<a href="projets.php?pr='.$i.'" class="list-group-item list-group-item-action active">'.$projets[$i]['nom'].'</a>';
+                  else echo '<a href="projets.php?pr='.$i.'" class="list-group-item list-group-item-action bg-clair">'.$projets[$i]['nom'].'</a>';
+                  $i++;
+                }
+                ?>
+                <button type="button" data-backdrop="false" data-toggle="modal" data-target="#ajouter_c" class="btn btn-light bg-clair btn-sm"><span data-feather="plus-circle"></button>
+                </div>
+              </div>
 
+              <div class="modal fade" id="ajouter_c" role="dialog">
+                <div class="modal-dialog modal-dialog-centered">
+                  
+                  <!-- Modal content-->
+                  <div class="modal-content">
+
+                    <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+
+                    <div class="modal-body">
+                      <p><B>CLIENT</B></p>
+                      <p>Code Client : <input id="newProjetClient" name="newProjetClient" type="text"/></p>
+
+                      <hr width="100%" color="grey">
+
+                      <p><B>PROJET</B></p>
+                      <p>Nom : <input id="newProjetName" name="newProjetName" type="text"/></p>
+                      <p>Code : <input id="newProjetCode" name="newProjetCode" type="text"/></p>
+                      <p>B : <select class="custom-select d-block w-50" name="newProjetB" required>
+                        <option selected value>...</option>
+                        <option value ="1" >1</option>
+                        <option value ="2" >2</option>
+                        <option value ="3" >3</option>
+                      </select>
+                      F : <select class="custom-select d-block w-100" name="newProjetF" required>
+                        <option selected value>...</option>
+                        <option value ="1" >1</option>
+                        <option value ="2" >2</option>
+                        <option value ="3" >3</option>
+                      </select>
+                      T : <select class="custom-select d-block w-100" name="newProjetT" required>
+                        <option selected value>...</option>
+                        <option value ="1" >1</option>
+                        <option value ="2" >2</option>
+                        <option value ="3" >3</option>
+                      </select></p>
+
+                      <p><select class="custom-select-2 d-block w-100" name="newProjetEtat" required>
+                        <option selected value>Choisir un état...</option>
+                        <option value ="0" >En cours</option>
+                        <option value ="1" >Reporté</option>
+                        <option value ="2" >Terminé</option>
+                      </select></p>
+                      
+                      <textarea class="form-control" id="newProjetText" name="newProjetText" rows="3"></textarea>
+                      
+                    </div>
+
+                    <div class="modal-footer">
+                      <button name = "ajouterProjet" type="submit" class="btn btn-default">OK</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </nav>
+            </div>
+          </div>
+    
+      </form>
+    
 
 
 <!----------------------------------------------------------------------CLIENT-------------------------------------------------------------------------------------->
 
 
-<main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+<main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4 padding-top-0">
 
       <div class="container-fluid content-row">
 
