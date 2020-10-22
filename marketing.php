@@ -145,7 +145,6 @@
           display: none;   
       }
       .custom-select {
-          width: 50px !important;
           display: inline-flex !important; 
       }
       .custom-select-2 {
@@ -189,6 +188,7 @@
       }
       .list-group{
         padding-top: 10px;
+        width: 15rem;
       }
       .ul-special{
         margin-left: 290px;
@@ -228,7 +228,9 @@
         margin-right: 2%;
         margin-top: 0.5%;
       }
-
+      .container{
+        padding-top: 0px;
+      }
 
     </style>
 
@@ -325,38 +327,16 @@
                 <?php
                 $i=0;
                 while ($i<count($categ)) { 
-                  if($_GET['pr']==$i) echo '<a href="marketing.php?categ='.htmlspecialchars($categ[$i][0]).'" name="' .str_replace(' ', '-',$categ[$i][0]) .'" class="list-group-item list-group-item-action active">'.$categ[$i][0].'</a>';
-                  else echo '<a href="projets.php?pr='.$i.'" class="list-group-item list-group-item-action bg-clair">'.$projets[$i]['nom'].'</a>';
+                  if($_GET['categ']==htmlspecialchars($categ[$i][0])) echo '<a href="marketing.php?categ='.htmlspecialchars($categ[$i][0]).'" name="' .str_replace(' ', '-',$categ[$i][0]) .'" class="list-group-item list-group-item-action bg-clair active">'.$categ[$i][0].'</a>';
+                  else echo '<a href="marketing.php?categ='.htmlspecialchars($categ[$i][0]).'" name="' .str_replace(' ', '-',$categ[$i][0]) .'" class="list-group-item list-group-item-action bg-clair">'.$categ[$i][0].'</a>';
                   $i++;
                 }
                 ?>
-                <button type="button" data-backdrop="false" data-toggle="modal" data-target="#ajouter_c" class="btn btn-light bg-clair btn-sm"><span data-feather="plus-circle"></button>
-                </div>
-              </div>
+                
 
-
-
-
-
-<form method="post">
-<div class="container-fluid">
-  <div class="row">
-    <nav class="col-md-2 d-none d-md-block bg-light sidebar">
-      <div class="sidebar-sticky">
-        <ul class="nav flex-column">
-              <?php
-              $i=0;
-              while ($i<count($categ)) {
-                ?>
-                <button class="nav-item" type=""><a class="nav-link" href="marketing.php?categ=<?php echo htmlspecialchars($categ[$i][0]); ?>" name=<?php echo str_replace(' ', '-',$categ[$i][0]) ?> ><?php echo $categ[$i][0] ?></a></button>
-                <?php
-                $i++;
-              }
-              ?>
-        </ul> 
           <?php if($_SESSION['statut']=="admin"){ ?>
-                <div>
-                <button type="button" data-backdrop="false" data-toggle="modal" data-target="#ajouter_c" class="btn btn-light btn-sm"><span data-feather="plus-circle"></button>
+                
+                <button type="button" data-backdrop="false" data-toggle="modal" data-target="#ajouter_c" class="btn btn-light bg-clair btn-sm"><span data-feather="plus-circle"></button>
 
                 <div class="modal fade" id="ajouter_c" role="dialog">
                   <div class="modal-dialog modal-dialog-centered">
@@ -378,8 +358,10 @@
                     </div>
                   </div>
                 </div>
-              </div>
+              
           <?php } ?>
+            </div>
+          </div>
       </div>
     </nav>
   </div>
