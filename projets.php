@@ -399,9 +399,29 @@
           background-color: #1d2124;
           border-color: #1d2124;
       }
-      .bg-success{
-        color: rgba(0,0,0,1);
+      .bg-card-rouge{
+        background-color: rgb(123 42 50 / 75%)!important;
       }
+      .bg-card-vert{
+        background-color: rgb(56 128 72 / 75%)!important;
+      }
+      .bg-card-jaune{
+        background-color: rgb(193 150 25 / 75%)!important;
+      }
+      .bg-card-bleu{
+        background-color: rgb(23 84 150 / 75%)!important;
+      }
+      .bg-card-mauve{
+        background-color: rgb(47 27 113 / 75%)!important;
+      }
+      .bg-card-bleuvert{
+        background-color: rgb(26 123 117 / 75%)!important;
+      }
+      .session{
+        margin-right: 2%;
+        margin-top: 0.5%;
+      }
+
 
     </style>
 
@@ -437,7 +457,7 @@
             <!-- <div class="collapse navbar-collapse" id="navbarSupportedContent"> -->
               <!-- <div class="row"> -->
                 <!-- <div class="col-lg-4"> -->
-                  <ul class="navbar-nav mr-auto ul-special">
+                  <ul class="navbar-nav mr-auto ul-special session">
                     <li class="nav-item">
                       <!-- <a class="special-menu btn btn-primary color-menu " href="#"><span data-feather="shopping-cart"></span>Home <span class="sr-only">(current)</span></a> -->
                       <a class="btn btn-dark btn-lg special-menu" href="marketing.php?categ=Postes%20Premium">
@@ -474,13 +494,43 @@
                   </ul>
                 <!-- </div> -->
                 <!-- <div class="col-lg-4"> -->
-                  <ul class="navbar-nav px-3">
-                      <li class="nav-item text-nowrap">
-                        <br/><p style="color:#49FF00">Session Ouverte<br/>
-                        <?php echo $_SESSION['prenom'] ." ".$_SESSION['nom']?><br/>
-                        <a style="color:#FF0000" href="deconnection.php">Déconnection</a></p>
-                      </li>
-                    </ul>
+                  <ul class="navbar-nav session">
+                    <div class="dropdown">
+                      <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <!-- <span class="navbar-toggler-icon"></span> -->
+                              <?php echo $_SESSION['prenom'] ." ".$_SESSION['nom']?><br/>
+                      </button>
+                      <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                        <button type="button" data-backdrop="false" data-toggle="modal" data-target="#modal_modif_mdp" class="dropdown-item">Modifier mot de passe</button>
+                        <a type="button" data-backdrop="false" href="deconnection.php" class="dropdown-item">Déconnection</a>
+                      </div>
+                    </div>
+                  <!-- /////////////////MODAL/////////////////////// -->
+                    <form method="post">
+                          <div class="modal fade" id="modal_modif_mdp" role="dialog">
+                            <div class="modal-dialog modal-dialog-centered">
+                            
+                              <!-- Modal content-->
+                              <div class="modal-content">
+
+                                <div class="modal-header">
+                                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                </div>
+
+                                <div class="modal-body">
+                                  <p>Mot de passe actuel : <input type="password" id="mdpactu" name="mdpactu" type="text"/></p>
+                                  <p>Nouveau mot de passe : <input type="password" id="newmdp" name="newmdp" type="text"/></p>
+                                  <p>confirmer mot de passe : <input type="password" id="confirm" name="confirm" type="text"/></p>
+                                </div>
+
+                                <div class="modal-footer">
+                                  <button name = "modifmdp" type="submit" class="btn btn-default">OK</button>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </form>
+                      </ul>
                   <!-- </div> -->
               <!-- </div> -->
             <!-- </div> -->
@@ -584,7 +634,7 @@
 
           <div class="col-lg-4">
             <form method="post">
-            <div class="card mb-4 text-white bg-danger shadow-sm h-100">
+            <div class="card mb-4 text-white bg-card-rouge shadow-sm h-100">
               <div class="card-header">
                 <h5 class="card-title">Client</h5>
               </div>
@@ -611,7 +661,7 @@
 <!----------------------------------------------------------------------PROJETS_DU_CLIENT------------------------------------------------------------------------------->
           <div class="col-lg-4">
             <form method="post">
-            <div class="card mb-4 text-white bg-success shadow-sm h-100">
+            <div class="card mb-4 text-white bg-card-vert shadow-sm h-100">
               <div class="card-header">
                 <h5 class="card-title">Projets du client</h5>
               </div> 
@@ -619,7 +669,7 @@
               $p=0;
               for (; $p < count($projets); $p++){
                 if($projets[$_GET['pr']]['client']==$projets[$p]['client']){ ?>
-                   <button type="button" class="btn btn-success" onclick="window.location.href='projets.php?pr=<?php echo $p;?>';" ><?php echo $projets[$p]['nom']."  ".$projets[$p]['dateCreation']?></button>
+                   <button type="button" class="btn bg-card-vert btn-success" onclick="window.location.href='projets.php?pr=<?php echo $p;?>';" ><?php echo $projets[$p]['nom']."  ".$projets[$p]['dateCreation']?></button>
               <?php }} ?>
             </div>
            </form>
@@ -628,7 +678,7 @@
 <!----------------------------------------------------------------------LE_PROJET-------------------------------------------------------------------------------------->
           <div class="col-lg-4">
             <form method="post">
-            <div class="card mb-4 text-white bg-warning shadow-sm h-100">
+            <div class="card mb-4 text-white bg-card-jaune shadow-sm h-100">
               <div class="card-header">
                 <h5 class="card-title">Le projet</h5>
               </div>
@@ -649,7 +699,7 @@
               <textarea class="form-control" id="projetText" name="projetText" rows="7"><?php echo $projets[$_GET['pr']]['description']?></textarea>
               <div class="d-flex flex-column mt-auto">
                 <div class="btn-group" role="group">
-                  <button type="button" id="okprojetModif" name="okprojetModif" class="btn btn-warning">OK</button>
+                  <button type="button" id="okprojetModif" name="okprojetModif" class="btn bg-card-jaune btn-warning">OK</button>
                 </div>
               </div>
             </div>
@@ -665,7 +715,7 @@
 <!----------------------------------------------------------------------PROFORMAS-------------------------------------------------------------------------------------->
           <div class="col-lg-4">
             <form method="post">
-            <div class="card mb-4 text-white bg-primary shadow-sm h-100">
+            <div class="card mb-4 text-white bg-card-bleu shadow-sm h-100">
               <div class="card-header">
                 <h5 class="card-title">Proformas</h5>
               </div>
@@ -680,8 +730,8 @@
             <?php }}?>
             <div class="d-flex flex-column mt-auto">
               <div class="btn-group" role="group">
-                <button type="button" class="btn btn-primary" onclick="window.location.href='proforma.php?pr=<?php echo $projets[$_GET['pr']]['id'];?>&categ=Postes%20Premium'">Nouveau</button>
-                <button type="submit" class="btn btn-primary" name="editerProformaProjet">Editer</button>
+                <button type="button" class="btn bg-card-bleu btn-primary" onclick="window.location.href='proforma.php?pr=<?php echo $projets[$_GET['pr']]['id'];?>&categ=Postes%20Premium'">Nouveau</button>
+                <button type="submit" class="btn bg-card-bleu btn-primary" name="editerProformaProjet">Editer</button>
               </div>
             </div>
             </div>
@@ -691,7 +741,7 @@
 <!----------------------------------------------------------------------BONS_DE_COMMANDE-------------------------------------------------------------------------------------->
           <div class="col-lg-4">
             <form method="post">
-            <div class="card mb-4 text-white bg-secondary shadow-sm h-100">
+            <div class="card mb-4 text-white bg-card-mauve shadow-sm h-100">
               <div class="card-header">
                 <h5 class="card-title">Bon de commande</h5>
               </div> 
@@ -703,7 +753,7 @@
 
               <div class="d-flex flex-column mt-auto">
                 <div class="btn-group" role="group">
-                  <button type="submit" class="btn btn-secondary" name="editerBonProjet">Editer</button>
+                  <button type="submit" class="btn bg-card-mauve btn-secondary" name="editerBonProjet">Editer</button>
                 </div>
               </div>
             </div>
@@ -713,7 +763,7 @@
 <!----------------------------------------------------------------------RAPPORTS-------------------------------------------------------------------------------------->
           <div class="col-lg-4">
             <form method="post">
-            <div class="card mb-4 text-white bg-dark shadow-sm h-100">
+            <div class="card mb-4 text-white bg-card-bleuvert shadow-sm h-100">
               <div class="card-header">
                 <h5 class="card-title">Rapports</h5>
               </div>
@@ -724,8 +774,8 @@
             <?php }}?>
             <div class="d-flex flex-column mt-auto">
               <div class="btn-group" role="group">
-                <button type="button" class="btn btn-dark" onclick="window.location.href='rapports.php?pr=<?php echo $projets[$_GET['pr']]['id'];?>'">Nouveau</button>
-                <button type="button" class="btn btn-dark">Editer</button>
+                <button type="button" class="btn bg-card-bleuvert btn-dark" onclick="window.location.href='rapports.php?pr=<?php echo $projets[$_GET['pr']]['id'];?>'">Nouveau</button>
+                <button type="button" class="btn bg-card-bleuvert btn-dark">Editer</button>
               </div>
             </div>
             </div>
