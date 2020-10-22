@@ -454,12 +454,9 @@
 <header>
           <nav class="navbar navbar-expand-lg navbar-dark">
 
-            <!-- <div class="collapse navbar-collapse" id="navbarSupportedContent"> -->
-              <!-- <div class="row"> -->
-                <!-- <div class="col-lg-4"> -->
                   <ul class="navbar-nav mr-auto ul-special session">
                     <li class="nav-item">
-                      <!-- <a class="special-menu btn btn-primary color-menu " href="#"><span data-feather="shopping-cart"></span>Home <span class="sr-only">(current)</span></a> -->
+
                       <a class="btn btn-dark btn-lg special-menu" href="marketing.php?categ=Postes%20Premium">
                         <svg width="1.5em" height="1.5em" viewBox="0.5 1.5 16 16" class="bi bi-cart3" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                           <path fill-rule="evenodd" d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .49.598l-1 5a.5.5 0 0 1-.465.401l-9.397.472L4.415 11H13a.5.5 0 0 1 0 1H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l.84 4.479 9.144-.459L13.89 4H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm7 0a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"/>
@@ -531,18 +528,12 @@
                           </div>
                         </form>
                       </ul>
-                  <!-- </div> -->
-              <!-- </div> -->
-            <!-- </div> -->
           </nav>
-
-  
 </header>
 
 <!------------------------------------------------------------------------MENU_GAUCHE------------------------------------------------------------------------------------>
 
 <form method="post">
-  
     <div class="row">
       <nav class="col-md-0 d-md-block sidebar">
         <div class="d-flex" id="wrapper">
@@ -559,66 +550,66 @@
                 <button type="button" data-backdrop="false" data-toggle="modal" data-target="#ajouter_c" class="btn btn-light bg-clair btn-sm"><span data-feather="plus-circle"></button>
                 </div>
               </div>
+              <!-----------------------------MODAL------------------------>
+                    <div class="modal fade" id="ajouter_c" role="dialog">
+                      <div class="modal-dialog modal-dialog-centered">
+                        
+                        <!-- Modal content-->
+                        <div class="modal-content">
 
-              <div class="modal fade" id="ajouter_c" role="dialog">
-                <div class="modal-dialog modal-dialog-centered">
-                  
-                  <!-- Modal content-->
-                  <div class="modal-content">
+                          <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                          </div>
 
-                    <div class="modal-header">
-                      <button type="button" class="close" data-dismiss="modal">&times;</button>
+                          <div class="modal-body">
+                            <p><B>CLIENT</B></p>
+                            <p>Code Client : <input id="newProjetClient" name="newProjetClient" type="text"/></p>
+
+                            <hr width="100%" color="grey">
+
+                            <p><B>PROJET</B></p>
+                            <p>Nom : <input id="newProjetName" name="newProjetName" type="text"/></p>
+                            <p>Code : <input id="newProjetCode" name="newProjetCode" type="text"/></p>
+                            <p>B : <select class="custom-select d-block w-50" name="newProjetB" required>
+                              <option selected value>...</option>
+                              <option value ="1" >1</option>
+                              <option value ="2" >2</option>
+                              <option value ="3" >3</option>
+                            </select>
+                            F : <select class="custom-select d-block w-100" name="newProjetF" required>
+                              <option selected value>...</option>
+                              <option value ="1" >1</option>
+                              <option value ="2" >2</option>
+                              <option value ="3" >3</option>
+                            </select>
+                            T : <select class="custom-select d-block w-100" name="newProjetT" required>
+                              <option selected value>...</option>
+                              <option value ="1" >1</option>
+                              <option value ="2" >2</option>
+                              <option value ="3" >3</option>
+                            </select></p>
+
+                            <p><select class="custom-select-2 d-block w-100" name="newProjetEtat" required>
+                              <option selected value>Choisir un état...</option>
+                              <option value ="0" >En cours</option>
+                              <option value ="1" >Reporté</option>
+                              <option value ="2" >Terminé</option>
+                            </select></p>
+                            
+                            <textarea class="form-control" id="newProjetText" name="newProjetText" rows="3"></textarea>
+                            
+                          </div>
+
+                          <div class="modal-footer">
+                            <button name = "ajouterProjet" type="submit" class="btn btn-default">OK</button>
+                          </div>
+                        </div>
+                      </div>
                     </div>
-
-                    <div class="modal-body">
-                      <p><B>CLIENT</B></p>
-                      <p>Code Client : <input id="newProjetClient" name="newProjetClient" type="text"/></p>
-
-                      <hr width="100%" color="grey">
-
-                      <p><B>PROJET</B></p>
-                      <p>Nom : <input id="newProjetName" name="newProjetName" type="text"/></p>
-                      <p>Code : <input id="newProjetCode" name="newProjetCode" type="text"/></p>
-                      <p>B : <select class="custom-select d-block w-50" name="newProjetB" required>
-                        <option selected value>...</option>
-                        <option value ="1" >1</option>
-                        <option value ="2" >2</option>
-                        <option value ="3" >3</option>
-                      </select>
-                      F : <select class="custom-select d-block w-100" name="newProjetF" required>
-                        <option selected value>...</option>
-                        <option value ="1" >1</option>
-                        <option value ="2" >2</option>
-                        <option value ="3" >3</option>
-                      </select>
-                      T : <select class="custom-select d-block w-100" name="newProjetT" required>
-                        <option selected value>...</option>
-                        <option value ="1" >1</option>
-                        <option value ="2" >2</option>
-                        <option value ="3" >3</option>
-                      </select></p>
-
-                      <p><select class="custom-select-2 d-block w-100" name="newProjetEtat" required>
-                        <option selected value>Choisir un état...</option>
-                        <option value ="0" >En cours</option>
-                        <option value ="1" >Reporté</option>
-                        <option value ="2" >Terminé</option>
-                      </select></p>
-                      
-                      <textarea class="form-control" id="newProjetText" name="newProjetText" rows="3"></textarea>
-                      
-                    </div>
-
-                    <div class="modal-footer">
-                      <button name = "ajouterProjet" type="submit" class="btn btn-default">OK</button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </nav>
+                  <!-----------------------------FIN_MODAL------------------------>
             </div>
+            </nav>
           </div>
-    
       </form>
     
 
