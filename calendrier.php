@@ -165,6 +165,7 @@
 
 
     </style>
+    <link rel="stylesheet" href="fullcalendar/lib/main.css">
   </head>
   <body>
 
@@ -249,23 +250,19 @@
           </nav>
 </header>
 
-      <iframe src="younes_benreguieg.pdf" width="800" height="600" align="middle"></iframe>
 
-<!-- <div class="container-fluid">
-    <main role="main" class="col-md-auto ml-sm-auto col-lg-15 ">
-    </br></br></br>
-    	<iframe src="https://calendar.google.com/calendar/embed?height=600&amp;wkst=1&amp;bgcolor=%23ffffff&amp;ctz=Europe%2FParis&amp;src=MGtyZHIyZTZnYXVtY2IydHU4Z2V0ZGFxcG9AZ3JvdXAuY2FsZW5kYXIuZ29vZ2xlLmNvbQ&amp;color=%23402175" style="border:solid 1px #777" width="100%" height="88%" frameborder="5" scrolling="yes"></iframe>
 
-    
-    </main>
-</div> -->
+<div id="calendrier"></div>
 
+
+
+<script src="fullcalendar/lib/main.js"></script>
 <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
       <script>window.jQuery || document.write('<script src="js/vendor/jquery.slim.min.js"><\/script>')</script><script src="/docs/4.4/dist/js/bootstrap.bundle.min.js" integrity="sha384-6khuMg9gaYr5AxOqhkVIODVIvm9ynTT5J4V1cfthmT+emCG6yVmEZsRHdxlotUnm" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.9.0/feather.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script>
         <script src="dashboard.js"></script>
-      </body>
+</body>
       <script type="text/javascript" src="js/jquery.min.js"></script>
     <script type="text/javascript" src="js/main.js"></script>
 </html>
