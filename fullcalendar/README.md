@@ -1,11 +1,9 @@
+# FullCalendar-BS3-PHP-MySQL
+FullCalendar 2 integration with bootstrap, php and mysql
 
-# FullCalendar [![Build Status](https://travis-ci.com/fullcalendar/fullcalendar.svg?branch=master)](https://travis-ci.com/fullcalendar/fullcalendar)
+## DEMO and Installtion
+[demo](http://jamelbaz.com/non-classe/integration-de-fullcalendar2-php-mysql).
 
-A full-sized drag & drop JavaScript event calendar
+## License
 
-- [Project website and demos](http://fullcalendar.io/)
-- [Documentation](http://fullcalendar.io/docs)
-- [Support](http://fullcalendar.io/support)
-- [Contributing](CONTRIBUTING.md)
-- [Changelog](CHANGELOG.md)
-- [License](LICENSE.txt)
+MIT
