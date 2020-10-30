@@ -35,7 +35,7 @@ if (!isset($_SESSION['index'])){
 
                 $_SESSION['email'] = $data[0]['email'];
                 $_SESSION['nom'] = $data[0]['nom'];
-                $_SESSION['id_compte'] = $data[0]['id'];
+                $_SESSION['id_compte'] = strval($data[0]['id']);
                 $_SESSION['prenom'] = $data[0]['prenom'];
                 $_SESSION['statut'] = $data[0]['Statut'];
                 unset($db);

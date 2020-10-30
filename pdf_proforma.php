@@ -44,21 +44,21 @@ else $pdf->Text(54.5, 43.5, $_SESSION['id_compte'].$_SESSION['id_proforma'].date
 $pdf->SetFont('Arial', '', 10);
 $pdf->Text(2, 50.5, "Date Proforma:    ".date("d/m/Y"));
 $pdf->Text(2, 55.5, "Date de validite:    " . $_SESSION['dateValid']);
-$pdf->Text(2, 60.5, "Delai de livraison:    " . $_SESSION['delaiLiv']."semaines");
+$pdf->Text(2, 60.5, "Delai de livraison:    " . $_SESSION['delaiLiv']." semaines");
 $pdf->Text(2, 65.5, "Emis et valide par:    ".$_SESSION['prenom']." ".$_SESSION['nom']);
 
 $pdf->Text(200, 35.5, $pdf->PageNo().'/{nb}');
 
 //Deuxieme Rectangle
 $pdf->Rect(120,37,90,30,"DF");
-$pdf->Text(122, 40.5, $_SESSION['NomClient']);
+$pdf->Text(122, 40.5, strtoupper($_SESSION['NomClient']));
 $pdf->Text(122, 45.5, $_SESSION['AdresseClient']);
 $pdf->Text(122, 50.5, "Numero NIF: ".$_SESSION['NIF']);
 $pdf->Text(122, 55.5, $_SESSION['CodePostalClient']);
 $pdf->Text(155, 55.5, $_SESSION['VilleClient']);
 $pdf->Text(190, 55.5, $_SESSION['WilayaClient']);
 $pdf->Text(122, 60.5, iconv("UTF-8", "CP1252", $_SESSION['PaysClient']));
-$pdf->Text(122, 65.5, $_SESSION['CodeClient']);
+$pdf->Text(122, 65.5, "CC : ".$_SESSION['CodeClient']);
 
 //$pdf->Text(122, 65.5, MontantGlobal());
 //Bande Transport
@@ -213,7 +213,7 @@ $pdf->Text(122, 256, "Total Marchandise H.T.");
 $pdf->Text(180, 256, ":      ".$TOTALPRICE.iconv("UTF-8", "CP1252", $DEVISE_SIGNE));
 $pdf->Text(122, 261, "Total Transport");
 $pdf->Text(180, 261, ":      ".$TOTALTRANSPORT.iconv("UTF-8", "CP1252", $DEVISE_SIGNE));
-$pdf->Text(122, 266, "Total CFR Port de");
+$pdf->Text(122, 266, "Total CFR Port de ".$_SESSION['port_dest']);
 $pdf->Text(180, 266, ":      ".($TOTALPRICE+$TOTALTRANSPORT).iconv("UTF-8", "CP1252", $DEVISE_SIGNE));
 $pdf->Rect(0,280,210,15,"DF");
 $pdf->Text(2, 284, "Sarl Integral Trading  : Capital 10 000".iconv("UTF-8", "CP1252", $DEVISE_SIGNE)."       Numero Intra CEE FR21 418 515 136        RCS Compi".utf8_decode("è")."gne N".utf8_decode("°")."");

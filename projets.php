@@ -255,10 +255,24 @@
               }
             }
 
-            else if(isset($_POST['editerProformaProjet'])){
+            else if(isset($_POST['okprojetModif'])){
+              $dbco = include 'db_mysql.php';
+                  $sth = $dbco->prepare('UPDATE projets SET description=? , etat=? WHERE code=?');
+                  $sth->execute(array($_POST['projetText'],$_POST['inlineRadioOptions'],$projets[$_GET['pr']]['code']));
+                  unset($dbco);
+                  header('Refresh: 0');
+            }
+
+            else if(isset($_POST['editerProformaProjet']) and isset($_POST['radioProforma']) and file_exists("proformas/".$_POST['radioProforma'].'.pdf')){
               $_SESSION['currentProforma'] = $_POST['radioProforma'];
               header('Location: proforma_visu.php?pr='.$_GET['pr']);
             }
+
+            else if(isset($_POST['editerBonProjet']) and isset($_POST['boxBon']) and file_exists("bons/".$_POST['boxBon'].'.pdf')){
+              $_SESSION['currentProforma'] = $_POST['radioProforma'];
+              header('Location: bon_de_commande_visu.php?pr='.$_GET['pr']);
+            }
+
             else if(isset($_POST['modifmdp'])){
               $db = include 'db_mysql.php';
                 $mail = $_SESSION['email'];
@@ -464,12 +478,12 @@
                     </li>
                     <li class="nav-item">
                       <a class="btn btn-dark btn-lg special-menu active" href="projets.php?pr=0">
-                      <svg width="1.5em" height="1.5em" viewBox="0 1 16 16" class="bi bi-folder-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                        <path fill-rule="evenodd" d="M9.828 3h3.982a2 2 0 0 1 1.992 2.181l-.637 7A2 2 0 0 1 13.174 14H2.826a2 2 0 0 1-1.991-1.819l-.637-7a1.99 1.99 0 0 1 .342-1.31L.5 3a2 2 0 0 1 2-2h3.672a2 2 0 0 1 1.414.586l.828.828A2 2 0 0 0 9.828 3zm-8.322.12C1.72 3.042 1.95 3 2.19 3h5.396l-.707-.707A1 1 0 0 0 6.172 2H2.5a1 1 0 0 0-1 .981l.006.139z"/>
+                      <svg width="1.5em" height="1.5em" viewBox="0.5 1.5 16 16" class="bi bi-folder2-open" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" d="M1 3.5A1.5 1.5 0 0 1 2.5 2h2.764c.958 0 1.76.56 2.311 1.184C7.985 3.648 8.48 4 9 4h4.5A1.5 1.5 0 0 1 15 5.5v.64c.57.265.94.876.856 1.546l-.64 5.124A2.5 2.5 0 0 1 12.733 15H3.266a2.5 2.5 0 0 1-2.481-2.19l-.64-5.124A1.5 1.5 0 0 1 1 6.14V3.5zM2 6h12v-.5a.5.5 0 0 0-.5-.5H9c-.964 0-1.71-.629-2.174-1.154C6.374 3.334 5.82 3 5.264 3H2.5a.5.5 0 0 0-.5.5V6zm-.367 1a.5.5 0 0 0-.496.562l.64 5.124A1.5 1.5 0 0 0 3.266 14h9.468a1.5 1.5 0 0 0 1.489-1.314l.64-5.124A.5.5 0 0 0 14.367 7H1.633z"/>
                       </svg> PROJETS <span class="sr-only">(current)</span></a>
                     </li>
                     <li class="nav-item">
-                      <a class="btn btn-dark btn-lg special-menu" href="calendrier.php">
+                      <a class="btn btn-dark btn-lg special-menu" href="calendar/calendrier.php">
                       <svg width="1.5em" height="1.5em" viewBox="0 0 16 16" class="bi bi-calendar-date" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                         <path fill-rule="evenodd" d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"/>
                         <path d="M6.445 11.688V6.354h-.633A12.6 12.6 0 0 0 4.5 7.16v.695c.375-.257.969-.62 1.258-.777h.012v4.61h.675zm1.188-1.305c.047.64.594 1.406 1.703 1.406 1.258 0 2-1.066 2-2.871 0-1.934-.781-2.668-1.953-2.668-.926 0-1.797.672-1.797 1.809 0 1.16.824 1.77 1.676 1.77.746 0 1.23-.376 1.383-.79h.027c-.004 1.316-.461 2.164-1.305 2.164-.664 0-1.008-.45-1.05-.82h-.684zm2.953-2.317c0 .696-.559 1.18-1.184 1.18-.601 0-1.144-.383-1.144-1.2 0-.823.582-1.21 1.168-1.21.633 0 1.16.398 1.16 1.23z"/>
@@ -675,22 +689,22 @@
               </div>
              <span>
               <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1" <?php if($projets[$_GET['pr']]['etat']==0) echo 'checked'?>>
+                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="0" <?php if($projets[$_GET['pr']]['etat']==0) echo 'checked'?>>
                 <label class="form-check-label" for="inlineRadio1">En Cours</label>
               </div>
               <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2" <?php if($projets[$_GET['pr']]['etat']==1) echo 'checked'?>>
+                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="1" <?php if($projets[$_GET['pr']]['etat']==1) echo 'checked'?>>
                 <label class="form-check-label" for="inlineRadio2">Reporté</label>
               </div>
               <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio3" value="option3" <?php if($projets[$_GET['pr']]['etat']==2) echo 'checked'?>>
+                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio3" value="2" <?php if($projets[$_GET['pr']]['etat']==2) echo 'checked'?>>
                 <label class="form-check-label" for="inlineRadio3">Terminé</label>
               </div> 
             </span>
               <textarea class="form-control" id="projetText" name="projetText" rows="7"><?php echo $projets[$_GET['pr']]['description']?></textarea>
               <div class="d-flex flex-column mt-auto">
                 <div class="btn-group" role="group">
-                  <button type="button" id="okprojetModif" name="okprojetModif" class="btn bg-card-jaune btn-warning">OK</button>
+                  <button type="submit" id="okprojetModif" name="okprojetModif" class="btn bg-card-jaune btn-warning">OK</button>
                 </div>
               </div>
             </div>
@@ -739,7 +753,7 @@
               <?php for($prof=0;$prof<count($proformas);$prof++){
                 if($proformas[$prof]['projet']==$projets[$_GET['pr']]['code']){
                ?>
-               <p><input type="radio" name="boxBon" id="<?php echo "boxBon".$proformas[$prof]['code'] ?>"><?php echo "Bon de commande "."N°".$proformas[$prof]['code']?></p>
+               <p><input type="radio" name="boxBon" id="<?php echo $proformas[$prof]['code'] ?>"><?php echo "Bon de commande "."N°".$proformas[$prof]['code']?></p>
             <?php }}?>
 
               <div class="d-flex flex-column mt-auto">
