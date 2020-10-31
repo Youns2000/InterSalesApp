@@ -51,7 +51,9 @@ function getRapportPDF(){
 	$pdf->Write(5,$_SESSION['remarques']);
 	$pdf->Write(10,"\n");
 
-	return $pdf->Output('I',"rapport");
+	if(intval($_SESSION['id_compte'])<10) $pdf->Output('F',"rapports/".$_SESSION['currentRapport'].".pdf");
+	else $pdf->Output('F',"proformas/".$_SESSION['currentRapport'].".pdf"); 
+	//return $pdf->Output('I',"rapport");
 }
 
 function getRapportCode(){

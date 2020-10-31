@@ -780,7 +780,7 @@
             <div class="d-flex flex-column mt-auto">
               <div class="btn-group" role="group">
                 <button type="button" class="btn bg-card-bleuvert btn-dark" onclick="window.location.href='rapports.php?pr=<?php echo $projets[$_GET['pr']]['id'];?>'">Nouveau</button>
-                <button type="button" class="btn bg-card-bleuvert btn-dark">Editer</button>
+                <button type="submit" class="btn bg-card-bleuvert btn-dark">Editer</button>
               </div>
             </div>
             </div>
