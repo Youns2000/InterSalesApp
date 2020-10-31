@@ -175,6 +175,7 @@
 
 
     </style>
+<<<<<<< Updated upstream
     
         <style>
 
@@ -186,6 +187,20 @@
         margin: 0 auto;
       }
         </style>
+=======
+     <script>
+
+      document.addEventListener('DOMContentLoaded', function() {
+        var calendarEl = document.getElementById('calendar');
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+          initialView: 'dayGridMonth'
+        });
+        calendar.render();
+      });
+
+    </script>
+    <link rel="stylesheet" href="fullcalendar/lib/main.css">
+>>>>>>> Stashed changes
   </head>
   <body>
 

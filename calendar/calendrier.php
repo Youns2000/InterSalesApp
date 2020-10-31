@@ -187,7 +187,7 @@ $events = $req->fetchAll();
     <!-- Custom CSS -->
     <style>
 	#calendar {
-		max-width: 800px;
+		max-width: 1100px;
 	}
 	.col-centered{
 		float: none;
