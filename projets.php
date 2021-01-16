@@ -31,6 +31,7 @@
 
   $sql_projets = 'SELECT id,user,nom,code,client,bft,dateCreation,description,etat, montant, objectif, offre, avancement, concurrence
           FROM projets
+          WHERE user='.$_SESSION['email'].'
           ORDER BY id;';
 
   $sql_rapports = 'SELECT id,code,num,projet,commandes,visitesClient,offres,remarques
@@ -88,6 +89,7 @@
              $stmt7 = $db->prepare($sql_projets);
              $stmt7->execute(array());
              $projets = $stmt7->fetchAll();
+             print_r($projets);
 
              $stmt8 = $db->prepare($sql_rapports);
              $stmt8->execute(array());
@@ -709,14 +711,14 @@
                 <h5 class="card-title">Proformas</h5>
               </div>
 
-              <?php 
+              <?php
                 if(count($projets)>0){
                 for($prof=0;$prof<count($proformas);$prof++){
                 if($proformas[$prof]['projet']==$projets[$_GET['pr']]['code']){
                ?>
-               <div class="scroll">
-               <p><input type="radio" name="radioProforma" value="<?php echo $proformas[$prof]['code'] ?>"><?php echo "Proforma "."N°".$proformas[$prof]['code']?></p>
-             </div>
+              <div class="scroll">
+                <p><input type="radio" name="radioProforma" value="<?php echo $proformas[$prof]['code'] ?>"><?php echo "Proforma "."N°".$proformas[$prof]['code']?></p>
+              </div>
                <!-- <div class="form-check">
                 <input class="form-check-input" type="radio" name="radioProforma" id="<?php echo "radioProforma".$proformas[$prof]['code'] ?>" value="<?php echo $proformas[$prof]['code'] ?>" >
                 <label class="form-check-label" for="<?php echo "radioProforma".$proformas[$prof]['code'] ?>"><?php echo "Proforma "."N°".$proformas[$prof]['code']?></label>
