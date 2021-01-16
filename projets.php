@@ -478,10 +478,8 @@
                 foreach ($projets as $key => $value) {
                   if($value['user'] == $_SESSION['email']) array_push($tmp,$value);
                 }
-                // print_r($tmp);
                 $client_pr = array_unique(array_column($tmp,'client'));
-                // print_r($client_pr);
-
+                print_r($client_pr);
                 $i=0;
                 while ($i<count($client_pr)) { 
                   $k=0;
