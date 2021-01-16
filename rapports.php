@@ -19,11 +19,16 @@
           FROM projets
           ORDER BY id;';
 
+  $sql_rapports = 'SELECT id,code,num,projet,commandes,visitesClient,offres,remarques
+          FROM rapports
+          ORDER BY id;';
+
   $sqlRapportEnregistrer = 'INSERT INTO `rapports` (`id`, `projet`, `commandes`, `visitesClient`, `offres` , `remarques`) VALUES (NULL, ?, ?, ?, ?, ?);';
     
           $data=array();
           $categ=array();
           $engins=array();
+          $rapports=array();
           $projets=array();
           $db = include 'db_mysql.php';
 
@@ -36,6 +41,10 @@
              $stmt2->execute(array());
              $engins= $stmt2->fetchAll();
 
+             $stmt3 = $db->prepare($sql_rapports);
+             $stmt3->execute(array());
+             $rapports= $stmt3->fetchAll();
+
              $stmt7 = $db->prepare($sql_projets);
              $stmt7->execute(array());
              $projets = $stmt7->fetchAll(); 
@@ -46,9 +55,12 @@
                           $_SESSION['visites'] = $_POST['visites'];
                           $_SESSION['offres'] = $_POST['offres'];
                           $_SESSION['remarques'] = $_POST['remarques'];
-                           //id_compte+currentProjetCode+mois+annee
-                          if(intval($_SESSION['id_compte'])<10) $_SESSION['currentRapport'] = '0'.$_SESSION['id_compte'].$projets[$_GET['pr']]['code'].date("my");
-                          else $_SESSION['currentRapport'] = $_SESSION['id_compte'].$projets[$_GET['pr']]['code'].date("my"); 
+                           //id_compte+num+currentProjetCode+mois+annee
+                          $numero = intval($rapports[count($rapports)]['num'])+1;
+                          $_SESSION['numeroRapport'] = $numero;
+                          $_SESSION['currentRapport'] = 0;
+                          if(intval($_SESSION['id_compte'])<10) $_SESSION['currentRapport'] = '0'.$_SESSION['id_compte'].strval($numero).$projets[$_GET['pr']]['code'];
+                          else $_SESSION['currentRapport'] = $_SESSION['id_compte'].strval($numero).$projets[$_GET['pr']]['code']; 
                           getRapportPDF();
                           header('Location: rapports_visu.php?pr='.$_GET['pr']);
                           exit();             
@@ -102,115 +114,7 @@
     <link href="css/style_menu.css" rel="stylesheet">
     <link href="css/dashboard.css" rel="stylesheet">
     <link href="css/carousel.css" rel="stylesheet">
-    <style type="text/css">
-      .form-group input[type="checkbox"] {
-          display: none;
-      }
-
-      .form-group input[type="checkbox"] + .btn-group > label span {
-          width: 20px;
-      }
-
-      .form-group input[type="checkbox"] + .btn-group > label span:first-child {
-          display: none;
-      }
-      .form-group input[type="checkbox"] + .btn-group > label span:last-child {
-          display: inline-block;   
-      }
-
-      .form-group input[type="checkbox"]:checked + .btn-group > label span:first-child {
-          display: inline-block;
-      }
-      .form-group input[type="checkbox"]:checked + .btn-group > label span:last-child {
-          display: none;   
-      }
-      .custom-select {
-          width: 50px !important;
-          display: inline-flex !important; 
-      }
-      .custom-select-2 {
-          width: 150px !important;
-          display: inline-flex !important; 
-      }
-      .container-fluid{
-        padding-top: 50px;
-      }
-      .special-menu{
-        font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
-        font-size: 15;
-        background-color: rgba(52,58,64,0.8)
-      }
-      .color-menu:hover{
-        background-color: #303234!important;
-          border-color: #303234!important;
-      }
-      .color-menu,
-      .color-menu:active,
-      .color-menu:visited,
-      .color-menu:focus {
-          background-color: #50575D!important;
-          border-color: #50575D!important;
-      }
-      li{
-        margin-left: 20px;
-      }
-      
-      .sidebar{
-        margin-top:100px;
-      }
-      .navbar{
-        padding-top: 0px;
-        padding-bottom: 0px;
-        padding-left: 0px;
-      }
-
-      .padding-top-0{
-        padding-top: 0px;
-      }
-      .list-group{
-        padding-top: 10px;
-      }
-      .ul-special{
-        margin-left: 290px;
-      }
-      .btn-lg{      
-        /*width: 250px;*/
-      }
-      
-      .bg-clair{
-        background-color: #f8f9fa85;
-      }
-      .list-group-item.active {
-          z-index: 2;
-          color: #fff;
-          background-color: #1d2124;
-          border-color: #1d2124;
-      }
-      .bg-card-rouge{
-        background-color: rgb(123 42 50 / 75%)!important;
-      }
-      .bg-card-vert{
-        background-color: rgb(56 128 72 / 75%)!important;
-      }
-      .bg-card-jaune{
-        background-color: rgb(193 150 25 / 75%)!important;
-      }
-      .bg-card-bleu{
-        background-color: rgb(23 84 150 / 75%)!important;
-      }
-      .bg-card-mauve{
-        background-color: rgb(47 27 113 / 75%)!important;
-      }
-      .bg-card-bleuvert{
-        background-color: rgb(26 123 117 / 75%)!important;
-      }
-      .session{
-        margin-right: 2%;
-        margin-top: 0.5%;
-      }
-
-
-    </style>
+    <link href="my_css.css" rel="stylesheet">
 
   </head>
   <body>
@@ -307,18 +211,18 @@
         <div class="col-lg-6">
           <div class="card mb-4 shadow-sm">
               <div class="card-header">
-                <h5 class="card-title">COMMANDES</h5>
+                <h5 class="card-title">VISITES CLIENTS</h5>
               </div>
-              <textarea class="form-control" name="commandes" rows="10"></textarea>
+              <textarea class="form-control" name="visites" rows="10"></textarea>
             </div>
         </div>
 
         <div class="col-lg-6">
           <div class="card mb-4 shadow-sm">
               <div class="card-header">
-                <h5 class="card-title">VISITES CLIENTS</h5>
+                <h5 class="card-title">OFFRES</h5>
               </div>
-              <textarea class="form-control" name="visites" rows="10"></textarea>
+              <textarea class="form-control" name="offres" rows="10"></textarea>
             </div>
         </div>
 
@@ -329,9 +233,9 @@
       <div class="col-lg-6">
         <div class="card mb-4 shadow-sm">
               <div class="card-header">
-                <h5 class="card-title">OFFRES</h5>
+                <h5 class="card-title">COMMANDES</h5>
               </div>
-              <textarea class="form-control" name="offres" rows="10"></textarea>
+              <textarea class="form-control" name="commandes" rows="10"></textarea>
             </div>
         </div>
 

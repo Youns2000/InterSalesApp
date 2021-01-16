@@ -1188,9 +1188,9 @@ pre code {
     max-width: 8.333333%;
   }
   .col-lg-2 {
-    -ms-flex: 0 0 16.666667%;
-    flex: 0 0 16.666667%;
-    max-width: 16.666667%;
+    -ms-flex: 0 0 19%;
+    flex: 0 0 19%;
+    max-width: 19%;
   }
   .col-lg-3 {
     -ms-flex: 0 0 25%;
@@ -4560,7 +4560,8 @@ input[type="button"].btn-block {
   word-wrap: break-word;
   background-color: #fff;
   background-clip: border-box;
-  border: 1px solid rgba(0, 0, 0, 0.125);
+  /*border: 1px solid #366092;*/
+  /*border: 1px solid rgba(0, 0, 0, 0.125);*/
   border-radius: 0.25rem;
   text-align: center;
 }
@@ -4610,7 +4611,8 @@ input[type="button"].btn-block {
 .card-header {
   padding: 0.75rem 1.25rem;
   margin-bottom: 0;
-  background-color: rgba(0, 0, 0, 0.03);
+  /*background-color: rgba(0, 0, 0, 0.03);*/
+  background-color: #16365C;
   border-bottom: 1px solid rgba(0, 0, 0, 0.125);
 }
 

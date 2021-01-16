@@ -1,0 +1,9 @@
+pdf
+
+jpg
+png
+
+mp4
+mov
+wv
+vob

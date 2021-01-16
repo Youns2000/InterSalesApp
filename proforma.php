@@ -25,7 +25,7 @@
           FROM pays
           ORDER BY id;';
 
-  $sql_proformas = 'SELECT id,DateCreation,DateValid,EmisPar,Client,projet,DelaiLivraison,PortDest,Engins,Options, monnaie
+  $sql_proformas = 'SELECT id,code,DateCreation,DateValid,EmisPar,Client,projet,DelaiLivraison,PortDest,Engins,Options, monnaie
           FROM proformas
           ORDER BY id;';
 
@@ -86,11 +86,16 @@
              $projets = $stmt7->fetchAll();
              unset($db);
 
-            if((isset($_POST['inputClientName']) or isset($_POST['inputClientWilaya']) or isset($_POST['inputClientCode'])) and isset($_POST['visualiser'])){
-                    $i = 0;
+            if(/*(isset($_POST['inputClientName']) or isset($_POST['inputClientWilaya']) or isset($_POST['inputClientCode'])) and*/ isset($_POST['visualiser'])){
+                   /* $i = 0;
                     while($i<count($clients)){
                       if( ($clients[$i]['NomSociete']==$_POST['inputClientName'] and $clients[$i]['Wilaya']==$_POST['inputClientWilaya']) or $clients[$i]['NomSociete']==$_POST['inputClientCode'])
-                      {
+                      {*/
+                        $i=0;
+                        $y=0;
+                        for (; $i < count($clients); $i++) { 
+                          if($clients[$i]['CodeClient'] == $projets[$y]['client']) break;
+                        }
                           $_SESSION['CodeClient'] = $clients[$i]['CodeClient'];
                           $_SESSION['NomClient'] = $clients[$i]['NomSociete'];
                           $_SESSION['AdresseClient'] = $clients[$i]['Adresse'];
@@ -119,18 +124,19 @@
                           //header('Location: pdf_proforma.php');
                           //exit();
                           //$_SESSION['pdf_temp'] = getProforma(true);
-                          getProforma(false);
+                          getProforma(false,false);
+                          getProforma(false,true);
                          if(intval($_SESSION['id_compte'])<10) $_SESSION['currentProforma'] = '0'.$_SESSION['id_compte'].$_SESSION['id_proforma'].date("my");
                           else $_SESSION['currentProforma'] = $_SESSION['id_compte'].$_SESSION['id_proforma'].date("my");
                           header('Location: proforma_visu.php?pr='.$_GET['pr']);
                           exit();
-                      }
+/*                      }
                       else{
                         $i++;
-                      }
+                      }*/
               }
-            }
-            else if((isset($_POST['inputClientName']) or isset($_POST['inputClientWilaya']) or isset($_POST['inputClientCode'])) and isset($_POST['enregistrer'])){
+            
+            else if(/*(isset($_POST['inputClientName']) or isset($_POST['inputClientWilaya']) or isset($_POST['inputClientCode'])) and*/ isset($_POST['enregistrer'])){
               if (compterArticles()>0) {
                   try {
                      $db = include 'db_mysql.php';
@@ -274,115 +280,6 @@
       }
     </style>
 
-    <style type="text/css">
-      .form-group input[type="checkbox"] {
-          display: none;
-      }
-
-      .form-group input[type="checkbox"] + .btn-group > label span {
-          width: 20px;
-      }
-
-      .form-group input[type="checkbox"] + .btn-group > label span:first-child {
-          display: none;
-      }
-      .form-group input[type="checkbox"] + .btn-group > label span:last-child {
-          display: inline-block;   
-      }
-
-      .form-group input[type="checkbox"]:checked + .btn-group > label span:first-child {
-          display: inline-block;
-      }
-      .form-group input[type="checkbox"]:checked + .btn-group > label span:last-child {
-          display: none;   
-      }
-      .custom-select {
-          /*width: 50px !important;*/
-          display: inline-flex !important; 
-      }
-      .custom-select-2 {
-          width: 150px !important;
-          display: inline-flex !important; 
-      }
-      .container-fluid{
-        padding-top: 50px;
-      }
-      .special-menu{
-        font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
-        font-size: 15;
-        background-color: rgba(52,58,64,0.8)
-      }
-      .color-menu:hover{
-        background-color: #303234!important;
-          border-color: #303234!important;
-      }
-      .color-menu,
-      .color-menu:active,
-      .color-menu:visited,
-      .color-menu:focus {
-          background-color: #50575D!important;
-          border-color: #50575D!important;
-      }
-      li{
-        margin-left: 20px;
-      }
-      
-      .sidebar{
-        margin-top:100px;
-      }
-      .navbar{
-        padding-top: 0px;
-        padding-bottom: 0px;
-        padding-left: 0px;
-      }
-
-      .padding-top-0{
-        padding-top: 0px;
-      }
-      .list-group{
-        padding-top: 10px;
-      }
-      .ul-special{
-        margin-left: 290px;
-      }
-      .btn-lg{      
-        /*width: 250px;*/
-      }
-      
-      .bg-clair{
-        background-color: #f8f9fa85;
-      }
-      .list-group-item.active {
-          z-index: 2;
-          color: #fff;
-          background-color: #1d2124;
-          border-color: #1d2124;
-      }
-      .bg-card-rouge{
-        background-color: rgb(123 42 50 / 75%)!important;
-      }
-      .bg-card-vert{
-        background-color: rgb(56 128 72 / 75%)!important;
-      }
-      .bg-card-jaune{
-        background-color: rgb(193 150 25 / 75%)!important;
-      }
-      .bg-card-bleu{
-        background-color: rgb(23 84 150 / 75%)!important;
-      }
-      .bg-card-mauve{
-        background-color: rgb(47 27 113 / 75%)!important;
-      }
-      .bg-card-bleuvert{
-        background-color: rgb(26 123 117 / 75%)!important;
-      }
-      .session{
-        margin-right: 2%;
-        margin-top: 0.5%;
-      }
-
-
-    </style>
 
     <script type="text/javascript">
       function qteProduit(id){
@@ -424,6 +321,7 @@
         }
       }
     </script>   
+    <link href="my_css.css" rel="stylesheet">
   </head>
 
 
@@ -433,20 +331,57 @@
   <body>
   <header>
           <nav class="navbar navbar-expand-lg navbar-dark">
+            <ul class="navbar-nav session">
+              <div class="dropdown" style="width:100%;">
+                <button style="width: 100%;" class="btn btn-secondary dropdown-toggle bg-card-bleu-special" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <!-- <span class="navbar-toggler-icon"></span> -->
+                        <?php echo "Session ouverte : ".$_SESSION['prenom'] ." ".$_SESSION['nom']?><br/>
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenu2" style="width: 100%;">
+                  <button type="button" data-backdrop="false" data-toggle="modal" data-target="#modal_modif_mdp" class="dropdown-item">Modifier mot de passe</button>
+                  <a type="button" data-backdrop="false" href="deconnection.php" class="dropdown-item">Déconnection</a>
+                </div>
+              </div>
+            <!-- /////////////////MODAL/////////////////////// -->
+              <form method="post">
+                    <div class="modal fade" id="modal_modif_mdp" role="dialog">
+                      <div class="modal-dialog modal-dialog-centered">
+                      
+                        <!-- Modal content-->
+                        <div class="modal-content">
 
-                  <ul class="navbar-nav mr-auto ul-special session">
+                          <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                          </div>
+
+                          <div class="modal-body">
+                            <p>Mot de passe actuel : <input type="password" id="mdpactu" name="mdpactu" type="text"/></p>
+                            <p>Nouveau mot de passe : <input type="password" id="newmdp" name="newmdp" type="text"/></p>
+                            <p>confirmer mot de passe : <input type="password" id="confirm" name="confirm" type="text"/></p>
+                          </div>
+
+                          <div class="modal-footer">
+                            <button name = "modifmdp" type="submit" class="btn btn-default">OK</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </form>
+                </ul>
+
+                  <ul class="navbar-nav mr-auto ul-special session2">
                     <li class="nav-item">
 
-                      <a class="btn btn-dark btn-lg special-menu" href="marketing.php?categ=Postes%20Premium">
+                      <a class="btn btn-dark btn-lg special-menu " href="marketing.php?categ=Postes%20Premium">
                         <svg width="1.5em" height="1.5em" viewBox="0.5 1.5 16 16" class="bi bi-cart3" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                           <path fill-rule="evenodd" d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .49.598l-1 5a.5.5 0 0 1-.465.401l-9.397.472L4.415 11H13a.5.5 0 0 1 0 1H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l.84 4.479 9.144-.459L13.89 4H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm7 0a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"/>
-                        </svg> PRODUITS </a>
+                        </svg> PRODUITS <span class="sr-only">(current)</span> </a>
                     </li>
                     <li class="nav-item">
                       <a class="btn btn-dark btn-lg special-menu active" href="projets.php?pr=0">
-                      <svg width="1.5em" height="1.5em" viewBox="0.5 1.5 16 16" class="bi bi-folder2-open" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                        <path fill-rule="evenodd" d="M1 3.5A1.5 1.5 0 0 1 2.5 2h2.764c.958 0 1.76.56 2.311 1.184C7.985 3.648 8.48 4 9 4h4.5A1.5 1.5 0 0 1 15 5.5v.64c.57.265.94.876.856 1.546l-.64 5.124A2.5 2.5 0 0 1 12.733 15H3.266a2.5 2.5 0 0 1-2.481-2.19l-.64-5.124A1.5 1.5 0 0 1 1 6.14V3.5zM2 6h12v-.5a.5.5 0 0 0-.5-.5H9c-.964 0-1.71-.629-2.174-1.154C6.374 3.334 5.82 3 5.264 3H2.5a.5.5 0 0 0-.5.5V6zm-.367 1a.5.5 0 0 0-.496.562l.64 5.124A1.5 1.5 0 0 0 3.266 14h9.468a1.5 1.5 0 0 0 1.489-1.314l.64-5.124A.5.5 0 0 0 14.367 7H1.633z"/>
-                      </svg> PROJETS <span class="sr-only">(current)</span></a>
+                      <svg width="1.5em" height="1.5em" viewBox="0 1 16 16" class="bi bi-folder-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" d="M9.828 3h3.982a2 2 0 0 1 1.992 2.181l-.637 7A2 2 0 0 1 13.174 14H2.826a2 2 0 0 1-1.991-1.819l-.637-7a1.99 1.99 0 0 1 .342-1.31L.5 3a2 2 0 0 1 2-2h3.672a2 2 0 0 1 1.414.586l.828.828A2 2 0 0 0 9.828 3zm-8.322.12C1.72 3.042 1.95 3 2.19 3h5.396l-.707-.707A1 1 0 0 0 6.172 2H2.5a1 1 0 0 0-1 .981l.006.139z"/>
+                      </svg> PROJETS </a>
                     </li>
                     <li class="nav-item">
                       <a class="btn btn-dark btn-lg special-menu" href="calendar/calendrier.php">
@@ -465,49 +400,13 @@
                       <a class="btn btn-dark btn-lg special-menu" href="marques.php">
                       <svg width="1.5em" height="1.5em" viewBox="0 0 16 16" class="bi bi-bag-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                         <path fill-rule="evenodd" d="M8 1a2.5 2.5 0 0 0-2.5 2.5V4h5v-.5A2.5 2.5 0 0 0 8 1zm3.5 3v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4h-3.5z"/>
-                      </svg> MARQUES </a>
+                      </svg> PARTENAIRES </a>
                     </li>
 
                   </ul>
                 <!-- </div> -->
                 <!-- <div class="col-lg-4"> -->
-                  <ul class="navbar-nav session">
-                    <div class="dropdown">
-                      <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <!-- <span class="navbar-toggler-icon"></span> -->
-                              <?php echo $_SESSION['prenom'] ." ".$_SESSION['nom']?><br/>
-                      </button>
-                      <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
-                        <button type="button" data-backdrop="false" data-toggle="modal" data-target="#modal_modif_mdp" class="dropdown-item">Modifier mot de passe</button>
-                        <a type="button" data-backdrop="false" href="deconnection.php" class="dropdown-item">Déconnection</a>
-                      </div>
-                    </div>
-                  <!-- /////////////////MODAL/////////////////////// -->
-                    <form method="post">
-                          <div class="modal fade" id="modal_modif_mdp" role="dialog">
-                            <div class="modal-dialog modal-dialog-centered">
-                            
-                              <!-- Modal content-->
-                              <div class="modal-content">
-
-                                <div class="modal-header">
-                                  <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                </div>
-
-                                <div class="modal-body">
-                                  <p>Mot de passe actuel : <input type="password" id="mdpactu" name="mdpactu" type="text"/></p>
-                                  <p>Nouveau mot de passe : <input type="password" id="newmdp" name="newmdp" type="text"/></p>
-                                  <p>confirmer mot de passe : <input type="password" id="confirm" name="confirm" type="text"/></p>
-                                </div>
-
-                                <div class="modal-footer">
-                                  <button name = "modifmdp" type="submit" class="btn btn-default">OK</button>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </form>
-                      </ul>
+                  
           </nav>
 </header>
 
@@ -633,7 +532,7 @@
                   if($engins[$j]['Categorie']==$_GET['categ']){
                    ?>
 
-                      <a class="<?php  if(isset($_GET['enginM'] ) and htmlspecialchars($engins[$j]['Marque'])." ".htmlspecialchars($engins[$j]['Type']) == $_GET['enginM']." ".$_GET['enginT']){ echo "nav-link-clicked";} else{ echo "nav-link";} ?> " href="proforma.php?pr=<?php echo $_GET['pr']; ?>&categ=<?php echo htmlspecialchars($_GET['categ']);?>&enginM=<?php echo htmlspecialchars($engins[$j]['Marque']);?>&enginT=<?php echo htmlspecialchars($engins[$j]['Type']);?>"> <?php echo $engins[$j]['Marque'].' '.$engins[$j]['Type']; ?> </a>
+                      <a class="<?php  if(isset($_GET['enginM'] ) and htmlspecialchars($engins[$j]['Marque'])." ".htmlspecialchars($engins[$j]['Type']) == $_GET['enginM']." ".$_GET['enginT']){ echo "list-group-item list-group-item-action bg-clair active";} else{ echo "nav-link";} ?> " href="proforma.php?pr=<?php echo $_GET['pr']; ?>&categ=<?php echo htmlspecialchars($_GET['categ']);?>&enginM=<?php echo htmlspecialchars($engins[$j]['Marque']);?>&enginT=<?php echo htmlspecialchars($engins[$j]['Type']);?>"> <?php echo $engins[$j]['Marque'].' '.$engins[$j]['Type']; ?> </a>
 
                     <?php
                   }
@@ -650,6 +549,7 @@
                     <div class="modal-content">
 
                       <div class="modal-header">
+                        <h4>CREATION NOUVEAU PRODUIT</h4>
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
                       </div>
 
@@ -764,9 +664,8 @@
 
             <div class="col-lg-12">
               <form class="form-horizontal" method="post" >
-                  <div class="form-group">
+                  <!-- <div class="form-group">
                   <div class="card-deck mb-3 text-center">
-                        <!--value=<?php echo $clients[$_GET['cID']][0] ?>-->
                         <div class="card mb-4 shadow-sm">
                             <div class="card-header">
                               <h5 class="card-title">Nom</h5>
@@ -774,7 +673,6 @@
                             <label for="inputClientName" class="sr-only">Nom</label>
                             <input type="text" name="inputClientName" id="inputClientName" class="form-control" placeholder="" onkeyup="checkpass();" value="<?php if(isset($_SESSION['NomSociete'])) { echo $_SESSION['NomSociete']; } ?>" />
                         </div>
-                        <!-- <p><?php if(isset($_SESSION['NomSociete'])) { echo $_SESSION['NomSociete']; } ?></p> -->
                         <div class="card mb-4 shadow-sm">
                             <div class="card-header">
                               <h5 class="card-title">Wilaya</h5>
@@ -791,7 +689,7 @@
                             <input type="text" name="inputClientCode" id="inputClientCode" class="form-control" placeholder="" onkeyup="checkpass();"/>
                         </div>
                   </div>
-                </div>
+                </div> -->
 
                   <div class="form-group">
                     <div class="row justify-content-center">
@@ -824,8 +722,9 @@
                                   <option value = "<?php echo $categ[$i]['Devises']?>"><?php echo $categ[$i]['Devises']?></option>
                                 <?php }?>
                                 </select>
-                                <input id="datevalidite" class="form-control"  name="datevalidite" type="date" />
-                                <input id="delailivraison" class="form-control" name="delailivraison" type="number" />
+                                Date de validité : 
+                                <input id="datevalidite" class="form-control"  name="datevalidite" type="date" placeholder="date de validité"/>
+                                <input id="delailivraison" class="form-control" name="delailivraison" type="number" placeholder="délai de livraison en semaines :" />
                               </div>
                               <div class="modal-footer">
                                 <button  id = "visualiser" name="visualiser" type="submit" class="btn btn-default">OK</button>

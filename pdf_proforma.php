@@ -1,6 +1,6 @@
 <?php
 require('fpdf/fpdf.php');
-function getProforma($code){
+function getProforma($code,$bon){
 /*$sql_options='SELECT Engin, Nom, Prix, prix_transport
           FROM options
           ORDER BY id;';
@@ -37,7 +37,8 @@ $pdf->Rect(0,37,90,30,"DF");
 $pdf->Line(0, 47, 90, 47);
 $pdf->Line(50, 37, 50, 47);
 $pdf->SetFont('Arial', 'B', 11);
-$pdf->Text(4.5, 43.5, "FACTURE PROFORMA");
+if($bon==false) $pdf->Text(4.5, 43.5, "FACTURE PROFORMA");
+else $pdf->Text(4.5, 43.5, "BON DE COMMANDE");
 $pdf->SetFont('Arial', '', 11);
 if(intval($_SESSION['id_compte'])<10) $pdf->Text(54.5, 43.5, '0'.$_SESSION['id_compte'].$_SESSION['id_proforma'].date("my"));
 else $pdf->Text(54.5, 43.5, $_SESSION['id_compte'].$_SESSION['id_proforma'].date("my"));
@@ -78,7 +79,7 @@ $pdf->Line(135, 72, 135, 87);
 $pdf->SetFont('Arial', 'U', 10);
 $pdf->Text(22, 77, "Port de Destination");
 $pdf->SetFont('Arial', '', 10);
-if(isset($_SESSION['port_dest'])) $pdf->Text(27, 83, $_SESSION['port_dest']);
+if(isset($_SESSION['port_dest'])) $pdf->Text(27, 83, utf8_decode($_SESSION['port_dest']));
 $pdf->SetFont('Arial', 'U', 10);
 $pdf->Text(90, 77, "Pays d'origine");
 $pdf->SetFont('Arial', 'U', 10);
@@ -216,15 +217,21 @@ $pdf->Text(180, 261, ":      ".$TOTALTRANSPORT.iconv("UTF-8", "CP1252", $DEVISE_
 $pdf->Text(122, 266, "Total CFR Port de ".$_SESSION['port_dest']);
 $pdf->Text(180, 266, ":      ".($TOTALPRICE+$TOTALTRANSPORT).iconv("UTF-8", "CP1252", $DEVISE_SIGNE));
 $pdf->Rect(0,280,210,15,"DF");
-$pdf->Text(2, 284, "Sarl Integral Trading  : Capital 10 000".iconv("UTF-8", "CP1252", $DEVISE_SIGNE)."       Numero Intra CEE FR21 418 515 136        RCS Compi".utf8_decode("è")."gne N".utf8_decode("°")."");
-$pdf->Text(2, 289, "Code APE :");
+$pdf->Text(2, 284, "Sarl Integral Trading  : Capital 10 000".iconv("UTF-8", "CP1252", $DEVISE_SIGNE)."       Numero Intra CEE FR21 418 515 136        RCS Compi".utf8_decode("è")."gne N".utf8_decode("°")."418515136");
+$pdf->Text(2, 289, "Code APE : 4690Z");
 }
 if($code == true)
   return $pdf->Output('S');
 
 else if($code == false){
-  if(intval($_SESSION['id_compte'])<10) $pdf->Output('F',"proformas/".'0'.$_SESSION['id_compte'].$_SESSION['id_proforma'].date("my").".pdf");
-  else $pdf->Output('F',"proformas/".$_SESSION['id_compte'].$_SESSION['id_proforma'].date("my").".pdf"); 
+  if(intval($_SESSION['id_compte'])<10){ 
+    if($bon==false) $pdf->Output('F',"proformas/".'0'.$_SESSION['id_compte'].$_SESSION['id_proforma'].date("my").".pdf");
+    else $pdf->Output('F',"bons/".'0'.$_SESSION['id_compte'].$_SESSION['id_proforma'].date("my").".pdf");
+  }
+  else {
+    if($bon==false) $pdf->Output('F',"proformas/".$_SESSION['id_compte'].$_SESSION['id_proforma'].date("my").".pdf"); 
+    else $pdf->Output('F',"bons/".$_SESSION['id_compte'].$_SESSION['id_proforma'].date("my").".pdf"); 
+  }
   
 }
 

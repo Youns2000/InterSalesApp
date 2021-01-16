@@ -5,7 +5,7 @@ if (!isset($_SESSION['index'])){
   } 
         require('fonctions_ip.php');
 
-        $sqlConnection = 'INSERT INTO `connections` (`id`, `pays`, `ville` , `nom`, `date`) VALUES (NULL, ?, ?, ?, ?);';
+        $sqlConnexion = 'INSERT INTO `connexions` (`ip`, `connexion` , `admin`, `mail`, `coordonees`, `date`, `heure`) VALUES (?, ?, ?, ?, ?, ?, ?);';
 
         if(isset($_POST['inputEmail']) and isset($_POST['inputPassword'])){
           $sql_data='SELECT id, email , mdp , nom , prenom , Statut FROM comptes WHERE email = ? ORDER BY id;';
@@ -18,33 +18,44 @@ if (!isset($_SESSION['index'])){
              $stmt->execute(array($mail));
              $data= $stmt->fetchAll(PDO::FETCH_ASSOC);
              unset($db);
+
+             $ip = get_user_ip();
+            //  $coords = get_user_coords();
             //Azeddine@integral.fr
-            if(count($data)==1 and password_verify($_POST['inputPassword'], $data[0]['mdp'])){
-                $ip = get_user_ip();
-                if($ip==false) echo "false";
-                else echo "true"; 
- 
-                echo '$ip:'.$ip;
+            if(count($data)==1){
+              if(password_verify($_POST['inputPassword'], $data[0]['mdp'])){
+                  $db = include 'db_mysql.php';
+                  
+                  $stmt = $db->prepare($sqlConnexion);
+                  if($data[0]['Statut']=='admin') $admin = true;
+                  $stmt->execute(array($ip,true,$admin,$data[0]['email'],0/*coordonnées*/ ,date('d-m-Y'),date('H:i:s')));
 
+                  $_SESSION['email'] = $data[0]['email'];
+                  $_SESSION['nom'] = $data[0]['nom'];
+                  $_SESSION['id_compte'] = strval($data[0]['id']);
+                  $_SESSION['prenom'] = $data[0]['prenom'];
+                  $_SESSION['statut'] = $data[0]['Statut'];
+                  unset($db);
+                  header('Location: marketing.php?categ=Postes%20Premium');
+                  exit();
+              } 
+              else{
                 $db = include 'db_mysql.php';
-                $coords = get_user_coords();
-                echo $coords;
-                //$stmt = $db->prepare($sqlConnection);
-                //$stmt->execute(array($coords['pays'],$coords['ville'],$data[0]['nom'],date("d/m/Y"),date('H:i:s')));
-                //$stmt->execute(array('pays','ville','nom',date('Y-m-d H:i:s')));
-
-                $_SESSION['email'] = $data[0]['email'];
-                $_SESSION['nom'] = $data[0]['nom'];
-                $_SESSION['id_compte'] = strval($data[0]['id']);
-                $_SESSION['prenom'] = $data[0]['prenom'];
-                $_SESSION['statut'] = $data[0]['Statut'];
-                unset($db);
-                header('Location: marketing.php?categ=Postes%20Premium');
-                exit();
-             } 
-             else{
-                echo 'Aucun resultat pour cette requete';
-             }
+                $stmt = $db->prepare($sqlConnexion);
+                if(isset($data[0]['Statut'])){
+                  if($data[0]['Statut']=='admin') $admin = true;
+                }
+                else {
+                  $admin = false;
+                }
+                $stmt->execute(array($ip,false,$admin,$mail,0/*coordonnées*/ ,date('d-m-Y'),date('H:i:s')));
+                  echo "<script >alert('Mot de passe incorrect'); </script>";
+               }
+            }
+            else{
+              echo "<script >alert('Email incorrect'); </script>";
+            }
+             
           } catch (Exception $e) {
              print "Erreur ! " . $e->getMessage() . "<br/>";
           }

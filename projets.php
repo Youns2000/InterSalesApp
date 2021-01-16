@@ -29,11 +29,11 @@
           FROM proformas
           ORDER BY id;';
 
-  $sql_projets = 'SELECT id,nom,code,client,bft,dateCreation,description,etat
+  $sql_projets = 'SELECT id,user,nom,code,client,bft,dateCreation,description,etat, montant, objectif, offre, avancement, concurrence
           FROM projets
           ORDER BY id;';
 
-  $sql_rapports = 'SELECT id,projet,commandes,visitesClient,offres,remarques
+  $sql_rapports = 'SELECT id,code,num,projet,commandes,visitesClient,offres,remarques
           FROM rapports
           ORDER BY id;';
 
@@ -43,7 +43,7 @@
 
   $sqlAddEng = 'INSERT INTO `engins` (`Categorie`, `Marque`, `Type`, `Ref`, `Prix`, `prix_transport`, `Origine`, `Numero_serie`, `Annee_Fabrication`, `Type_Moteur`, `Numero_Serie_Moteur`, `ConfBase`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?);';
   
-  $sqlAddProjet = 'INSERT INTO `projets` (`nom`, `code`, `client`, `bft`, `dateCreation`, `description`, `etat`) VALUES (?,?,?,?,?,?,?);';
+  $sqlAddProjet = 'INSERT INTO `projets` (`nom`, `user`, `code`, `client`, `bft`, `dateCreation`, `description`, `etat`) VALUES (?,?,?,?,?,?,?,?);';
 
   $sql_data='SELECT email , mdp , nom , prenom , Statut FROM comptes WHERE email = ? ORDER BY id;';
 
@@ -57,6 +57,8 @@
           $projets=array();
           $rapports=array();
           $db = include 'db_mysql.php';
+
+          $etats = ["Prosp","Demande","Offre","Nég","Conclu","LC Open"];
 
           try {
              $stmt = $db->prepare($sql_categ);
@@ -92,7 +94,7 @@
              $rapports = $stmt8->fetchAll();
              unset($db);
 
-            if((isset($_POST['inputClientName']) or isset($_POST['inputClientWilaya']) or isset($_POST['inputClientCode'])) and isset($_POST['visualiser'])){
+            if(/*(isset($_POST['inputClientName']) or isset($_POST['inputClientWilaya']) or isset($_POST['inputClientCode'])) and*/ isset($_POST['visualiser'])){
                     $i = 0;
                     while($i<count($clients)){
                       if( ($clients[$i]['NomSociete']==$_POST['inputClientName'] and $clients[$i]['Wilaya']==$_POST['inputClientWilaya']) or $clients[$i]['NomSociete']==$_POST['inputClientCode'])
@@ -130,7 +132,7 @@
                       }
               }
             }
-            else if((isset($_POST['inputClientName']) or isset($_POST['inputClientWilaya']) or isset($_POST['inputClientCode'])) and isset($_POST['enregistrer'])){
+            else if(/*(isset($_POST['inputClientName']) or isset($_POST['inputClientWilaya']) or isset($_POST['inputClientCode'])) and*/ isset($_POST['enregistrer'])){
               if (compterArticles()>0) {
                   try {
                     $db = include 'db_mysql.php';
@@ -152,7 +154,7 @@
                 }
             }
 
-            else if((isset($_POST['inputClientName']) or isset($_POST['inputClientWilaya']) or isset($_POST['inputClientCode'])) and isset($_POST['envoyermail'])){
+            else if(/*(isset($_POST['inputClientName']) or isset($_POST['inputClientWilaya']) or isset($_POST['inputClientCode'])) and*/ isset($_POST['envoyermail'])){
               $i = 0;
               while($i<count($clients) and ($clients[$i]['NomSociete']!=$_POST['inputClientName'] or $clients[$i]['Wilaya']!=$_POST['inputClientWilaya']) and $clients[$i]['NomSociete']!=$_POST['inputClientCode']){
                 $i++;
@@ -213,21 +215,42 @@
               
           }
             
-          else if(isset($_POST['ajouterProjet']) and !in_array($_POST['newProjetName'], $projets)){
-            try {
-                    $db = include 'db_mysql.php';
-                     $stmtenr = $db->prepare($sqlAddProjet);
-                     $stmtenr->execute(array( $_POST['newProjetName'], $_POST['newProjetCode'],$_POST['newProjetClient'],$_POST['newProjetB'].$_POST['newProjetF'].$_POST['newProjetT'],date("d/m/Y"),$_POST['newProjetText'],$_POST['newProjetEtat']));
+          else if((isset($_POST['newProjetClientName']) or isset($_POST['newProjetClientWilaya']) or isset($_POST['newProjetClientCode'])) and isset($_POST['ajouterProjet']) and !in_array($_POST['newProjetName'], $projets)){
+                    $i = 0;
+                    $found = false;
+                    while($i<count($clients)){
+                      if( ($clients[$i]['NomSociete']==$_POST['newProjetClientName'] and $clients[$i]['Wilaya']==$_POST['newProjetClientWilaya']) or $clients[$i]['CodeClient']==$_POST['newProjetClientCode']){
+                        $found = true;
+                        break;
+                      }
+                      else $i++;
+                    }
+                    if($found == true){
+                      try {
+                       
+                            $db = include 'db_mysql.php';
+                            $codeProjet = $clients[$i]['CodeClient'].date("my").strval($projets[count($projets)-1]['id']+1);//code projet : code client + mois + annee + id projet
+                             $stmtenr = $db->prepare($sqlAddProjet);
+                             $stmtenr->execute(array( $_POST['newProjetName'], $_SESSION['email'],$codeProjet,$clients[$i]['CodeClient'],$_POST['newProjetB'].'/'.$_POST['newProjetF'].'/'.$_POST['newProjetT'],date("d/m/Y"),$_POST['newProjetText'],$_POST['newProjetEtat']));
 
-                     $nb_insert = $stmtenr->rowCount();
-                     unset($db);
-                     header('Refresh: 0');
-                  }
-                  catch (Exception $e){
-                     print "Erreur ! " . $e->getMessage() . "<br/>";
-                  }
-          }
+                             $nb_insert = $stmtenr->rowCount();
+                             unset($db);
+                             header('Refresh: 0');
+                             
+                        }
+                          catch (Exception $e){
+                             print "Erreur ! " . $e->getMessage() . "<br/>";
+                          }
+                      }
+                else{
+                  ?>
+                  <script type="text/javascript">
+                    alert("Ce client n'existe pas");
+                  </script>
+                  <?php
+                }
 
+                }     
 
             else if(isset($_POST['nbConfBase'])){
               if(creationPanier()){
@@ -257,8 +280,8 @@
 
             else if(isset($_POST['okprojetModif'])){
               $dbco = include 'db_mysql.php';
-                  $sth = $dbco->prepare('UPDATE projets SET description=? , etat=? WHERE code=?');
-                  $sth->execute(array($_POST['projetText'],$_POST['inlineRadioOptions'],$projets[$_GET['pr']]['code']));
+                  $sth = $dbco->prepare('UPDATE projets SET description=?, etat=?, montant=?, objectif=?, offre=?, avancement=?, concurrence=?, bft=? WHERE code=?');
+                  $sth->execute(array($_POST['projetText'],$_POST['etatsprojet'],$_POST['montant'],$_POST['objectif_vente'],"offre",$_POST['avancement'],$_POST['concurrence0'].'/'.$_POST['concurrence1'].'/'.$_POST['concurrence2'],$_POST['B'].'/'.$_POST['F'].'/'.$_POST['T'],$projets[$_GET['pr']]['code']));
                   unset($dbco);
                   header('Refresh: 0');
             }
@@ -269,8 +292,13 @@
             }
 
             else if(isset($_POST['editerBonProjet']) and isset($_POST['boxBon']) and file_exists("bons/".$_POST['boxBon'].'.pdf')){
-              $_SESSION['currentProforma'] = $_POST['radioProforma'];
+              $_SESSION['currentBon'] = $_POST['radioProforma'];
               header('Location: bon_de_commande_visu.php?pr='.$_GET['pr']);
+            }
+
+            else if(isset($_POST['editerRapportProjet']) and isset($_POST['boxRapport']) and file_exists("rapports/".$_POST['boxRapport'].'.pdf')){
+              $_SESSION['currentRapport'] = $_POST['boxRapport'];
+              header('Location: rapports_visu.php?pr='.$_GET['pr']);
             }
 
             else if(isset($_POST['modifmdp'])){
@@ -329,116 +357,6 @@
     <link href="css/simple-sidebar.css" rel="stylesheet">
     <link href="css/navbar-top.css" rel="stylesheet">
 
-    <style type="text/css">
-      .form-group input[type="checkbox"] {
-          display: none;
-      }
-
-      .form-group input[type="checkbox"] + .btn-group > label span {
-          width: 20px;
-      }
-
-      .form-group input[type="checkbox"] + .btn-group > label span:first-child {
-          display: none;
-      }
-      .form-group input[type="checkbox"] + .btn-group > label span:last-child {
-          display: inline-block;   
-      }
-
-      .form-group input[type="checkbox"]:checked + .btn-group > label span:first-child {
-          display: inline-block;
-      }
-      .form-group input[type="checkbox"]:checked + .btn-group > label span:last-child {
-          display: none;   
-      }
-      .custom-select {
-          width: 50px !important;
-          display: inline-flex !important; 
-      }
-      .custom-select-2 {
-          width: 150px !important;
-          display: inline-flex !important; 
-      }
-      .container-fluid{
-        padding-top: 50px;
-      }
-      .special-menu{
-        font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
-        font-size: 15;
-        background-color: rgba(52,58,64,0.8)
-      }
-      .color-menu:hover{
-        background-color: #303234!important;
-          border-color: #303234!important;
-      }
-      .color-menu,
-      .color-menu:active,
-      .color-menu:visited,
-      .color-menu:focus {
-          background-color: #50575D!important;
-          border-color: #50575D!important;
-      }
-      li{
-        margin-left: 20px;
-      }
-      
-      .sidebar{
-        margin-top:100px;
-      }
-      .navbar{
-        padding-top: 0px;
-        padding-bottom: 0px;
-        padding-left: 0px;
-      }
-
-      .padding-top-0{
-        padding-top: 0px;
-      }
-      .list-group{
-        padding-top: 10px;
-      }
-      .ul-special{
-        margin-left: 290px;
-      }
-      .btn-lg{      
-        /*width: 250px;*/
-      }
-      
-      .bg-clair{
-        background-color: #f8f9fa85;
-      }
-      .list-group-item.active {
-          z-index: 2;
-          color: #fff;
-          background-color: #1d2124;
-          border-color: #1d2124;
-      }
-      .bg-card-rouge{
-        background-color: rgb(123 42 50 / 75%)!important;
-      }
-      .bg-card-vert{
-        background-color: rgb(56 128 72 / 75%)!important;
-      }
-      .bg-card-jaune{
-        background-color: rgb(193 150 25 / 75%)!important;
-      }
-      .bg-card-bleu{
-        background-color: rgb(23 84 150 / 75%)!important;
-      }
-      .bg-card-mauve{
-        background-color: rgb(47 27 113 / 75%)!important;
-      }
-      .bg-card-bleuvert{
-        background-color: rgb(26 123 117 / 75%)!important;
-      }
-      .session{
-        margin-right: 2%;
-        margin-top: 0.5%;
-      }
-
-
-    </style>
-
     <script type="text/javascript">
       function qteProduit(id){
         return document.getElementById(id).value;
@@ -458,6 +376,7 @@
       }
 
     </script>   
+    <link href="my_css.css" rel="stylesheet">
   </head>
 
 
@@ -467,20 +386,57 @@
 <body>
 <header>
           <nav class="navbar navbar-expand-lg navbar-dark">
+            <ul class="navbar-nav session">
+              <div class="dropdown" style="width:100%;">
+                <button style="width: 100%;" class="btn btn-secondary dropdown-toggle bg-card-bleu-special" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <!-- <span class="navbar-toggler-icon"></span> -->
+                        <?php echo "Session ouverte : ".$_SESSION['prenom'] ." ".$_SESSION['nom']?><br/>
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenu2" style="width: 100%;">
+                  <button type="button" data-backdrop="false" data-toggle="modal" data-target="#modal_modif_mdp" class="dropdown-item">Modifier mot de passe</button>
+                  <a type="button" data-backdrop="false" href="deconnection.php" class="dropdown-item">Déconnection</a>
+                </div>
+              </div>
+            <!-- /////////////////MODAL/////////////////////// -->
+              <form method="post">
+                    <div class="modal fade" id="modal_modif_mdp" role="dialog">
+                      <div class="modal-dialog modal-dialog-centered">
+                      
+                        <!-- Modal content-->
+                        <div class="modal-content">
 
-                  <ul class="navbar-nav mr-auto ul-special session">
+                          <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                          </div>
+
+                          <div class="modal-body">
+                            <p>Mot de passe actuel : <input type="password" id="mdpactu" name="mdpactu" type="text"/></p>
+                            <p>Nouveau mot de passe : <input type="password" id="newmdp" name="newmdp" type="text"/></p>
+                            <p>confirmer mot de passe : <input type="password" id="confirm" name="confirm" type="text"/></p>
+                          </div>
+
+                          <div class="modal-footer">
+                            <button name = "modifmdp" type="submit" class="btn btn-default">OK</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </form>
+                </ul>
+
+                  <ul class="navbar-nav mr-auto ul-special session2">
                     <li class="nav-item">
 
-                      <a class="btn btn-dark btn-lg special-menu" href="marketing.php?categ=Postes%20Premium">
+                      <a class="btn btn-dark btn-lg special-menu " href="marketing.php?categ=Postes%20Premium">
                         <svg width="1.5em" height="1.5em" viewBox="0.5 1.5 16 16" class="bi bi-cart3" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                           <path fill-rule="evenodd" d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .49.598l-1 5a.5.5 0 0 1-.465.401l-9.397.472L4.415 11H13a.5.5 0 0 1 0 1H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l.84 4.479 9.144-.459L13.89 4H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm7 0a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"/>
-                        </svg> PRODUITS </a>
+                        </svg> PRODUITS <span class="sr-only">(current)</span> </a>
                     </li>
                     <li class="nav-item">
                       <a class="btn btn-dark btn-lg special-menu active" href="projets.php?pr=0">
-                      <svg width="1.5em" height="1.5em" viewBox="0.5 1.5 16 16" class="bi bi-folder2-open" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                        <path fill-rule="evenodd" d="M1 3.5A1.5 1.5 0 0 1 2.5 2h2.764c.958 0 1.76.56 2.311 1.184C7.985 3.648 8.48 4 9 4h4.5A1.5 1.5 0 0 1 15 5.5v.64c.57.265.94.876.856 1.546l-.64 5.124A2.5 2.5 0 0 1 12.733 15H3.266a2.5 2.5 0 0 1-2.481-2.19l-.64-5.124A1.5 1.5 0 0 1 1 6.14V3.5zM2 6h12v-.5a.5.5 0 0 0-.5-.5H9c-.964 0-1.71-.629-2.174-1.154C6.374 3.334 5.82 3 5.264 3H2.5a.5.5 0 0 0-.5.5V6zm-.367 1a.5.5 0 0 0-.496.562l.64 5.124A1.5 1.5 0 0 0 3.266 14h9.468a1.5 1.5 0 0 0 1.489-1.314l.64-5.124A.5.5 0 0 0 14.367 7H1.633z"/>
-                      </svg> PROJETS <span class="sr-only">(current)</span></a>
+                      <svg width="1.5em" height="1.5em" viewBox="0 1 16 16" class="bi bi-folder-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" d="M9.828 3h3.982a2 2 0 0 1 1.992 2.181l-.637 7A2 2 0 0 1 13.174 14H2.826a2 2 0 0 1-1.991-1.819l-.637-7a1.99 1.99 0 0 1 .342-1.31L.5 3a2 2 0 0 1 2-2h3.672a2 2 0 0 1 1.414.586l.828.828A2 2 0 0 0 9.828 3zm-8.322.12C1.72 3.042 1.95 3 2.19 3h5.396l-.707-.707A1 1 0 0 0 6.172 2H2.5a1 1 0 0 0-1 .981l.006.139z"/>
+                      </svg> PROJETS </a>
                     </li>
                     <li class="nav-item">
                       <a class="btn btn-dark btn-lg special-menu" href="calendar/calendrier.php">
@@ -499,49 +455,13 @@
                       <a class="btn btn-dark btn-lg special-menu" href="marques.php">
                       <svg width="1.5em" height="1.5em" viewBox="0 0 16 16" class="bi bi-bag-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                         <path fill-rule="evenodd" d="M8 1a2.5 2.5 0 0 0-2.5 2.5V4h5v-.5A2.5 2.5 0 0 0 8 1zm3.5 3v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4h-3.5z"/>
-                      </svg> MARQUES </a>
+                      </svg> PARTENAIRES </a>
                     </li>
 
                   </ul>
                 <!-- </div> -->
                 <!-- <div class="col-lg-4"> -->
-                  <ul class="navbar-nav session">
-                    <div class="dropdown">
-                      <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <!-- <span class="navbar-toggler-icon"></span> -->
-                              <?php echo $_SESSION['prenom'] ." ".$_SESSION['nom']?><br/>
-                      </button>
-                      <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
-                        <button type="button" data-backdrop="false" data-toggle="modal" data-target="#modal_modif_mdp" class="dropdown-item">Modifier mot de passe</button>
-                        <a type="button" data-backdrop="false" href="deconnection.php" class="dropdown-item">Déconnection</a>
-                      </div>
-                    </div>
-                  <!-- /////////////////MODAL/////////////////////// -->
-                    <form method="post">
-                          <div class="modal fade" id="modal_modif_mdp" role="dialog">
-                            <div class="modal-dialog modal-dialog-centered">
-                            
-                              <!-- Modal content-->
-                              <div class="modal-content">
-
-                                <div class="modal-header">
-                                  <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                </div>
-
-                                <div class="modal-body">
-                                  <p>Mot de passe actuel : <input type="password" id="mdpactu" name="mdpactu" type="text"/></p>
-                                  <p>Nouveau mot de passe : <input type="password" id="newmdp" name="newmdp" type="text"/></p>
-                                  <p>confirmer mot de passe : <input type="password" id="confirm" name="confirm" type="text"/></p>
-                                </div>
-
-                                <div class="modal-footer">
-                                  <button name = "modifmdp" type="submit" class="btn btn-default">OK</button>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </form>
-                      </ul>
+                  
           </nav>
 </header>
 
@@ -549,15 +469,30 @@
 
 <form method="post">
     <div class="row">
-      <nav class="col-md-0 d-md-block sidebar">
+      <nav class="col-md-0 d-md-block sidebar scroll">
         <div class="d-flex" id="wrapper">
             <div class="" id="sidebar-wrapper">
               <div class="list-group list-group-flush">
                 <?php
+                $tmp = array();
+                foreach ($projets as $key => $value) {
+                  if($value['user'] == $_SESSION['email']) array_push($tmp,$value);
+                }
+                // print_r($tmp);
+                $client_pr = array_unique(array_column($tmp,'client'));
+                // print_r($client_pr);
+
                 $i=0;
-                while ($i<count($projets)) { 
-                  if($_GET['pr']==$i) echo '<a href="projets.php?pr='.$i.'" class="list-group-item list-group-item-action active">'.$projets[$i]['nom'].'</a>';
-                  else echo '<a href="projets.php?pr='.$i.'" class="list-group-item list-group-item-action bg-clair">'.$projets[$i]['nom'].'</a>';
+                while ($i<count($client_pr)) { 
+                  $k=0;
+                  for (; $k < count($clients); $k++) { 
+                    if($clients[$k]['CodeClient']==$client_pr[$i]) break;
+                  }
+                  $name = $clients[$k]['NomSociete'];
+                    if($projets[$_GET['pr']]['client']==$client_pr[$i]){
+                      echo '<a href="projets.php?pr='.$i.'" class="list-group-item list-group-item-action active">'.$name.'</a>';
+                    }
+                    else echo '<a href="projets.php?pr='.$i.'" class="list-group-item list-group-item-action bg-clair">'.$name.'</a>';
                   $i++;
                 }
                 ?>
@@ -572,19 +507,22 @@
                         <div class="modal-content">
 
                           <div class="modal-header">
+                            <h4>CREATION NOUVEAU PROJET</h4>
                             <button type="button" class="close" data-dismiss="modal">&times;</button>
                           </div>
 
                           <div class="modal-body">
                             <p><B>CLIENT</B></p>
-                            <p>Code Client : <input id="newProjetClient" name="newProjetClient" type="text"/></p>
+                            <p>Nom Societe : <input id="newProjetClientName" name="newProjetClientName" type="text" /></p>
+                            <p>Wilaya : <input id="newProjetClientWilaya" name="newProjetClientWilaya" type="text"/></p>
+                            <p>Code Client : <input id="newProjetClientCode" name="newProjetClientCode" type="text"/></p>
 
                             <hr width="100%" color="grey">
 
                             <p><B>PROJET</B></p>
-                            <p>Nom : <input id="newProjetName" name="newProjetName" type="text"/></p>
-                            <p>Code : <input id="newProjetCode" name="newProjetCode" type="text"/></p>
-                            <p>B : <select class="custom-select d-block w-50" name="newProjetB" required>
+                            <p>Nom : <input id="newProjetName" name="newProjetName" type="text" required/></p>
+                            <!-- <p>Code : <input id="newProjetCode" name="newProjetCode" type="text" required/></p> -->
+                            <p>B : <select class="custom-select d-block w-100" name="newProjetB" required>
                               <option selected value>...</option>
                               <option value ="1" >1</option>
                               <option value ="2" >2</option>
@@ -603,7 +541,7 @@
                               <option value ="3" >3</option>
                             </select></p>
 
-                            <p><select class="custom-select-2 d-block w-100" name="newProjetEtat" required>
+                            <p><select class="custom-select-2 d-block w-100" name="newProjetEtat" >
                               <option selected value>Choisir un état...</option>
                               <option value ="0" >En cours</option>
                               <option value ="1" >Reporté</option>
@@ -633,7 +571,7 @@
 
 <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4 padding-top-0">
 
-      <div class="container-fluid content-row">
+      <div class="container-fluid content-row ">
 
         <div class="row">
 
@@ -641,93 +579,146 @@
             <form method="post">
             <div class="card mb-4 text-white bg-card-rouge shadow-sm h-100">
               <div class="card-header">
-                <h5 class="card-title">Client</h5>
-              </div>
-              <?php 
-              $z=0;
-              for (; $z < count($clients) and $clients[$z]['CodeClient']!=$projets[$_GET['pr']]['client']; $z++);
-              ?>
-                <p>Nom du client : <B><?php echo $clients[$z]['NomSociete']?></B></p>
-                <p>Wilaya : <B><?php echo $clients[$z]['Wilaya']?></B></p>
-                <p>Code client : <B><?php echo $clients[$z]['CodeClient']?></B></p>
-                <p>Code Projet : <B><?php echo $projets[$_GET['pr']]['code']?></B></p>
-                <p>BFT du projet : <B><?php echo $projets[$_GET['pr']]['bft']?></B></p>
-                <!-- BFT du projet :
-                <div class="input-group-sm ">
-                    <div class="input-group-prepend">
-                      <span class="input-group-text">B</span>
-                      <FONT size="4pt"><B><?php echo $projets[$_GET['pr']]['bft']?></B></FONT>
-                    </div>
-                </div> -->
-            </div>
-           </form>
-          </div>  
-
-<!----------------------------------------------------------------------PROJETS_DU_CLIENT------------------------------------------------------------------------------->
-          <div class="col-lg-4">
-            <form method="post">
-            <div class="card mb-4 text-white bg-card-vert shadow-sm h-100">
-              <div class="card-header">
                 <h5 class="card-title">Projets du client</h5>
               </div> 
               <?php 
+              if(count($projets)>0){
               $p=0;
               for (; $p < count($projets); $p++){
-                if($projets[$_GET['pr']]['client']==$projets[$p]['client']){ ?>
-                   <button type="button" class="btn bg-card-vert btn-success" onclick="window.location.href='projets.php?pr=<?php echo $p;?>';" ><?php echo $projets[$p]['nom']."  ".$projets[$p]['dateCreation']?></button>
-              <?php }} ?>
+                $style="bg-card-rouge";
+                if($projets[$_GET['pr']]['client']==$projets[$p]['client']){ 
+                  if($projets[$_GET['pr']]['code']==$projets[$p]['code']) $style="";?>
+                   <button type="button" class="btn <?php echo $style;?> btn-danger " onclick="window.location.href='projets.php?pr=<?php echo $p;?>';" ><?php echo $projets[$p]['nom']."  ".$projets[$p]['dateCreation']?></button>
+              <?php }}} ?>
+              
             </div>
            </form>
-          </div>  
+          </div>   
 
-<!----------------------------------------------------------------------LE_PROJET-------------------------------------------------------------------------------------->
-          <div class="col-lg-4">
-            <form method="post">
-            <div class="card mb-4 text-white bg-card-jaune shadow-sm h-100">
+<!----------------------------------------------------------------------STATUT DU PROJET------------------------------------------------------------------------------->
+            <div class="col-lg-4">
+            
+            <div class="card mb-4 text-white bg-card-vert shadow-sm">
               <div class="card-header">
-                <h5 class="card-title">Le projet</h5>
+                <h5 class="card-title">Statut du Projet</h5>
               </div>
-             <span>
-              <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="0" <?php if($projets[$_GET['pr']]['etat']==0) echo 'checked'?>>
-                <label class="form-check-label" for="inlineRadio1">En Cours</label>
+              
+              <form method="post">
+              <div class="btn-group btn-group-toggle" data-toggle="buttons">
+              <?php 
+              
+              for ($i=0; $i < 6; $i++) {
+                $checked = "";
+                $style = "bg-card-vert" ;
+                if(count($projets)>0 && $projets[$_GET['pr']]['etat']==$etats[$i]){
+                  $checked = "checked";
+                  $style = "";
+                }
+                echo "<label class=\"btn btn-sm btn-success\" for=\"".$etats[$i]."\">".$etats[$i];
+                echo "<input type=\"radio\" class=\"btn-check\" name=\"etatsprojet\" id=\"".$etats[$i]."\" value=\"".$etats[$i]."\" autocomplete=\"off\" ".$checked.">";
+                echo "</label>";
+
+              }
+              ?>
               </div>
-              <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="1" <?php if($projets[$_GET['pr']]['etat']==1) echo 'checked'?>>
-                <label class="form-check-label" for="inlineRadio2">Reporté</label>
+
+
+              <div class="modal-body">
+
+              <div class="row">
+                  <label for="montant" style="font-size:12" class="col-form-label">Objectif de vente</label>
+                  <div class="col-lg-9">
+                    <input type="text" class="form-control-plaintext form-control-sm" name="objectif_vente" value="<?php echo $projets[$_GET['pr']]['objectif'];?>">
+                  </div>
               </div>
-              <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio3" value="2" <?php if($projets[$_GET['pr']]['etat']==2) echo 'checked'?>>
-                <label class="form-check-label" for="inlineRadio3">Terminé</label>
-              </div> 
-            </span>
-              <textarea class="form-control" id="projetText" name="projetText" rows="7"><?php echo $projets[$_GET['pr']]['description']?></textarea>
+
+              <div class="row">
+                    <label for="montant" style="font-size:12" class="col-form-label">Montant</label>
+                    <div  class="col-lg-3">
+                      <input style="padding-right:0" type="text" class="form-control-plaintext form-control-sm" name="montant" value="<?php echo $projets[$_GET['pr']]['montant'];?>">
+                    </div>
+
+                    <label for="montant" style="font-size:12" class="col-form-label">Avancement</label>
+                    <div class="col-lg-2">
+                      <input type="text" class="form-control-plaintext form-control-sm" name="avancement" value="<?php echo $projets[$_GET['pr']]['avancement'];?>">
+                    </div>
+
+                    <?php $bft =  explode('/',$projets[$_GET['pr']]['bft']);?>
+                    <label for="B" style="font-size:12" class="col-form-label">B&nbsp;</label>
+                    <input type="text" style="width:15" class="form-control-plaintext form-control-sm" name="B" value="<?php if(isset($bft[0])) echo $bft[0];?>">
+                    
+                    <label for="F" style="font-size:12" class="col-form-label">F&nbsp;</label>
+                    <input type="text" style="width:15" class="form-control-plaintext form-control-sm" name="F" value="<?php if(isset($bft[1])) echo $bft[1];?>">
+
+                    <label for="T" style="font-size:12" class="col-form-label">T&nbsp;</label>
+                    <input type="text" style="width:15" class="form-control-plaintext form-control-sm" name="T" value="<?php if(isset($bft[2])) echo $bft[2];?>">
+
+
+              </div>
+
+              <div class="row">
+
+              <label style="font-size:12" class="col-form-label">Concurrence</label>
+                <?php $concu =  explode('/',$projets[$_GET['pr']]['concurrence']);?>
+                  <div class="col-lg-3">
+                    <input type="text" class="form-control-plaintext form-control-sm" name="concurrence0" value="<?php if(isset($concu[0])) echo $concu[0];?>">
+                  </div>
+                  <div class="col-lg-3">
+                    <input type="text" class="form-control-plaintext form-control-sm" name="concurrence1" value="<?php if(isset($concu[1])) echo $concu[1];?>">
+                  </div>
+                  <div class="col-lg-3">
+                    <input type="text" class="form-control-plaintext form-control-sm" name="concurrence2" value="<?php if(isset($concu[2])) echo $concu[2];?>">
+                  </div>
+
+              </div>
+
+              </div>
+
+              <textarea class="form-control-plaintext" id="projetText" name="projetText" rows="3"><?php if(count($projets)>0){ echo $projets[$_GET['pr']]['description']; }?></textarea>
               <div class="d-flex flex-column mt-auto">
                 <div class="btn-group" role="group">
-                  <button type="submit" id="okprojetModif" name="okprojetModif" class="btn bg-card-jaune btn-warning">OK</button>
+                  <button type="submit" id="okprojetModif" name="okprojetModif" class="btn bg-card-vert btn-success">OK</button>
                 </div>
               </div>
+              </form>
+            </div>
+            
+          </div>  
+
+<!----------------------------------------------------------------------ACTIONS-------------------------------------------------------------------------------------->
+          <div class="col-lg-4">
+            <form method="post">
+            <div class="card mb-4 text-white bg-card-jaune shadow-sm">
+              <div class="card-header">
+                <h5 class="card-title">Actions à faire</h5>
+              </div>
+
             </div>
            </form>
           </div> 
        </div>    
       </div>
 
-      <div class="container-fluid content-row">
+      <div class="container-fluid content-row h-100">
         <div class="row">
 
 
 <!----------------------------------------------------------------------PROFORMAS-------------------------------------------------------------------------------------->
-          <div class="col-lg-4">
+          <div class="col-lg-4 ">
             <form method="post">
-            <div class="card mb-4 text-white bg-card-bleu shadow-sm h-100">
+            <div class="card mb-4 text-white bg-card-bleu shadow-sm h-100 ">
               <div class="card-header">
                 <h5 class="card-title">Proformas</h5>
               </div>
-              <?php for($prof=0;$prof<count($proformas);$prof++){
+
+              <?php 
+                if(count($projets)>0){
+                for($prof=0;$prof<count($proformas);$prof++){
                 if($proformas[$prof]['projet']==$projets[$_GET['pr']]['code']){
                ?>
+               <div class="scroll">
                <p><input type="radio" name="radioProforma" value="<?php echo $proformas[$prof]['code'] ?>"><?php echo "Proforma "."N°".$proformas[$prof]['code']?></p>
+             </div>
                <!-- <div class="form-check">
                 <input class="form-check-input" type="radio" name="radioProforma" id="<?php echo "radioProforma".$proformas[$prof]['code'] ?>" value="<?php echo $proformas[$prof]['code'] ?>" >
                 <label class="form-check-label" for="<?php echo "radioProforma".$proformas[$prof]['code'] ?>"><?php echo "Proforma "."N°".$proformas[$prof]['code']?></label>
@@ -735,10 +726,13 @@
             <?php }}?>
             <div class="d-flex flex-column mt-auto">
               <div class="btn-group" role="group">
-                <button type="button" class="btn bg-card-bleu btn-primary" onclick="window.location.href='proforma.php?pr=<?php echo $projets[$_GET['pr']]['id'];?>&categ=Postes%20Premium'">Nouveau</button>
+                <!-- <button type="button" class="btn bg-card-bleu btn-primary" onclick="window.location.href='proforma.php?pr=<?php echo $projets[$_GET['pr']]['id'];?>&categ=Postes%20Premium'">Nouveau</button> -->
+
+                <button type="button" class="btn bg-card-bleu btn-primary" onclick="window.location.href='proforma.php?pr=<?php echo $_GET['pr']?>&categ=Postes%20Premium'">Nouveau</button>
                 <button type="submit" class="btn bg-card-bleu btn-primary" name="editerProformaProjet">Editer</button>
               </div>
             </div>
+          <?php } ?>
             </div>
            </form>
           </div>  
@@ -750,10 +744,12 @@
               <div class="card-header">
                 <h5 class="card-title">Bon de commande</h5>
               </div> 
-              <?php for($prof=0;$prof<count($proformas);$prof++){
+              <?php 
+              if(count($projets)>0){
+                for($prof=0;$prof<count($proformas);$prof++){
                 if($proformas[$prof]['projet']==$projets[$_GET['pr']]['code']){
                ?>
-               <p><input type="radio" name="boxBon" id="<?php echo $proformas[$prof]['code'] ?>"><?php echo "Bon de commande "."N°".$proformas[$prof]['code']?></p>
+               <p><input type="radio" name="boxBon" value="<?php echo $proformas[$prof]['code'] ?>"><?php echo "Bon de commande "."N°".$proformas[$prof]['code']?></p>
             <?php }}?>
 
               <div class="d-flex flex-column mt-auto">
@@ -761,6 +757,7 @@
                   <button type="submit" class="btn bg-card-mauve btn-secondary" name="editerBonProjet">Editer</button>
                 </div>
               </div>
+              <?php } ?>
             </div>
            </form>
           </div>  
@@ -772,17 +769,20 @@
               <div class="card-header">
                 <h5 class="card-title">Rapports</h5>
               </div>
-              <?php for($rap=0;$rap<count($rapports);$rap++){
+              <?php 
+              if(count($projets)>0){
+                for($rap=0;$rap<count($rapports);$rap++){
                 if($rapports[$rap]['projet']==$projets[$_GET['pr']]['code']){
                ?>
-               <p><input type="radio" name = "boxRapport" id="<?php echo "boxRapport".$rapports[$rap]['id'] ?>"><?php echo "Rapport "."N°".($rap+1)?></p>
+               <p><input type="radio" name = "boxRapport" value="<?php echo $rapports[$rap]['code'] ?>"><?php echo "Rapport "."N°".$rapports[$rap]['num']?></p>
             <?php }}?>
             <div class="d-flex flex-column mt-auto">
               <div class="btn-group" role="group">
-                <button type="button" class="btn bg-card-bleuvert btn-dark" onclick="window.location.href='rapports.php?pr=<?php echo $projets[$_GET['pr']]['id'];?>'">Nouveau</button>
-                <button type="submit" class="btn bg-card-bleuvert btn-dark">Editer</button>
+                <button type="button" class="btn bg-card-bleuvert btn-dark" onclick="window.location.href='rapports.php?pr=<?php echo $_GET['pr']?>'">Nouveau</button>
+                <button type="submit" name="editerRapportProjet" class="btn bg-card-bleuvert btn-dark">Editer</button>
               </div>
             </div>
+            <?php } ?>
             </div>
            </form>
           </div>

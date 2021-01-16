@@ -1,5 +1,5 @@
 <?php
-require('fonctions_panier.php');
+
 require('fpdf/fpdf.php');
 function getRapportPDF(){
 	$pdf = new FPDF();
@@ -51,8 +51,12 @@ function getRapportPDF(){
 	$pdf->Write(5,$_SESSION['remarques']);
 	$pdf->Write(10,"\n");
 
-	if(intval($_SESSION['id_compte'])<10) $pdf->Output('F',"rapports/".$_SESSION['currentRapport'].".pdf");
-	else $pdf->Output('F',"proformas/".$_SESSION['currentRapport'].".pdf"); 
+	if(intval($_SESSION['id_compte'])<10) $filename = "rapports/".$_SESSION['currentRapport'].".pdf";
+	else $filename = "proformas/".$_SESSION['currentRapport'].".pdf";
+
+	if(file_exists($filename)) unlink($filename);
+	$pdf->Output('F',$filename);
+	header('Refresh: 0');
 	//return $pdf->Output('I',"rapport");
 }
 
