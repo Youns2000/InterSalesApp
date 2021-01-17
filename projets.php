@@ -31,7 +31,7 @@
 
   $sql_projets = 'SELECT id,user,nom,code,client,bft,dateCreation,description,etat, montant, objectif, offre, avancement, concurrence
           FROM projets
-          WHERE user='.$_SESSION['email'].'
+          -- WHERE user="'.$_SESSION['email'].'"
           ORDER BY id;';
 
   $sql_rapports = 'SELECT id,code,num,projet,commandes,visitesClient,offres,remarques
@@ -89,7 +89,7 @@
              $stmt7 = $db->prepare($sql_projets);
              $stmt7->execute(array());
              $projets = $stmt7->fetchAll();
-             print_r($projets);
+            //  print_r($projets);
 
              $stmt8 = $db->prepare($sql_rapports);
              $stmt8->execute(array());
@@ -476,24 +476,22 @@
             <div class="" id="sidebar-wrapper">
               <div class="list-group list-group-flush">
                 <?php
-                $tmp = array();
-                foreach ($projets as $key => $value) {
-                  if($value['user'] == $_SESSION['email']) array_push($tmp,$value);
-                }
-                $client_pr = array_unique(array_column($tmp,'client'));
-                print_r($client_pr);
+                // $client_pr = array_unique(array_column($tmp,'client'));
+                $cli = array();
                 $i=0;
-                while ($i<count($client_pr)) { 
-                  $k=0;
-                  for (; $k < count($clients); $k++) { 
-                    if($clients[$k]['CodeClient']==$client_pr[$i]) break;
-                  }
-                  $name = $clients[$k]['NomSociete'];
-                    if($projets[$_GET['pr']]['client']==$client_pr[$i]){
-                      echo '<a href="projets.php?pr='.$i.'" class="list-group-item list-group-item-action active">'.$name.'</a>';
+                while ($i<count($projets)) { 
+                  if($projets[$i]['user']==$_SESSION['email']){
+                    if(!in_array($projets[$i]['client'],$cli)){
+                      array_push($cli,$projets[$i]['client']);
+                      $c=0;
+                      for (; $c < count($clients); $c++) if($clients[$c]['CodeClient']==$projets[$i]['client']) break;
+                      if($projets[$_GET['pr']]['client']==$projets[$i]['client']){
+                        echo '<a href="projets.php?pr='.$i.'" class="list-group-item list-group-item-action active">'.$clients[$c]['NomSociete'].'</a>';
+                      }
+                      else echo '<a href="projets.php?pr='.$i.'" class="list-group-item list-group-item-action bg-clair">'.$name.'</a>';
                     }
-                    else echo '<a href="projets.php?pr='.$i.'" class="list-group-item list-group-item-action bg-clair">'.$name.'</a>';
-                  $i++;
+                  }
+                  $i++;  
                 }
                 ?>
                 <button type="button" data-backdrop="false" data-toggle="modal" data-target="#ajouter_c" class="btn btn-light bg-clair btn-sm"><span data-feather="plus-circle"></button>
