@@ -488,7 +488,7 @@
                       if($projets[$_GET['pr']]['client']==$projets[$i]['client']){
                         echo '<a href="projets.php?pr='.$i.'" class="list-group-item list-group-item-action active">'.$clients[$c]['NomSociete'].'</a>';
                       }
-                      else echo '<a href="projets.php?pr='.$i.'" class="list-group-item list-group-item-action bg-clair">'.$name.'</a>';
+                      else echo '<a href="projets.php?pr='.$i.'" class="list-group-item list-group-item-action bg-clair">'.$clients[$c]['NomSociete'].'</a>';
                     }
                   }
                   $i++;  
