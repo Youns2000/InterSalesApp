@@ -4,6 +4,7 @@
     header('Location: index.php');
   } 
   else{
+    $_SESSION['currentPage'] = "bon_de_commande";
     require('fonctions_panier.php');
     require('mail_php.php');
     require('pdf_bon.php');
@@ -308,92 +309,8 @@
   <body>
 
   <header>
-   <nav class="navbar navbar-dark fixed-top bg-dark  p-0 shadow navbar-expand-md">
-          <a class="navbar col-sm-0 col-md-0 mr-0" href=""></a> 
-          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="true" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-              </button>
-
-          <div class="collapse navbar-collapse col-md-0" id="navbarCollapse">
-            <!-- <ul class="navbar p-0"> -->
-              <div class="dropdown">
-                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
-                  <button type="button" data-backdrop="false" data-toggle="modal" data-target="#modal_modif_mdp" class="dropdown-item">Modifier mot de passe</button>
-                </div>
-              </div>
-            <!-- /////////////////MODAL/////////////////////// -->
-              <form method="post">
-                    <div class="modal fade" id="modal_modif_mdp" role="dialog">
-                      <div class="modal-dialog modal-dialog-centered">
-                      
-                        <!-- Modal content-->
-                        <div class="modal-content">
-
-                          <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal">&times;</button>
-                          </div>
-
-                          <div class="modal-body">
-                            <p>Mot de passe actuel : <input type="password" id="mdpactu" name="mdpactu" type="text"/></p>
-                            <p>Nouveau mot de passe : <input type="password" id="newmdp" name="newmdp" type="text"/></p>
-                            <p>confirmer mot de passe : <input type="password" id="confirm" name="confirm" type="text"/></p>
-                          </div>
-
-                          <div class="modal-footer">
-                            <button name = "modifmdp" type="submit" class="btn btn-default">OK</button>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </form>
-                  <!-- /////////////////END_MODAL/////////////////////// -->
-                  <a class="navbar col-sm-0 col-md-2 mr-0" href=""></a> 
-                
-                  <a class="nav-link" href="marketing.php?categ=Postes%20Premium">
-                    <span data-feather="shopping-cart" align="center"></span>
-                    <br/>Marketing
-                  </a>
-                
-                <a class="nav-link" href="newClient.php">
-                  <span data-feather="users"></span>
-                  <br/>Nouveau Client
-                </a>
-                <ul class="navbar-nav px-3">
-                <a class="nav-link" href="projets.php?pr=0">
-                  <span data-feather="file"></span>
-                  <br/>Projets <span align="center"class="sr-only">(current)</span>
-                </a>
-                </ul>
-                <!-- <a class="nav-link" href="bon_de_commande.php">
-                  <span data-feather="file-text"></span>
-                  <br/>Bon de Commande
-                </a> -->
-                <a class="nav-link" href="calendrier.php">
-                  <span data-feather="calendar"></span>
-                  <br/>Agenda
-                </a>
-               <!-- <a class="nav-link" href="objectifs.php">
-                  <span data-feather="bar-chart-2"></span>
-                  <br/>Objectifs
-                </a>  -->
-                <!-- <a class="nav-link" href="rapports.php">
-                  <span data-feather="file-text"></span>
-                  <br/>Rapports
-                </a> -->
-                <ul class="navbar-nav px-3">
-                  <li class="nav-item text-nowrap">
-                    <br/><p style="color:#49FF00">Session Ouverte<br/>
-                    <?php echo $_SESSION['prenom'] ." ".$_SESSION['nom']?><br/>
-                    <a style="color:#FF0000" href="deconnection.php">Déconnection</a></p>
-                  </li>
-                </ul>
-    
-          </div>
-  </nav>
-</header>
+    <?php include("header.php"); ?>
+  </header>
 
 
     <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
