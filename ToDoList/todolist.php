@@ -116,7 +116,7 @@ $_SESSION['currentPage'] = "todolist";
       <div class="header-style ap-demain">
         <p class="p-header"><?php 
             setlocale(LC_TIME, 'fr_FR', "French"); 
-            echo strftime("%A %d %B %Y", strtotime('tomorrow'));?></p>
+            echo strftime("%A %d %B %Y", strtotime('+2 day'));?></p>
       </div>
       <div class="container">
 
@@ -138,7 +138,7 @@ $_SESSION['currentPage'] = "todolist";
       <div class="header-style apap-demain">
         <p class="p-header"><?php 
             setlocale(LC_TIME, 'fr_FR', "French"); 
-            echo strftime("%A %d %B %Y", strtotime('+2 day'));?></p>
+            echo strftime("%A %d %B %Y", strtotime('+3 day'));?></p>
       </div>
       <div class="container">
 
