@@ -2,8 +2,9 @@
   session_start();
   if (!isset($_SESSION['email'])){
     header('Location: index.php');
-    $_SESSION['currentPage'] = "newClient";
+    
   }
+  $_SESSION['currentPage'] = "newClient";
   $sql_activites='SELECT Activités
           FROM others
           ORDER BY id;';
