@@ -7,7 +7,7 @@
                 </button>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenu2" style="width: 100%;">
                   <button type="button" data-backdrop="false" data-toggle="modal" data-target="#modal_modif_mdp" class="dropdown-item">Modifier mot de passe</button>
-                  <a type="button" data-backdrop="false" href="deconnection.php" class="dropdown-item">Déconnection</a>
+                  <a type="button" data-backdrop="false" href="<?php if(isset($_SESSION['currentPage']) and ($_SESSION['currentPage']=="todolist" or $_SESSION['currentPage']=="pdr")) echo "../";?>deconnection.php" class="dropdown-item">Déconnection</a>
                 </div>
               </div>
             <!-- /////////////////MODAL/////////////////////// -->
