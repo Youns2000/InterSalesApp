@@ -39,7 +39,7 @@ if (isset($_POST['delete']) && isset($_POST['id'])){
 	}
 
 }
-header('Location: calendrier.php');
+header('Location: ../calendrier.php');
 
 	
 ?>

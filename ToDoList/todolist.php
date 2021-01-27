@@ -35,6 +35,7 @@ $_SESSION['currentPage'] = "todolist";
       }
     </style>
     <link rel="stylesheet" href="todolist.css"/>
+    <link rel="stylesheet" href="fiche_action.css"/>
   </head>
   <body>
 
@@ -53,17 +54,15 @@ $_SESSION['currentPage'] = "todolist";
         <p class="p-header">Retard</p>
       </div>
       <div class="container">
+          <div class="draggable" draggable="true">
+            <p style="text-align: center; font-weight: bold;">Partenaire</p>
+            <p style="text-align: center; font-weight: bold;">1</p>
 
-              <div class="draggable" draggable="true">
-                <p style="text-align: center; font-weight: bold;">Partenaire</p>
-                <p style="text-align: center; font-weight: bold;">1</p>
-
-                <div class="trait_vert"></div>
-                <div class="trait_vert"></div>
-                <div class="trait_vert"></div>
-                <div class="trait_rouge"></div>
-              </div>
-
+            <div class="trait_vert"></div>
+            <div class="trait_vert"></div>
+            <div class="trait_vert"></div>
+            <div class="trait_rouge"></div>
+          </div>
       </div>
     </div>
 
@@ -73,17 +72,21 @@ $_SESSION['currentPage'] = "todolist";
       </div>
       <div class="container">
 
-              <div class="draggable" draggable="true">
-                <p style="text-align: center; font-weight: bold;">Partenaire</p>
-                <p style="text-align: center; font-weight: bold;">2</p>
+          <div class="draggable" draggable="true">
+            <p style="text-align: center; font-weight: bold;">Partenaire</p>
+            <p style="text-align: center; font-weight: bold;">2</p>
 
-                <div class="trait_vert"></div>
-                <div class="trait_vert"></div>
-                <div class="trait_vert"></div>
-                <div class="trait_rouge"></div>
+            <div class="trait_vert"></div>
+            <div class="trait_vert"></div>
+            <div class="trait_vert"></div>
+            <div class="trait_rouge"></div>
 
-              </div>
-
+          </div>
+          <div class="newAction">
+          <!-- <button type="button" data-backdrop="false" data-toggle="modal" data-target="#ajouter_c" class="btn btn-light bg-clair btn-sm"><span data-feather="plus-circle"></button> -->
+            <button type="button" data-backdrop="false" data-toggle="modal" data-target="#newAction" style="margin-left:30%;margin-top:5%;background-color:#0a7500d5;" class="btn-sm btn-success justify-content-end">NOUVELLE ACTION</button>
+            <?php include("fiche_action.php"); ?>
+          </div>
       </div>
     </div>
 

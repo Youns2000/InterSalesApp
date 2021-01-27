@@ -257,83 +257,83 @@
                 }
             }
 
-            else if(isset($_POST['configModif']) and isset($_GET['enginM'])){
-              $dbco = include 'db_mysql.php';
-              $x=0;
-              while($x<count($engins) and ($_GET['enginM']!=$engins[$x]['Marque'] or $_GET['enginT']!=$engins[$x]['Type'])){
-                $x++;
-              }
+            else if(isset($_POST['configModif']) and isset($_GET['enginM'])){ //modification de produit
+                      $dbco = include 'db_mysql.php';
+                      $x=0; //current Engin
+                      while($x<count($engins) and ($_GET['enginM']!=$engins[$x]['Marque'] or $_GET['enginT']!=$engins[$x]['Type'])){
+                        $x++;
+                      }
 
-              if(is_dir("./produits/".$_GET['categ'])) $categorie = $_GET['categ'];
-              else $categorie = strtoupper($_GET['categ']);
+                      if(is_dir("./produits/".$_GET['categ'])) $categorie = $_GET['categ'];
+                      else $categorie = strtoupper($_GET['categ']);
 
-              $old_dir = "./produits/".$categorie."/".$_GET['enginM']." ".$_GET['enginT'];
-              $new_dir = "./produits/".$categorie."/".$_POST['marqueModif']." ".$_POST['typeModif'];
+                      $old_dir = "./produits/".$categorie."/".$_GET['enginM']." ".$_GET['enginT'];
+                      $new_dir = "./produits/".$categorie."/".$_POST['marqueModif']." ".$_POST['typeModif'];
 
-              
-              // sleep(2);
-              rename($old_dir,$new_dir);
+                      
+                      // sleep(2);
+                      rename($old_dir,$new_dir);
 
-              if(is_dir($old_dir)){
-                deleteTree($old_dir);
-                rmdir($old_dir);
-              }
+                      // if(is_dir($old_dir)){
+                      //   deleteTree($old_dir);
+                      //   rmdir($old_dir);
+                      // }
 
-              $mdengin = $dbco->prepare('UPDATE engins SET Marque=?, Type=?, Ref=?, Prix=?, prix_transport=?, Origine=?, Numero_serie=?, Annee_Fabrication=?, Type_Moteur=?, Numero_Serie_Moteur=?, ConfBase=? WHERE id=?');
-              $mdengin->execute(array($_POST['marqueModif'],$_POST['typeModif'],$_POST['referenceModif'],$_POST['prixEngin'],$_POST['prixTransportEngin'], $_POST['origineModif'], $_POST['numSerieModif'], $_POST['anneeFabModif'], $_POST['typeMoteurModif'], $_POST['numSerieMoteurModif'], $_POST['configBase'], $engins[$x]['id']));
+                      $mdengin = $dbco->prepare('UPDATE engins SET Marque=?, Type=?, Ref=?, Prix=?, prix_transport=?, Origine=?, Numero_serie=?, Annee_Fabrication=?, Type_Moteur=?, Numero_Serie_Moteur=?, ConfBase=? WHERE id=?');
+                      $mdengin->execute(array($_POST['marqueModif'],$_POST['typeModif'],$_POST['referenceModif'],$_POST['prixEngin'],$_POST['prixTransportEngin'], $_POST['origineModif'], $_POST['numSerieModif'], $_POST['anneeFabModif'], $_POST['typeMoteurModif'], $_POST['numSerieMoteurModif'], $_POST['configBase'], $engins[$x]['id']));
 
-              $firstOpt=0;
-              $scroll=0;
-              while ($scroll<count($options)) {
-                if($options[$scroll]['Engin']==$engins[$x]['id']){
-                  $firstOpt=$options[$scroll]['id'];
-                  break;
-                }
-                $scroll++;
-              }
-                            
-              $opt=0;
-              $mdoptions = $dbco->prepare('UPDATE options SET Nom=? , Prix=? , prix_transport=? WHERE id=?');
-              for ($op=0; $op < count($options); $op++) {
-                if($options[$op]['Engin']==$engins[$x]['id']){
-                  $mdoptions->execute(array($_POST["nomOption".$options[$op]['id']."Engin".$engins[$x]['id']] , $_POST["prixOption".$options[$op]['id']."Engin".$engins[$x]['id']] , $_POST["prixTransportOptionModif".$options[$op]['id']."Engin".$engins[$x]['id']] , $firstOpt));
-                  $opt++;
-                  $firstOpt++;
-                }
-              } 
-              unset($dbco);
-              // header('Refresh: 0');
-              header('Location: marketing.php?categ='.$_GET['categ'].'&enginM='.$_POST['marqueModif'].'&enginT='.$_POST['typeModif']);
+                      $firstOpt=0;
+                      $scroll=0;
+                      while ($scroll<count($options)) {
+                        if($options[$scroll]['Engin']==$engins[$x]['id']){
+                          $firstOpt=$options[$scroll]['id'];
+                          break;
+                        }
+                        $scroll++;
+                      }
+                                    
+                      $opt=0;
+                      $mdoptions = $dbco->prepare('UPDATE options SET Nom=? , Prix=? , prix_transport=? WHERE id=?');
+                      for ($op=0; $op < count($options); $op++) {
+                        if($options[$op]['Engin']==$engins[$x]['id']){
+                          $mdoptions->execute(array($_POST["nomOption".$options[$op]['id']."Engin".$engins[$x]['id']] , $_POST["prixOption".$options[$op]['id']."Engin".$engins[$x]['id']] , $_POST["prixTransportOptionModif".$options[$op]['id']."Engin".$engins[$x]['id']] , $firstOpt));
+                          $opt++;
+                          $firstOpt++;
+                        }
+                      } 
+                      unset($dbco);
+                      // header('Refresh: 0');
+                      header('Location: marketing.php?categ='.$_GET['categ'].'&enginM='.$_POST['marqueModif'].'&enginT='.$_POST['typeModif']);
               
             }
 
             else if(isset($_POST['supprimerEngin']) and isset($_GET['enginM'])){
-              $dbco = include 'db_mysql.php';
-              $x=0;
-              while($x<count($engins) and ($_GET['enginM']!=$engins[$x]['Marque'] or $_GET['enginT']!=$engins[$x]['Type'])){
-                $x++;
-              }
+                      $dbco = include 'db_mysql.php';
+                      $x=0;
+                      while($x<count($engins) and ($_GET['enginM']!=$engins[$x]['Marque'] or $_GET['enginT']!=$engins[$x]['Type'])){
+                        $x++;
+                      }
 
-              $id = $engins[$x]['id'];
+                      $id = $engins[$x]['id'];
 
-              if(is_dir("./produits/".$_GET['categ'])) $dir = "./produits/".$_GET['categ']."/".$engins[$x]['Marque']." ".$engins[$x]['Type'];
-              else $dir = "./produits/".strtoupper($_GET['categ'])."/".$engins[$x]['Marque']." ".$engins[$x]['Type'];
-              deleteTree($dir);
-              rmdir($dir);
+                      if(is_dir("./produits/".$_GET['categ'])) $dir = "./produits/".$_GET['categ']."/".$engins[$x]['Marque']." ".$engins[$x]['Type'];
+                      else $dir = "./produits/".strtoupper($_GET['categ'])."/".$engins[$x]['Marque']." ".$engins[$x]['Type'];
+
+                      RepEfface($dir);
 
 
-              $mdengin = $dbco->prepare('DELETE FROM `engins` WHERE id=?');
-              $mdengin->execute(array($id));
+                      $mdengin = $dbco->prepare('DELETE FROM `engins` WHERE id=?');
+                      $mdengin->execute(array($id));
 
-              $mdengin = $dbco->prepare('DELETE FROM `options` WHERE Engin=?');
-              $mdengin->execute(array($id));
-              
-              
+                      $mdengin = $dbco->prepare('DELETE FROM `options` WHERE Engin=?');
+                      $mdengin->execute(array($id));
+                      
+                      
 
-              unset($dbco);
-              // header('Refresh: 0');
-              header('Location: marketing.php?categ='.$_GET['categ']);
-              // header('Location: marketing.php?categ=Postes%20Premium');
+                      unset($dbco);
+                      // header('Refresh: 0');
+                      header('Location: marketing.php?categ='.$_GET['categ']);
+                      // header('Location: marketing.php?categ=Postes%20Premium');
             }
 
           } catch (Exception $e) {

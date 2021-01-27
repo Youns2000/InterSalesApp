@@ -1,7 +1,7 @@
 <?php
 try
 {
-	$bdd = new PDO('mysql:host=intersallx721.mysql.db;port=3306;dbname=intersallx721;charset=utf8','intersallx721', 'dbIntersallx721');
+	$bdd = new PDO('mysql:host=localhost;port=3306;dbname=calendar;charset=utf8', 'root', '');
 }
 catch(Exception $e)
 {
