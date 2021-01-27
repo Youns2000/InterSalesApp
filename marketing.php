@@ -273,11 +273,10 @@
                       
                       // sleep(2);
                       rename($old_dir,$new_dir);
-
-                      // if(is_dir($old_dir)){
-                      //   deleteTree($old_dir);
-                      //   rmdir($old_dir);
-                      // }
+                      sleep(5);
+                      if(is_dir($old_dir)){
+                        RepEfface($old_dir);
+                      }
 
                       $mdengin = $dbco->prepare('UPDATE engins SET Marque=?, Type=?, Ref=?, Prix=?, prix_transport=?, Origine=?, Numero_serie=?, Annee_Fabrication=?, Type_Moteur=?, Numero_Serie_Moteur=?, ConfBase=? WHERE id=?');
                       $mdengin->execute(array($_POST['marqueModif'],$_POST['typeModif'],$_POST['referenceModif'],$_POST['prixEngin'],$_POST['prixTransportEngin'], $_POST['origineModif'], $_POST['numSerieModif'], $_POST['anneeFabModif'], $_POST['typeMoteurModif'], $_POST['numSerieMoteurModif'], $_POST['configBase'], $engins[$x]['id']));
