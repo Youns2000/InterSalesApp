@@ -272,6 +272,9 @@
 
                       
                       // sleep(2);
+                      if(is_dir($new_dir)){
+                        RepEfface($new_dir);
+                      }
                       rename($old_dir,$new_dir);
                       // sleep(5);
                       
@@ -301,9 +304,9 @@
                       unset($dbco);
                       // header('Refresh: 0');
                       header('Location: marketing.php?categ='.$_GET['categ'].'&enginM='.$_POST['marqueModif'].'&enginT='.$_POST['typeModif']);
-                      if(is_dir($old_dir)){
-                        RepEfface($old_dir);
-                      }
+                      // if(is_dir($old_dir)){
+                      //   RepEfface($old_dir);
+                      // }
               
             }
 
