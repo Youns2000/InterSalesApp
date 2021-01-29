@@ -41,13 +41,11 @@ $_SESSION['currentPage'] = "todolist";
 
 <!-----------------------------------------------------------HEADER--------------------------------------------------------------------->
 <header>
-          <?php include("../header.php"); ?> 
+          <?php include("../header.php"); ?>
 </header>
 <!-----------------------------------------------------------MAIN--------------------------------------------------------------------->
 
-
 <main>
-<?php  ?>
     
     <div id="retard" class="total" style="margin-left: 10px;">
       <div class="header-style retard">
@@ -82,12 +80,12 @@ $_SESSION['currentPage'] = "todolist";
             <div class="trait_rouge"></div>
 
           </div>
-          <div class="newAction">
-          <!-- <button type="button" data-backdrop="false" data-toggle="modal" data-target="#ajouter_c" class="btn btn-light bg-clair btn-sm"><span data-feather="plus-circle"></button> -->
+          
+      </div>
+      <div class="newAction">
             <button type="button" data-backdrop="false" data-toggle="modal" data-target="#newAction" style="margin-left:30%;margin-top:5%;background-color:#0a7500d5;" class="btn-sm btn-success justify-content-end">NOUVELLE ACTION</button>
             <?php include("fiche_action.php"); ?>
           </div>
-      </div>
     </div>
 
     <div id="demain" class="total" >

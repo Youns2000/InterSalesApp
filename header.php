@@ -3,9 +3,10 @@
               <div class="dropdown" style="width:100%;">
                 <button style="width: 100%;" class="btn btn-secondary dropdown-toggle bg-card-bleu-special" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   <!-- <span class="navbar-toggler-icon"></span> -->
-                        <?php echo "Session ouverte : ".$_SESSION['prenom'] ." ".$_SESSION['nom']?><br/>
+                        <?php echo "Session ouverte : ".$_SESSION['prenom'] ." ".$_SESSION['nom']?>
                 </button>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenu2" style="width: 100%;">
+                <a type="button" data-backdrop="false" href="<?php if(isset($_SESSION['currentPage']) and ($_SESSION['currentPage']=="todolist" or $_SESSION['currentPage']=="pdr")) echo "../";?>management.php" class="dropdown-item">Management</a>
                   <button type="button" data-backdrop="false" data-toggle="modal" data-target="#modal_modif_mdp" class="dropdown-item">Modifier mot de passe</button>
                   <a type="button" data-backdrop="false" href="<?php if(isset($_SESSION['currentPage']) and ($_SESSION['currentPage']=="todolist" or $_SESSION['currentPage']=="pdr")) echo "../";?>deconnection.php" class="dropdown-item">Déconnection</a>
                 </div>

@@ -1,128 +1,136 @@
 .form-group input[type="checkbox"] {
-          display: none;
-      }
+  display: none;
+}
 
-      .form-group input[type="checkbox"] + .btn-group > label span {
-          width: 20px;
-      }
+.form-group input[type="checkbox"] + .btn-group > label span {
+  width: 20px;
+}
 
-      .form-group input[type="checkbox"] + .btn-group > label span:first-child {
-          display: none;
-      }
-      .form-group input[type="checkbox"] + .btn-group > label span:last-child {
-          display: inline-block;   
-      }
+.form-group input[type="checkbox"] + .btn-group > label span:first-child {
+  display: none;
+}
+.form-group input[type="checkbox"] + .btn-group > label span:last-child {
+  display: inline-block;
+}
 
-      .form-group input[type="checkbox"]:checked + .btn-group > label span:first-child {
-          display: inline-block;
-      }
-      .form-group input[type="checkbox"]:checked + .btn-group > label span:last-child {
-          display: none;   
-      }
-      .custom-select {
-          /*width: 50px !important;*/
-          display: inline-flex !important; 
-      }
-      .custom-select-2 {
-          /*width: 150px !important;*/
-          display: inline-flex !important; 
-      }
-      .container-fluid{
-        padding-top: 50px;
-      }
-      .special-menu{
-        font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
-        font-size: 15;
-        background-color: rgba(52,58,64,0.8)
-      }
-      .color-menu:hover{
-        background-color: #303234!important;
-          border-color: #303234!important;
-      }
-      .color-menu,
-      .color-menu:active,
-      .color-menu:visited,
-      .color-menu:focus {
-          background-color: #50575D!important;
-          border-color: #50575D!important;
-      }
-      li{
-        margin-left: 20px;
-      }
-      
-      .sidebar{
-        margin-top:100px;
-        position: absolute;
-      }
-      .navbar{
-        padding-top: 0px;
-        padding-bottom: 0px;
-        padding-left: 0px;
-      }
+.form-group
+  input[type="checkbox"]:checked
+  + .btn-group
+  > label
+  span:first-child {
+  display: inline-block;
+}
+.form-group
+  input[type="checkbox"]:checked
+  + .btn-group
+  > label
+  span:last-child {
+  display: none;
+}
+.custom-select {
+  /*width: 50px !important;*/
+  display: inline-flex !important;
+}
+.custom-select-2 {
+  /*width: 150px !important;*/
+  display: inline-flex !important;
+}
+.container-fluid {
+  padding-top: 50px;
+}
+.special-menu {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji",
+    "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  font-size: 15px;
+  background-color: rgba(52, 58, 64, 0.8);
+}
+.color-menu:hover {
+  background-color: #303234 !important;
+  border-color: #303234 !important;
+}
+.color-menu,
+.color-menu:active,
+.color-menu:visited,
+.color-menu:focus {
+  background-color: #50575d !important;
+  border-color: #50575d !important;
+}
+li {
+  margin-left: 20px;
+}
 
-      .padding-top-0{
-        padding-top: 0px;
-      }
-      .list-group{
-        padding-top: 10px;
-      }
-      .ul-special{
-        margin-left: 290px;
-      }
-      
-      .bg-clair{
-        background-color: #366092;
-        border: #366092;
-      }
+.sidebar {
+  margin-top: 100px;
+  position: absolute;
+}
+.navbar {
+  padding-top: 0px;
+  padding-bottom: 0px;
+  padding-left: 0px;
+}
 
-      .list-group-item {
-          z-index: 2;
-          color: #fff;
-          background-color: #366092;
-          border-color: #366092;
-      }
+.padding-top-0 {
+  padding-top: 0px;
+}
+.list-group {
+  padding-top: 10px;
+}
+.ul-special {
+  margin-left: 290px;
+}
 
-      .list-group-item.active {
-          z-index: 2;
-          color: #fff;
-          background-color: #16365C;
-          border-color: #16365C;
-      }
-      .bg-card-rouge{
-        background-color: rgb(123 42 50 / 75%)!important;
-      }
-      .bg-card-vert{
-        background-color: rgb(56 128 72 / 75%)!important;
-      }
-      .bg-card-jaune{
-        background-color: rgb(193 150 25 / 75%)!important;
-      }
-      .bg-card-bleu{
-        background-color: rgb(23 84 150 / 75%)!important;
-      }
-      .bg-card-mauve{
-        background-color: rgb(47 27 113 / 75%)!important;
-      }
-      .bg-card-bleuvert{
-        background-color: rgb(26 123 117 / 75%)!important;
-      }
-      .bg-card-blanc{
-        background-color: rgb(255 255 255 / 75%)!important;
-      }
+.bg-clair {
+  background-color: #366092;
+  border: #366092;
+}
 
-      .bg-card-bleu-special{
-        background-color: rgb(54 96 146 / 100%)!important;
-      }
-      .session{
-        margin-right: 2%;
-        margin-top: 0.5%;
-        margin-left: 1%;
-        width: 31%;
-      }
-      .session2{
-        margin-right: 2%;
-        margin-top: 0.5%;
-        margin-left: 7%;
-      }
+.list-group-item {
+  z-index: 2;
+  color: #fff;
+  background-color: #366092;
+  border-color: #366092;
+}
 
+.list-group-item.active {
+  z-index: 2;
+  color: #fff;
+  background-color: #16365c;
+  border-color: #16365c;
+}
+.bg-card-rouge {
+  background-color: rgb(123 42 50 / 75%) !important;
+}
+.bg-card-vert {
+  background-color: rgb(56 128 72 / 75%) !important;
+}
+.bg-card-jaune {
+  background-color: rgb(193 150 25 / 75%) !important;
+}
+.bg-card-bleu {
+  background-color: rgb(23 84 150 / 75%) !important;
+}
+.bg-card-mauve {
+  background-color: rgb(47 27 113 / 75%) !important;
+}
+.bg-card-bleuvert {
+  background-color: rgb(26 123 117 / 75%) !important;
+}
+.bg-card-blanc {
+  background-color: rgb(255 255 255 / 75%) !important;
+}
 
+.bg-card-bleu-special {
+  background-color: rgb(54 96 146 / 100%) !important;
+}
+.session {
+  margin-right: 2%;
+  margin-top: 0.5%;
+  margin-left: 1%;
+  width: 31%;
+}
+.session2 {
+  margin-right: 2%;
+  margin-top: 0.5%;
+  margin-left: 7%;
+}
