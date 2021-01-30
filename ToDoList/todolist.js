@@ -7,6 +7,7 @@ draggables.forEach(draggable => {
     })
 
     draggable.addEventListener('dragend', () => {
+        console.log(draggable.id);
         draggable.classList.remove('dragging')
     })
 })
