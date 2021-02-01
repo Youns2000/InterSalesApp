@@ -82,10 +82,7 @@ $_SESSION['currentPage'] = "todolist";
           </div>
           
       </div>
-      <div class="newAction">
-            <button type="button" data-backdrop="false" data-toggle="modal" data-target="#newAction" style="margin-left:30%;margin-top:5%;background-color:#0a7500d5;" class="btn-sm btn-success justify-content-end">NOUVELLE ACTION</button>
-            <?php include("fiche_action.php"); ?>
-          </div>
+      
     </div>
 
     <div id="demain" class="total" >
@@ -163,7 +160,8 @@ $_SESSION['currentPage'] = "todolist";
       </div>
       <div class="container">
 
-              <div class="draggable" draggable="true">
+              <div id="2" class="draggable" draggable="true">
+                <button type="button" data-backdrop="false" data-toggle="modal" data-target="#newAction" >
                 <p style="text-align: center; font-weight: bold;">Partenaire</p>
                 <p style="text-align: center; font-weight: bold;">3</p>
 
@@ -171,11 +169,17 @@ $_SESSION['currentPage'] = "todolist";
                 <div class="trait_vert"></div>
                 <div class="trait_vert"></div>
                 <div class="trait_rouge"></div>
-
+                </button>
               </div>
 
       </div>
     </div>
+    <div class="newAction">
+        <button type="button" data-backdrop="false" data-toggle="modal" data-target="#newAction" style="margin-left:30%;margin-top:5%;background-color:#0a7500d5;" class="btn-sm btn-success justify-content-end">NOUVELLE ACTION</button>
+        <?php include("fiche_action.php"); ?>
+      </div>
+
+    
 </main>
 <script src="todolist.js"></script>
 </body>
