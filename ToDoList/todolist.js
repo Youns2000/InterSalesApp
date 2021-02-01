@@ -7,7 +7,22 @@ draggables.forEach(draggable => {
     })
 
     draggable.addEventListener('dragend', () => {
-        console.log(draggable.id);
+        console.log(draggable.id)
+        
+
+        // $.ajax({
+        //     url: 'edit.php',
+        //     type: "POST",
+        //     data: {Event:Event},
+        //     success: function(rep) {
+        //            if(rep == 'OK'){
+        //                alert('Saved');
+        //            }else{
+        //                alert('Could not be saved. try again.'); 
+        //            }
+        //        }
+        //    });
+
         draggable.classList.remove('dragging')
     })
 })

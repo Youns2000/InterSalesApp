@@ -1,11 +1,11 @@
 main {
   white-space: nowrap;
-  display: inline-block;
+  /* display: inline-block; */
 }
 
 .total {
   display: inline-block !important;
-  float: left;
+  /* float: left; */
   position: relative;
   white-space: nowrap;
   margin-right: 10px;
@@ -20,6 +20,8 @@ main {
 .header-style {
   height: 58;
   width: 260px;
+  /* position: relative;
+  float: left; */
 }
 .p-header {
   margin: 0;
@@ -62,7 +64,8 @@ main {
 .newAction {
   position: relative;
   float: left;
-  padding-left: 25;
+  /* margin-left: 300;
+  margin-top: 0; */
 }
 
 .draggable {

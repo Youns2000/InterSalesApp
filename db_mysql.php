@@ -8,7 +8,7 @@ if ( ! function_exists('db_connexion')) {
            // tentative d'ouverture de la connexion MySQL
              try {
             //$pdo = new PDO('mysql:host=intersallx720.mysql.db;port=3306;dbname=intersallx720;charset=utf8','intersallx720', 'dbIntersallx720', [
-              $pdo = new PDO('mysql:host=localhost;port=3306;dbname=integral;charset=utf8','root', '', [
+              $pdo = new PDO('mysql:host=localhost;port=3308;dbname=integral;charset=utf8','root', '', [
                 PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
                 PDO::ATTR_EMULATE_PREPARES   => false
                 ]);

@@ -1,3 +1,27 @@
-.carre {
+.carre1 {
   display: inline-block;
+  width:25%;
+}
+.carre2 {
+  display: inline-block;
+  width:60%;
+}
+.carre3 {
+  display: inline-block;
+  width:15%;
+  padding-left: 2%;
+}
+.base{
+  background-color: #A6A6A6;
+  display: inline-block;
+  text-align: center;
+  width:50%;
+}
+.active{
+  background-color: #FF6600;
+  display: inline-block;
+}
+
+.top-group{
+  width:100%;
 }
