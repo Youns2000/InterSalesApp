@@ -32,7 +32,7 @@
 
   $sql_projets = 'SELECT id,user,nom,code,client,bft,dateCreation,description,etat, montant, objectif, offre, avancement, concurrence
           FROM projets
-          -- WHERE user="'.$_SESSION['email'].'"
+          WHERE user="'.$_SESSION['email'].'"
           ORDER BY id;';
 
   $sql_rapports = 'SELECT id,code,num,projet,commandes,visitesClient,offres,remarques

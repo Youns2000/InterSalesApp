@@ -7,6 +7,19 @@ draggables.forEach(draggable => {
     })
 
     draggable.addEventListener('dragend', () => {
+        var categ = draggable.parentElement.parentElement.id;
+        // var date_ = date.toISOString().slice(0, 10);
+        $.ajax({
+            url: './editPdr.php',
+            type: "POST",
+            data: { id: draggable.id, categ: categ },
+            success: function (rep) {
+                if (rep != 'OK') {
+                    alert(rep);
+                }
+            }
+        });
+
         draggable.classList.remove('dragging')
     })
 })

@@ -7,21 +7,30 @@ draggables.forEach(draggable => {
     })
 
     draggable.addEventListener('dragend', () => {
-        console.log(draggable.id)
-        
+        var categ = draggable.parentElement.parentElement.id;
+        var date = new Date();
 
-        // $.ajax({
-        //     url: 'edit.php',
-        //     type: "POST",
-        //     data: {Event:Event},
-        //     success: function(rep) {
-        //            if(rep == 'OK'){
-        //                alert('Saved');
-        //            }else{
-        //                alert('Could not be saved. try again.'); 
-        //            }
-        //        }
-        //    });
+        if (categ == "today") date.setDate(date.getDate());
+        else if (categ == "demain") date.setDate(date.getDate() + 1);
+        else if (categ == "ap") date.setDate(date.getDate() + 2);
+        else if (categ == "apap") date.setDate(date.getDate() + 3);
+        else if (categ == "reste" || categ == "retard") {
+            draggable.classList.remove('dragging');
+            window.location.reload();
+            return;
+        }
+
+        var date_ = date.toISOString().slice(0, 10);
+        $.ajax({
+            url: './edit.php',
+            type: "POST",
+            data: { id: draggable.id, new_date: date_ },
+            success: function (rep) {
+                if (rep != 'OK') {
+                    alert(rep);
+                }
+            }
+        });
 
         draggable.classList.remove('dragging')
     })

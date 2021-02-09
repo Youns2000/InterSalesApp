@@ -4,9 +4,9 @@
 $bdd = include '../db_mysql.php';
 
 $id = $_POST['id'];
-$date = $_POST['new_date'];
+$categ = $_POST['categ'];
 
-$sql = "UPDATE todolist SET date_prog='".$date."' WHERE id = ".$id;
+$sql = "UPDATE pdr SET categ='".$categ."' WHERE id = ".$id;
 
 
 $query = $bdd->prepare( $sql );
