@@ -7,10 +7,10 @@ $_SESSION['currentPage'] = "pdr";
 
 $sql_pdr='SELECT * FROM pdr WHERE user="'.$_SESSION['email'].'" ORDER BY id';
 
-$sqlNewAction = 'INSERT INTO `pdr` (`user`,`categ`,`client`,`titre`,`actions`,`ref`,`numero_serie`,`date_creation`,`pieces`) 
+$sqlNewPDR = 'INSERT INTO `pdr` (`user`,`categ`,`client`,`titre`,`actions`,`ref`,`numero_serie`,`date_creation`,`pieces`) 
                  VALUES (?,?,?,?,?,?,?,?,?);';
 
-$sqlModifAction = 'UPDATE pdr SET user=?, categ=?, client=?, titre=?, actions=?, ref=?, numero_serie=?, date_creation=?,pieces=? WHERE id=?;';
+$sqlModifPDR = 'UPDATE pdr SET user=?, categ=?, client=?, titre=?, actions=?, ref=?, numero_serie=?, date_creation=?,pieces=? WHERE id=?;';
 
 $sql_projets = 'SELECT id,user,nom,code,client,bft,dateCreation,description,etat, montant, objectif, offre, avancement, concurrence
           FROM projets
@@ -50,6 +50,16 @@ try {
   foreach ($pdr as $key => $value) {
     array_push($total[$value['categ']],$value);
   }
+
+  if(isset($_POST['SavePDR'])){
+    $query = $db->prepare($sqlNewPDR);
+    $query->execute(array($_SESSION['email'],$_POST['email']));
+
+    header('Refresh: 0');
+  }
+
+
+
 
   // if(isset($_POST['SaveAction'])){
   //   $query = $db->prepare($sqlNewAction);

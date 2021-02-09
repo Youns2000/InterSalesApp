@@ -10,7 +10,7 @@ $sql_todolist='SELECT * FROM todolist WHERE user="'.$_SESSION['email'].'" ORDER 
 $sqlNewAction = 'INSERT INTO `todolist` (`user`,`avancement`,`importance`,`partenaire`,`titre`,`date_creation`,`date_prog`,`fichiers`,`projet`,`detail`) 
                  VALUES (?,?,?,?,?,?,?,?,?,?);';
 
-$sqlModifAction = 'UPDATE todolist SET user=?, avancement=?, importance=?, partenaire=?, titre=?, date_creation=?, date_prog=?,fichiers=?,projet=?, detail=? WHERE id=?;';
+$sqlModifAction = 'UPDATE todolist SET user=?, avancement=?, importance=?, partenaire=?, titre=?, date_prog=?,fichiers=?,projet=?, detail=? WHERE id=?;';
 
 $sql_projets = 'SELECT id,user,nom,code,client,bft,dateCreation,description,etat, montant, objectif, offre, avancement, concurrence
           FROM projets
@@ -70,7 +70,7 @@ try {
   }
   else if(isset($_POST['ModifAction'])){
     $query = $db->prepare($sqlModifAction);
-    $query->execute(array($_SESSION['email'],$_POST['avancement'],$_POST['importance'],$_POST['partenaire'],$_POST['titre'],date("Y-m-d"),$_POST['date_prog'],"",$_POST['projet'],$_POST['detail'],$_POST['id_action']));
+    $query->execute(array($_SESSION['email'],$_POST['avancement'],$_POST['importance'],$_POST['partenaire'],$_POST['titre'],$_POST['date_prog'],"",$_POST['projet'],$_POST['detail'],$_POST['id_action']));
     header('Refresh: 0');
   }
 

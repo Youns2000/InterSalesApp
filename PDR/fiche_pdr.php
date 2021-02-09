@@ -73,20 +73,21 @@
                   <script>
                     $(document).ready(function(){
                       $("#addPiece").click(function(){
-                        var lastID = $('#piecesList').children().last().children().attr('id').slice(2);
-                        console.log(lastID);
+                        // var lastID = $('#piecesList').children().last().children().attr('id').slice(2);
+                        var lastID = parseInt($('#piecesList').children().last().children().children().last().attr('id').slice(3));
+                        console.log();
                         var piece = "<tr>";
                         piece += "<th scope=\"row\">";
-                        piece += "<input style=\"width:100%;\" type=\"text\" class=\"form-control-sm\" name=\"ref\" id=\"ref\" value=\"\">";
+                        piece += "<input style=\"width:100%;\" type=\"text\" class=\"form-control-sm\" name=\"ref"+(lastID+1)+"\" id=\"ref"+(lastID+1)+"\" value=\"\">";
                         piece += "</th>";
                         piece += "<td scope=\"row\">";
-                        piece += "<input style=\"width:100%;\" type=\"text\" class=\"form-control-sm\" name=\"marque\" id=\"marque\" value=\"\">";
+                        piece += "<input style=\"width:100%;\" type=\"text\" class=\"form-control-sm\" name=\"marque"+(lastID+1)+"\" id=\"marque"+(lastID+1)+"\" value=\"\">";
                         piece += "</td>";
                         piece += "<td scope=\"row\">";
-                        piece += "<input style=\"width:100%;\" type=\"text\" class=\"form-control-sm\" name=\"piece\" id=\"piece\" value=\"\">";
+                        piece += "<input style=\"width:100%;\" type=\"text\" class=\"form-control-sm\" name=\"piece"+(lastID+1)+"\" id=\"piece"+(lastID+1)+"\" value=\"\">";
                         piece += "</td>";
                         piece += "<td scope=\"row\">";
-                        piece += "<input style=\"width:100%;\" type=\"text\" class=\"form-control-sm\" name=\"qte\" id=\"qte\" value=\"\">";
+                        piece += "<input style=\"width:100%;\" type=\"text\" class=\"form-control-sm\" name=\"qte"+(lastID+1)+"\" id=\"qte"+(lastID+1)+"\" value=\"\">";
                         piece += "</td>";
                         piece += "</tr>";
                         $("#piecesList").append(piece);
