@@ -10,7 +10,7 @@ $sql_pdr='SELECT * FROM pdr WHERE user="'.$_SESSION['email'].'" ORDER BY id';
 $sqlNewPDR = 'INSERT INTO `pdr` (`user`,`categ`,`client`,`titre`,`actions`,`ref`,`numero_serie`,`date_creation`,`pieces`) 
                  VALUES (?,?,?,?,?,?,?,?,?);';
 
-$sqlModifPDR = 'UPDATE pdr SET user=?, categ=?, client=?, titre=?, actions=?, ref=?, numero_serie=?, date_creation=?,pieces=? WHERE id=?;';
+$sqlModifPDR = 'UPDATE pdr SET user=?, categ=?, client=?, titre=?, actions=?, ref=?, numero_serie=?,pieces=? WHERE id=?;';
 
 $sql_projets = 'SELECT id,user,nom,code,client,bft,dateCreation,description,etat, montant, objectif, offre, avancement, concurrence
           FROM projets
@@ -53,25 +53,32 @@ try {
 
   if(isset($_POST['SavePDR'])){
     $query = $db->prepare($sqlNewPDR);
-    $query->execute(array($_SESSION['email'],$_POST['email']));
+    $pieces = "";
+    if(isset($_POST['ref0']) or isset($_POST['marque0']) or isset($_POST['piece0']) or isset($_POST['qte0'])){
+      $pieces = $pieces.$_POST['ref0']."/".$_POST['marque0']."/".$_POST['piece0']."/".$_POST['qte0'];
+    }
+    for ($i=0; isset($_POST['ref'.$i]) or isset($_POST['marque'.$i]) or isset($_POST['piece'.$i]) or isset($_POST['qte'.$i]); $i++) { 
+      $pieces = $pieces."//".$_POST['ref'.$i]."/".$_POST['marque'.$i]."/".$_POST['piece'.$i]."/".$_POST['qte'.$i];
+    }
+    $query->execute(array($_SESSION['email'],$_POST['categ'],$_POST['client'],$_POST['titre'],"",$_POST['ref'],$_POST['numero_serie'],date("Y-m-d"),$pieces));
 
     header('Refresh: 0');
   }
 
-
-
-
-  // if(isset($_POST['SaveAction'])){
-  //   $query = $db->prepare($sqlNewAction);
-  //   $query->execute(array($_SESSION['email'],$_POST['avancement'],$_POST['importance'],$_POST['partenaire'],$_POST['titre'],date("Y-m-d"),$_POST['date_prog'],"",$_POST['projet'],$_POST['detail']));
-
-  //   header('Refresh: 0');
-  // }
-  // else if(isset($_POST['ModifAction'])){
-  //   $query = $db->prepare($sqlModifAction);
-  //   $query->execute(array($_SESSION['email'],$_POST['avancement'],$_POST['importance'],$_POST['partenaire'],$_POST['titre'],date("Y-m-d"),$_POST['date_prog'],"",$_POST['projet'],$_POST['detail'],$_POST['id_action']));
-  //   header('Refresh: 0');
-  // }
+  else if(isset($_POST['ModifPDR'])){
+    $query = $db->prepare($sqlModifPDR);
+    $pieces = "";
+    if(isset($_POST['ref0']) or isset($_POST['marque0']) or isset($_POST['piece0']) or isset($_POST['qte0'])){
+      $pieces = $pieces.$_POST['ref0']."/".$_POST['marque0']."/".$_POST['piece0']."/".$_POST['qte0'];
+    }
+    for ($i=0; isset($_POST['ref'.$i]) or isset($_POST['marque'.$i]) or isset($_POST['piece'.$i]) or isset($_POST['qte'.$i]); $i++) { 
+      $pieces = $pieces."//".$_POST['ref'.$i]."/".$_POST['marque'.$i]."/".$_POST['piece'.$i]."/".$_POST['qte'.$i];
+    }
+    print_r($pieces);
+    $query->execute(array($_SESSION['email'],$_POST['categ'],$_POST['client'],$_POST['titre'],"",$_POST['ref'],$_POST['numero_serie'],$pieces,$_POST['id_PDR']));
+    
+    header('Refresh: 0');
+  }
 
   unset($db);
 
@@ -134,7 +141,7 @@ setlocale(LC_TIME, 'fr_FR', "French");
       <?php for ($i=0; $i < count($total['demandes']); $i++) { ?>
 
         <div class="draggable" id="<?php echo $total['demandes'][$i]['id'];?>" draggable="true">
-          <button type="button" class="open-EditFicheAction" style="border-radius: 3px; background-color: #fff;" data-id="<?php echo $$total['demandes'][$i]['id']; ?>" data-backdrop="false" data-toggle="modal" data-target="#modifPDR" >
+          <button type="button" class="open-EditFichePDR" style="height:100%;width:100%;border-radius: 3px; background-color: #fff;" data-id="<?php echo $$total['demandes'][$i]['id']; ?>" data-backdrop="false" data-toggle="modal" data-target="#modifPDR" >
           <p style="text-align: center; font-weight: bold;"><?php echo $$total['demandes'][$i]['client'];?></p>
           <p style="text-align: center; font-weight: bold;"><?php echo $$total['demandes'][$i]['titre'];?></p>
           </button>
@@ -152,7 +159,7 @@ setlocale(LC_TIME, 'fr_FR', "French");
           <?php for ($i=0; $i < count($total['sourcing']); $i++) { ?>
 
           <div class="draggable" id="<?php echo $total['sourcing'][$i]['id'];?>" draggable="true">
-            <button type="button" class="open-EditFicheAction" style="border-radius: 3px; background-color: #fff;" data-id="<?php echo $total['sourcing'][$i]['id']; ?>" data-backdrop="false" data-toggle="modal" data-target="#modifPDR" >
+            <button type="button" class="open-EditFichePDR" style="height:100%;width:100%;border-radius: 3px; background-color: #fff;" data-id="<?php echo $total['sourcing'][$i]['id']; ?>" data-backdrop="false" data-toggle="modal" data-target="#modifPDR" >
             <p style="text-align: center; font-weight: bold;"><?php echo $total['sourcing'][$i]['client'];?></p>
             <p style="text-align: center; font-weight: bold;"><?php echo $total['sourcing'][$i]['titre'];?></p>
             </button>
@@ -172,7 +179,7 @@ setlocale(LC_TIME, 'fr_FR', "French");
         <?php for ($i=0; $i < count($total['envoyer']); $i++) { ?>
 
           <div class="draggable" id="<?php echo $total['envoyer'][$i]['id'];?>" draggable="true">
-            <button type="button" class="open-EditFicheAction" style="border-radius: 3px; background-color: #fff;" data-id="<?php echo $total['envoyer'][$i]['id']; ?>" data-backdrop="false" data-toggle="modal" data-target="#modifPDR" >
+            <button type="button" class="open-EditFichePDR" style="height:100%;width:100%;border-radius: 3px; background-color: #fff;" data-id="<?php echo $total['envoyer'][$i]['id']; ?>" data-backdrop="false" data-toggle="modal" data-target="#modifPDR" >
             <p style="text-align: center; font-weight: bold;"><?php echo $total['envoyer'][$i]['client'];?></p>
             <p style="text-align: center; font-weight: bold;"><?php echo $total['envoyer'][$i]['titre'];?></p>
             </button>
@@ -192,7 +199,7 @@ setlocale(LC_TIME, 'fr_FR', "French");
       <?php for ($i=0; $i < count($total['commandesClient']); $i++) { ?>
 
         <div class="draggable" id="<?php echo $total['commandesClient'][$i]['id'];?>" draggable="true">
-          <button type="button" class="open-EditFicheAction" style="border-radius: 3px; background-color: #fff;" data-id="<?php echo $total['commandesClient'][$i]['id']; ?>" data-backdrop="false" data-toggle="modal" data-target="#modifPDR" >
+          <button type="button" class="open-EditFichePDR" style="height:100%;width:100%;border-radius: 3px; background-color: #fff;" data-id="<?php echo $total['commandesClient'][$i]['id']; ?>" data-backdrop="false" data-toggle="modal" data-target="#modifPDR" >
           <p style="text-align: center; font-weight: bold;"><?php echo $total['commandesClient'][$i]['client'];?></p>
           <p style="text-align: center; font-weight: bold;"><?php echo $total['commandesClient'][$i]['titre'];?></p>
           </button>
@@ -212,7 +219,7 @@ setlocale(LC_TIME, 'fr_FR', "French");
       <?php for ($i=0; $i < count($total['commandesFournisseur']); $i++) { ?>
 
         <div class="draggable" id="<?php echo $total['commandesFournisseur'][$i]['id'];?>" draggable="true">
-          <button type="button" class="open-EditFicheAction" style="border-radius: 3px; background-color: #fff;" data-id="<?php echo $total['commandesFournisseur'][$i]['id']; ?>" data-backdrop="false" data-toggle="modal" data-target="#modifPDR" >
+          <button type="button" class="open-EditFichePDR" style="height:100%;width:100%;border-radius: 3px; background-color: #fff;" data-id="<?php echo $total['commandesFournisseur'][$i]['id']; ?>" data-backdrop="false" data-toggle="modal" data-target="#modifPDR" >
           <p style="text-align: center; font-weight: bold;"><?php echo $total['commandesFournisseur'][$i]['client'];?></p>
           <p style="text-align: center; font-weight: bold;"><?php echo $total['commandesFournisseur'][$i]['titre'];?></p>
           </button>
@@ -232,7 +239,7 @@ setlocale(LC_TIME, 'fr_FR', "French");
       <?php for ($i=0; $i < count($total['livraisons']); $i++) { ?>
 
         <div class="draggable" id="<?php echo $total['livraisons'][$i]['id'];?>" draggable="true">
-          <button type="button" class="open-EditFicheAction" style="border-radius: 3px; background-color: #fff;" data-id="<?php echo $total['livraisons'][$i]['id']; ?>" data-backdrop="false" data-toggle="modal" data-target="#modifPDR" >
+          <button type="button" class="open-EditFichePDR" style="height:100%;width:100%;border-radius: 3px; background-color: #fff;" data-id="<?php echo $total['livraisons'][$i]['id']; ?>" data-backdrop="false" data-toggle="modal" data-target="#modifPDR" >
           <p style="text-align: center; font-weight: bold;"><?php echo $total['livraisons'][$i]['client'];?></p>
           <p style="text-align: center; font-weight: bold;"><?php echo $total['livraisons'][$i]['titre'];?></p>
           </button>
@@ -261,40 +268,63 @@ total["commandesClient"] = <?php echo json_encode($total['commandesClient'])?>;
 total["commandesFournisseur"] = <?php echo json_encode($total['commandesFournisseur'])?>;
 total["livraisons"] = <?php echo json_encode($total['livraisons'])?>;
 
-$(document).on("click", ".open-EditFicheAction", function () {
-    var ActionId = $(this).data('id');
+$(document).on("click", ".open-EditFichePDR", function () {
+    var PDRId = $(this).data('id');
     var categ = $(this).parent().parent().parent().attr("id");
     var index = 0;
 
     for (; index < total[categ].length; index++) 
-      if(total[categ][index]['id']==ActionId) break;
-    var action = total[categ][index];
-    $("#modifAction #titre").val( action['titre'] );
-    $("#modifAction #partenaire").val( action['partenaire'] );
-    $("#modifAction #projet").val( action['projet'] );
+      if(total[categ][index]['id']==PDRId) break;
 
-    let date_creation = new Date(action['date_creation']);
-    let date_prog = new Date(action['date_prog']);
-    let date_diff = (date_prog - date_creation)/86400000;
-    $("#modifAction #date_creation").text(action['date_creation']);
-    $("#modifAction #date_prog").val( action['date_prog']);
-    $("#modifAction #depuis").text( date_diff+" jours" );
+    var PDR = total[categ][index];
 
-    $("#modifAction #id_action").val( ActionId );
+    $("#modifPDR #titre").val( PDR['titre'] );
+    $("#modifPDR #client").val( PDR['client'] );
 
-    $("#modifAction #detail").val( action['detail'] );
+    $("#modifPDR #id_PDR").val( PDRId );
 
-    $("#modifAction .carre1 ").children().children().children('.btn').each(function(){
+    $("#modifPDR #ref").val( PDR['ref'] );
+    $("#modifPDR #numero_serie").val( PDR['numero_serie'] );
+
+    $("#modifPDR #categList").children('.btn').each(function(){
       if($(this).hasClass("active")) $(this).removeClass('active');
     });
-    $("#modifAction .carre2 ").children().children('.btn').each(function(){
-      if($(this).hasClass("active")) $(this).removeClass('active');
-    });
-    $("#modifAction #avancement"+action['avancement']).addClass('active');
-    $("#modifAction #avancement"+action['avancement']).children().prop("checked", true);
 
-    $("#modifAction #importance"+action['importance']).addClass('active');
-    $("#modifAction #importance"+action['importance']).children().prop("checked", true);
+    $("#modifPDR #"+categ).parent().addClass('active');
+    $("#modifPDR #"+categ).prop("checked", true);
+
+    var pieces = [];
+    var tmp = PDR['pieces'].split('//');
+    tmp.forEach(element => {
+      pieces.push(element.split('/'));
+    });
+    
+    if(pieces.length>0){
+      $("#modifPDR #ref0").val(pieces[0][0]);
+      $("#modifPDR #marque0").val(pieces[0][1]);
+      $("#modifPDR #piece0").val(pieces[0][2]);
+      $("#modifPDR #qte0").val(pieces[0][3]);
+      console.log(pieces);
+      for (let index = 1; index < pieces.length; index++) {
+        const element = pieces[index];
+        var piece = "<tr>";
+        piece += "<th scope=\"row\">";
+        piece += "<input style=\"width:100%;\" type=\"text\" class=\"form-control-sm\" name=\"ref"+index+"\" id=\"ref"+index+"\" value=\""+element[0]+"\">";
+        piece += "</th>";
+        piece += "<td scope=\"row\">";
+        piece += "<input style=\"width:100%;\" type=\"text\" class=\"form-control-sm\" name=\"marque"+index+"\" id=\"marque"+index+"\" value=\""+element[1]+"\">";
+        piece += "</td>";
+        piece += "<td scope=\"row\">";
+        piece += "<input style=\"width:100%;\" type=\"text\" class=\"form-control-sm\" name=\"piece"+index+"\" id=\"piece"+index+"\" value=\""+element[2]+"\">";
+        piece += "</td>";
+        piece += "<td scope=\"row\">";
+        piece += "<input style=\"width:100%;\" type=\"text\" class=\"form-control-sm\" name=\"qte"+index+"\" id=\"qte"+index+"\" value=\""+element[3]+"\">";
+        piece += "</td>";
+        piece += "</tr>";
+        // console.log(piece);
+        $("#modifPDR #piecesList").append(piece);
+      }
+    }
 });
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.9.0/feather.min.js"></script>

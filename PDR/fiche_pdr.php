@@ -13,23 +13,23 @@
       <div class="modal-body">
           <div class="btn-group btn-group-toggle" data-toggle="buttons" style="margin: 0 auto;width: 100%; ">
 
-            <label class="btn base " for="test1">Demande
-              <input type="radio" class="btn-check sr-only" name="demandes" id="demandes" value="" autocomplete="off" required>
+            <label class="btn base" >Demande
+              <input type="radio" class="btn-check sr-only" name="categ" id="demandes" value="demandes" autocomplete="off" required>
             </label>
-            <label class="btn base " for="test1">Sourcing
-              <input type="radio" class="btn-check sr-only" name="sourcing" id="sourcing" value="" autocomplete="off" required>
+            <label class="btn base" >Sourcing
+              <input type="radio" class="btn-check sr-only" name="categ" id="sourcing" value="sourcing" autocomplete="off" required>
             </label>
-            <label class="btn base " for="test1">Offre
-              <input type="radio" class="btn-check sr-only" name="envoyer" id="" value="envoyer" autocomplete="off" required>
+            <label class="btn base" >Offre
+              <input type="radio" class="btn-check sr-only" name="categ" id="envoyer" value="envoyer" autocomplete="off" required>
             </label>
-            <label class="btn base " for="test1">Commande
-              <input type="radio" class="btn-check sr-only" name="commandesClient" id="commandesClient" value="" autocomplete="off" required>
+            <label class="btn base" >Commande
+              <input type="radio" class="btn-check sr-only" name="categ" id="commandesClient" value="commandesClient" autocomplete="off" required>
             </label>
-            <label class="btn base " for="test1">Achat
-              <input type="radio" class="btn-check sr-only" name="commandesFournisseur" id="commandesFournisseur" value="" autocomplete="off" required>
+            <label class="btn base" >Achat
+              <input type="radio" class="btn-check sr-only" name="categ" id="commandesFournisseur" value="commandesFournisseur" autocomplete="off" required>
             </label>
-            <label class="btn base " for="test1">Livraison
-              <input type="radio" class="btn-check sr-only" name="livraisons" id="livraisons" value="" autocomplete="off" required>
+            <label class="btn base" >Livraison
+              <input type="radio" class="btn-check sr-only" name="categ" id="livraisons" value="livraisons" autocomplete="off" required>
             </label>
 
           </div>
@@ -72,10 +72,10 @@
                   </button>
                   <script>
                     $(document).ready(function(){
-                      $("#addPiece").click(function(){
+                      $("#newPDR #addPiece").click(function(){
                         // var lastID = $('#piecesList').children().last().children().attr('id').slice(2);
-                        var lastID = parseInt($('#piecesList').children().last().children().children().last().attr('id').slice(3));
-                        console.log();
+                        var lastID = parseInt($('#newPDR #piecesList').children().last().children().children().last().attr('id').slice(3));
+                        console.log(lastID);
                         var piece = "<tr>";
                         piece += "<th scope=\"row\">";
                         piece += "<input style=\"width:100%;\" type=\"text\" class=\"form-control-sm\" name=\"ref"+(lastID+1)+"\" id=\"ref"+(lastID+1)+"\" value=\"\">";
@@ -90,7 +90,7 @@
                         piece += "<input style=\"width:100%;\" type=\"text\" class=\"form-control-sm\" name=\"qte"+(lastID+1)+"\" id=\"qte"+(lastID+1)+"\" value=\"\">";
                         piece += "</td>";
                         piece += "</tr>";
-                        $("#piecesList").append(piece);
+                        $("#newPDR #piecesList").append(piece);
                       });
                     });
                   </script>
@@ -106,12 +106,7 @@
                     <tbody >
                       <tr>
                         <th scope="row" >
-                          <button type="button"  class="btn btn-secondary btn-sm btn-block">TEST</button>
-                        </th>
-                      </tr>
-                      <tr>
-                        <th scope="row" >
-                          <button type="button"  class="btn btn-secondary btn-sm btn-block">TEST</button>
+                          <button type="button" class="btn btn-secondary btn-sm btn-block"></button>
                         </th>
                       </tr>
                     </tbody>
@@ -125,35 +120,35 @@
                     <div class="input-group-prepend">
                       <span class="input-group-text" id="inputGroup-sizing-default">Client</span>
                     </div>
-                    <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+                    <input type="text" name="client" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
                   </div>
 
                   <div class="input-group mb-3">
                     <div class="input-group-prepend">
                       <span class="input-group-text" id="inputGroup-sizing-default">Titre</span>
                     </div>
-                    <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+                    <input type="text" name="titre" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
                   </div>
 
                   <div class="input-group mb-3" style="width:100%;">
                     <div class="input-group-prepend">
                       <span class="input-group-text" id="inputGroup-sizing-default">Réf. Dossier</span>
                     </div>
-                    <input type="text" class="form-control" aria-label="ref" aria-describedby="inputGroup-sizing-default">
+                    <input type="text" name="ref" class="form-control" aria-label="ref" aria-describedby="inputGroup-sizing-default">
                   </div>
                   <div class="input-group mb-3" style="width:100%;">
                     <div class="input-group-prepend">
                       <span class="input-group-text" id="inputGroup-sizing-default">Numéro de série</span>
                     </div>
-                    <input type="text" class="form-control" aria-label="numero_serie" aria-describedby="inputGroup-sizing-default">
+                    <input type="text" name="numero_serie" class="form-control" aria-label="numero_serie" aria-describedby="inputGroup-sizing-default">
                   </div>
                   <div class="input-group mb-3" style="width:100%;">
                     <div class="input-group-prepend">
                       <span class="input-group-text" id="inputGroup-sizing-default">Prix Total</span>
                     </div>
-                    <input type="text" class="form-control" aria-label="Prix" aria-describedby="inputGroup-sizing-default">
+                    <input type="text" name="prix" class="form-control" aria-label="Prix" aria-describedby="inputGroup-sizing-default">
                   </div>
-                  <button type="submit" name="SavePDR" id="SavePDR" class="btn btn-success btn-sm btn-block">Enregistrer</button>
+                  <button type="submit" name="SavePDR" class="btn btn-success btn-sm btn-block">Enregistrer</button>
               </div>
           </div>
 

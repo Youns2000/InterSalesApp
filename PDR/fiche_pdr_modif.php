@@ -1,107 +1,163 @@
 <form method="post">
 <div class="modal fade" id="modifPDR" role="dialog">
-  <div class="modal-dialog modal-dialog-centered modal-xl">
+  <div class="modal-dialog modal-dialog-centered modal-xl"><!--  modal-dialog-scrollable -->
     
     <!-- Modal content-->
     <div class="modal-content">
 
       <div class="modal-header">
-        <h5>Fiche d'Action</h5>
+        <h5>Dossier PDR</h5>
         <button type="button" class="close" data-dismiss="modal">&times;</button>
       </div>
 
-      <div class="modal-body"> 
-          <div class="top-group">
-            <div class="carre1">
-              <!-- <div class="base" style="display:block;width:50%;"><p>Avancement</p></div> -->
-              <div style="position: relative;white-space: nowrap;display: inline-block;width:100%;">
-                <div class="btn-group btn-group-toggle" style="width:90%;" data-toggle="buttons">
-                  <label id="avancement0" class="btn base">0%
-                    <input type="radio" class="btn-check sr-only" name="avancement" id="0" value="0" required>
-                  </label>
-                  <label id="avancement30" class="btn base">30%
-                    <input type="radio" class="btn-check sr-only" name="avancement" id="30" value="30" required>
-                  </label>
-                  <label id="avancement70" class="btn base">70%
-                    <input type="radio" class="btn-check sr-only" name="avancement" id="70" value="70" required>
-                  </label>
-                  <label id="avancement100" class="btn base">100%
-                    <input type="radio" class="btn-check sr-only" name="avancement" id="100" value="100" required>
-                  </label>
-                </div>
-              </div>
-            </div>
+      <div class="modal-body">
+          <div class="btn-group btn-group-toggle" id="categList" data-toggle="buttons" style="margin: 0 auto;width: 100%; ">
 
-            <div class="carre2">
-              <!-- <div class="btn-group btn-group-toggle" style="display:block; " data-toggle="buttons"> -->
-              <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                  <label id="importance0" class="btn base">I et U
-                    <input type="radio" class="btn-check sr-only" name="importance" id="importance0" value="0" required>
-                  </label>
-                  <label id="importance1" class="btn base">I et Non U
-                    <input type="radio" class="btn-check sr-only" name="importance" id="importance1" value="1" required>
-                  </label><br>
-                  <label id="importance2" class="btn base">U et Non I
-                    <input type="radio" class="btn-check sr-only" name="importance" id="importance2" value="2" required>
-                  </label>
-                  <label id="importance3" class="btn base">Non U et Non I
-                    <input type="radio" class="btn-check sr-only" name="importance" id="importance3" value="3" required>
-                  </label>
-              </div>
-            </div>
+            <label class="btn base" >Demande
+              <input type="radio" class="btn-check sr-only" name="categ" id="demandes" value="demandes" autocomplete="off" required>
+            </label>
+            <label class="btn base" >Sourcing
+              <input type="radio" class="btn-check sr-only" name="categ" id="sourcing" value="sourcing" autocomplete="off" required>
+            </label>
+            <label class="btn base" >Offre
+              <input type="radio" class="btn-check sr-only" name="categ" id="envoyer" value="envoyer" autocomplete="off" required>
+            </label>
+            <label class="btn base" >Commande
+              <input type="radio" class="btn-check sr-only" name="categ" id="commandesClient" value="commandesClient" autocomplete="off" required>
+            </label>
+            <label class="btn base" >Achat
+              <input type="radio" class="btn-check sr-only" name="categ" id="commandesFournisseur" value="commandesFournisseur" autocomplete="off" required>
+            </label>
+            <label class="btn base" >Livraison
+              <input type="radio" class="btn-check sr-only" name="categ" id="livraisons" value="livraisons" autocomplete="off" required>
+            </label>
 
-            <div class="carre3">
-              <button type="submit" name="ModifAction" class="btn btn-success">Enregistrer</button>
-            </div>
+          </div>
+
+          <div class="row" style="margin-top:15px;">
+
+              <div class="col-lg-8">
+                  <div class="row" >
+                    
+                  </div>   
+
+                  <table class="table table-hover table-bordered">
+                    <thead class="thead-light">
+                      <tr>
+                        <th scope="col">Référence</th>
+                        <th scope="col">Marque</th>
+                        <th scope="col">Désignation pièce</th>
+                        <th scope="col">Qté</th>
+                      </tr>
+                    </thead>
+                    <tbody id="piecesList">
+                      <tr>
+                        <th scope="row">
+                          <input style="width:100%;" type="text" class="form-control-sm" name="ref0" id="ref0" value="">
+                        </th>
+                        <td>
+                          <input style="width:100%;" type="text" class=" form-control-sm" name="marque0" id="marque0" value="">
+                        </td>
+                        <td>
+                          <input style="width:100%;" type="text" class="form-control-sm" name="piece0" id="piece0" value="">
+                        </td>
+                        <td>
+                          <input style="width:100%;" type="text" class="form-control-sm" name="qte0" id="qte0" value="">
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <button id="addPiece" type="button" style="background-color:#e9ecef;" class="btn btn-sm btn-block">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus-circle"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg>
+                  </button>
+                  <script>
+                    $(document).ready(function(){
+                      $("#modifPDR #addPiece").click(function(){
+                        var lastID = parseInt($('#modifPDR #piecesList').children().last().children().children().last().attr('id').slice(3));
+                        var piece = "<tr>";
+                        piece += "<th scope=\"row\">";
+                        piece += "<input style=\"width:100%;\" type=\"text\" class=\"form-control-sm\" name=\"ref"+(lastID+1)+"\" id=\"ref"+(lastID+1)+"\" value=\"\">";
+                        piece += "</th>";
+                        piece += "<td scope=\"row\">";
+                        piece += "<input style=\"width:100%;\" type=\"text\" class=\"form-control-sm\" name=\"marque"+(lastID+1)+"\" id=\"marque"+(lastID+1)+"\" value=\"\">";
+                        piece += "</td>";
+                        piece += "<td scope=\"row\">";
+                        piece += "<input style=\"width:100%;\" type=\"text\" class=\"form-control-sm\" name=\"piece"+(lastID+1)+"\" id=\"piece"+(lastID+1)+"\" value=\"\">";
+                        piece += "</td>";
+                        piece += "<td scope=\"row\">";
+                        piece += "<input style=\"width:100%;\" type=\"text\" class=\"form-control-sm\" name=\"qte"+(lastID+1)+"\" id=\"qte"+(lastID+1)+"\" value=\"\">";
+                        piece += "</td>";
+                        piece += "</tr>";
+                        $("#modifPDR #piecesList").append(piece);
+                      });
+                    });
+                  </script>
+
+
+                  <br/>
+                  <table class="table">
+                    <thead class="thead-light">
+                      <tr>
+                        <th scope="col" style="text-align:center;">Actions</th>
+                      </tr>
+                    </thead> 
+                    <tbody >
+                      <tr>
+                        <th scope="row" >
+                          <button type="button"  class="btn btn-secondary btn-sm btn-block">TEST</button>
+                        </th>
+                      </tr>
+                      <tr>
+                        <th scope="row" >
+                          <button type="button"  class="btn btn-secondary btn-sm btn-block">TEST</button>
+                        </th>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <button type="button" style="background-color:#e9ecef;" class="btn btn-sm btn-block">Ajouter une Action</button>
+
+              </div>       
+
+              <div class="col-lg-4">
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text" id="inputGroup-sizing-default">Client</span>
+                    </div>
+                    <input type="text" name="client" id="client" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+                  </div>
+
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text" id="inputGroup-sizing-default">Titre</span>
+                    </div>
+                    <input type="text" name="titre" id="titre" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+                  </div>
+
+                  <div class="input-group mb-3" style="width:100%;">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text" id="inputGroup-sizing-default">Réf. Dossier</span>
+                    </div>
+                    <input type="text" name="ref" id="ref" class="form-control" aria-label="ref" aria-describedby="inputGroup-sizing-default">
+                  </div>
+                  <div class="input-group mb-3" style="width:100%;">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text" id="inputGroup-sizing-default">Numéro de série</span>
+                    </div>
+                    <input type="text" name="numero_serie" id="numero_serie" class="form-control" aria-label="numero_serie" aria-describedby="inputGroup-sizing-default">
+                  </div>
+                  <div class="input-group mb-3" style="width:100%;">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text" id="inputGroup-sizing-default">Prix Total</span>
+                    </div>
+                    <input type="text" name="prix" id="prix" class="form-control" aria-label="Prix" aria-describedby="inputGroup-sizing-default">
+                  </div>
+                  <button type="submit" name="ModifPDR" id="ModifPDR" class="btn btn-success btn-sm btn-block">Enregistrer</button>
+              </div>
+          </div>
+          <input style="display: none;" id="id_PDR" class="form-control"  name="id_PDR" type="number"/>
+
+
             
-          </div>
-
-          <div class="group">
-            <div class="forms">
-              <label>Titre:</label>
-              <input id="titre" name="titre" style="display: inline-block;" required></input>
-            </div>
-            <div class="forms">
-              <label>Partenaire:</label>
-              <input id="partenaire" name="partenaire" style="display: inline-block;" required></input>
-            </div>
-            <div class="forms">
-              <label>Projet:</label>
-              <!-- <input id="projet" name="projet" style="display: inline-block;"></input> -->
-              <select class="custom-select d-block w-100" name="projet" id="projet" required>
-                <option selected value>...</option>
-                <?php 
-                for ($i=0; $i < count($projets); $i++) { 
-                  echo "<option value =\"".$projets[$i]['code']."\" >".$projets[$i]['nom']."</option>";
-                }
-                
-                ?>
-                
-              </select>
-            </div>
-          </div>
-
-          <div class="group">
-            <div class="forms">
-              <label>Date de création: </label>
-              <label id="date_creation"><B></B></label>
-            </div>
-            <div class="forms" style="margin-right: 80px;">
-              <label style="display: inline-block;">Date Programmée:</label>
-              <input style="display: inline-block;" id="date_prog" class="form-control"  name="date_prog" type="date" required/>
-            </div>
-            <div class="forms">
-              <label>Depuis: </label>
-              <label id="depuis"><B></B></label>
-            </div>
-          </div>
-
-          <input style="display: none;" id="id_action" class="form-control"  name="id_action" type="number"/>
-
-          <div class="group">
-            <label>Détails de l'Action:</label>
-            <textarea class="form-control" id="detail" name="detail" name="projetText" rows="3"></textarea>
-          </div>
     </div>
   </div>
 </div>
