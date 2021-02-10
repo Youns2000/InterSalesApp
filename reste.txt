@@ -1,1 +1,13 @@
--date valid pour enregistrement proforma et pour bon de commande (copie des modals)
+-Proforma : date valid pour enregistrement proforma et pour bon de commande (copie des modals)
+-Proforma : reduction proforma
+-PDR : verification cases vides pieces PDR
+-PDR : lier Actions à PDR
+-projets : lier todolist à "A faire"
+-projets : ajouter nouveau projet depuis carré rouge "projets du client"
+-todolist : retirer "depuis" de ModifAction
+-agenda : personnifier
+-agenda : résoudre bugs javascript
+
+-fluidifier le chargement des images
+-filtrer connections au site par adresse MAC ou type d'appareil
+ABSOLUMENT TOUT TESTER!!!
