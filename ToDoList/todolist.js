@@ -29,6 +29,9 @@ draggables.forEach(draggable => {
                 if (rep != 'OK') {
                     alert(rep);
                 }
+                else {
+                    window.location.reload();
+                }
             }
         });
 
