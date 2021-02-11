@@ -147,6 +147,9 @@
                       <span class="input-group-text" id="inputGroup-sizing-default">Prix Total</span>
                     </div>
                     <input type="text" name="prix" class="form-control" aria-label="Prix" aria-describedby="inputGroup-sizing-default">
+                    <div class="input-group-append">
+                      <span class="input-group-text">€</span>
+                    </div>
                   </div>
                   <button type="submit" name="SavePDR" class="btn btn-success btn-sm btn-block">Enregistrer</button>
               </div>
