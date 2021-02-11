@@ -63,14 +63,20 @@ try {
   }
 
   if(isset($_POST['SaveAction'])){
+    $projet = "";
+    if(!isset($_POST['projet'])) $projet="";
+    else $projet=$_POST['projet'];
     $query = $db->prepare($sqlNewAction);
-    $query->execute(array($_SESSION['email'],$_POST['avancement'],$_POST['importance'],$_POST['partenaire'],$_POST['titre'],date("Y-m-d"),$_POST['date_prog'],"",$_POST['projet'],$_POST['detail']));
+    $query->execute(array($_SESSION['email'],$_POST['avancement'],$_POST['importance'],$_POST['partenaire'],$_POST['titre'],date("Y-m-d"),$_POST['date_prog'],"",$projet,$_POST['detail']));
 
     header('Refresh: 0');
   }
   else if(isset($_POST['ModifAction'])){
+    $projet = "";
+    if(!isset($_POST['projet'])) $projet="";
+    else $projet=$_POST['projet'];
     $query = $db->prepare($sqlModifAction);
-    $query->execute(array($_SESSION['email'],$_POST['avancement'],$_POST['importance'],$_POST['partenaire'],$_POST['titre'],$_POST['date_prog'],"",$_POST['projet'],$_POST['detail'],$_POST['id_action']));
+    $query->execute(array($_SESSION['email'],$_POST['avancement'],$_POST['importance'],$_POST['partenaire'],$_POST['titre'],$_POST['date_prog'],"",$projet,$_POST['detail'],$_POST['id_action']));
     header('Refresh: 0');
   }
 
@@ -135,8 +141,8 @@ setlocale(LC_TIME, 'fr_FR', "French");
 
         <div class="draggable" id="<?php echo $retard[$i]['id'];?>" draggable="true">
           <button type="button" class="open-EditFicheAction" style="border-radius: 3px; background-color: #fff;" data-id="<?php echo $retard[$i]['id']; ?>" data-backdrop="false" data-toggle="modal" data-target="#modifAction" >
-          <p style="text-align: center; font-weight: bold;"><?php echo $retard[$i]['partenaire'];?></p>
-          <p style="text-align: center; font-weight: bold;"><?php echo $retard[$i]['titre'];?></p>
+          <p style="text-align: center; font-weight: bold;"><?php if(strlen($retard[$i]['partenaire'])>25) echo substr($retard[$i]['partenaire'],0,25)."..." ; else echo $retard[$i]['partenaire'];;?></p>
+          <p style="text-align: center; font-weight: bold;"><?php if(strlen($retard[$i]['titre'])>25) echo substr($retard[$i]['titre'],0,25)."..." ; else echo $retard[$i]['titre'];?></p>
 
           <?php if(intval($retard[$i]['avancement'])>0) echo "<div class=\"trait_vert\"></div>"; else echo "<div class=\"trait_rouge\"></div>";?>
           <?php if(intval($retard[$i]['avancement'])>=30) echo "<div class=\"trait_vert\"></div>"; else echo "<div class=\"trait_rouge\"></div>";?>
@@ -157,9 +163,9 @@ setlocale(LC_TIME, 'fr_FR', "French");
           <?php for ($i=0; $i < count($today); $i++) { ?>
 
           <div class="draggable" id="<?php echo $today[$i]['id'];?>" draggable="true">
-            <button type="button" class="open-EditFicheAction" style="border-radius: 3px; background-color: #fff;" data-id="<?php echo $today[$i]['id']; ?>" data-backdrop="false" data-toggle="modal" data-target="#modifAction" >
-            <p style="text-align: center; font-weight: bold;"><?php echo $today[$i]['partenaire'];?></p>
-            <p style="text-align: center; font-weight: bold;"><?php echo $today[$i]['titre'];?></p>
+            <button type="button" class="open-EditFicheAction" style="border-radius: 3px; background-color: #fff;width:100%;" data-id="<?php echo $today[$i]['id']; ?>" data-backdrop="false" data-toggle="modal" data-target="#modifAction" >
+            <p style="text-align: center; font-weight: bold;"><?php if(strlen($today[$i]['partenaire'])>25) echo substr($today[$i]['partenaire'],0,25)."..." ; else echo $today[$i]['partenaire'];?></p>
+            <p style="text-align: center; font-weight: bold;"><?php if(strlen($today[$i]['titre'])>25) echo substr($today[$i]['titre'],0,25)."..." ; else echo $today[$i]['titre'];?></p>
 
             <?php if(intval($today[$i]['avancement'])>0) echo "<div class=\"trait_vert\"></div>"; else echo "<div class=\"trait_rouge\"></div>";?>
             <?php if(intval($today[$i]['avancement'])>=30) echo "<div class=\"trait_vert\"></div>"; else echo "<div class=\"trait_rouge\"></div>";?>
@@ -188,8 +194,8 @@ setlocale(LC_TIME, 'fr_FR', "French");
 
           <div class="draggable" id="<?php echo $demain[$i]['id'];?>" draggable="true">
             <button type="button" class="open-EditFicheAction" style="border-radius: 3px; background-color: #fff;" data-id="<?php echo $demain[$i]['id']; ?>" data-backdrop="false" data-toggle="modal" data-target="#modifAction" >
-            <p style="text-align: center; font-weight: bold;"><?php echo $demain[$i]['partenaire'];?></p>
-            <p style="text-align: center; font-weight: bold;"><?php echo $demain[$i]['titre'];?></p>
+            <p style="text-align: center; font-weight: bold;"><?php if(strlen($demain[$i]['partenaire'])>25) echo substr($demain[$i]['partenaire'],0,25)."..." ; else echo $demain[$i]['partenaire'];?></p>
+            <p style="text-align: center; font-weight: bold;"><?php if(strlen($demain[$i]['titre'])>25) echo substr($demain[$i]['titre'],0,25)."..." ; else echo $demain[$i]['titre'];?></p>
 
             <?php if(intval($demain[$i]['avancement'])>0) echo "<div class=\"trait_vert\"></div>"; else echo "<div class=\"trait_rouge\"></div>";?>
             <?php if(intval($demain[$i]['avancement'])>=30) echo "<div class=\"trait_vert\"></div>"; else echo "<div class=\"trait_rouge\"></div>";?>
@@ -214,8 +220,8 @@ setlocale(LC_TIME, 'fr_FR', "French");
 
         <div class="draggable" id="<?php echo $ap[$i]['id'];?>" draggable="true">
           <button type="button" class="open-EditFicheAction" style="border-radius: 3px; background-color: #fff;" data-id="<?php echo $ap[$i]['id']; ?>" data-backdrop="false" data-toggle="modal" data-target="#modifAction" >
-          <p style="text-align: center; font-weight: bold;"><?php echo $ap[$i]['partenaire'];?></p>
-          <p style="text-align: center; font-weight: bold;"><?php echo $ap[$i]['titre'];?></p>
+          <p style="text-align: center; font-weight: bold;"><?php if(strlen($ap[$i]['partenaire'])>25) echo substr($ap[$i]['partenaire'],0,25)."..." ; else echo $ap[$i]['partenaire'];?></p>
+          <p style="text-align: center; font-weight: bold;"><?php if(strlen($ap[$i]['titre'])>25) echo substr($ap[$i]['titre'],0,25)."..." ; else echo $ap[$i]['titre'];?></p>
 
           <?php if(intval($ap[$i]['avancement'])>0) echo "<div class=\"trait_vert\"></div>"; else echo "<div class=\"trait_rouge\"></div>";?>
           <?php if(intval($ap[$i]['avancement'])>=30) echo "<div class=\"trait_vert\"></div>"; else echo "<div class=\"trait_rouge\"></div>";?>
@@ -240,8 +246,8 @@ setlocale(LC_TIME, 'fr_FR', "French");
 
         <div class="draggable" id="<?php echo $apap[$i]['id'];?>" draggable="true">
           <button type="button" class="open-EditFicheAction" style="border-radius: 3px; background-color: #fff;" data-id="<?php echo $apap[$i]['id']; ?>" data-backdrop="false" data-toggle="modal" data-target="#modifAction" >
-          <p style="text-align: center; font-weight: bold;"><?php echo $apap[$i]['partenaire'];?></p>
-          <p style="text-align: center; font-weight: bold;"><?php echo $apap[$i]['titre'];?></p>
+          <p style="text-align: center; font-weight: bold;"><?php if(strlen($apap[$i]['partenaire'])>25) echo substr($apap[$i]['partenaire'],0,25)."..." ; else echo $apap[$i]['partenaire'];?></p>
+          <p style="text-align: center; font-weight: bold;"><?php if(strlen($apap[$i]['titre'])>25) echo substr($apap[$i]['titre'],0,25)."..." ; else echo $apap[$i]['titre'];?></p>
 
           <?php if(intval($apap[$i]['avancement'])>0) echo "<div class=\"trait_vert\"></div>"; else echo "<div class=\"trait_rouge\"></div>";?>
           <?php if(intval($apap[$i]['avancement'])>=30) echo "<div class=\"trait_vert\"></div>"; else echo "<div class=\"trait_rouge\"></div>";?>
@@ -265,8 +271,8 @@ setlocale(LC_TIME, 'fr_FR', "French");
 
         <div class="draggable" id="<?php echo $reste[$i]['id'];?>" draggable="true">
           <button type="button" class="open-EditFicheAction" style="border-radius: 3px; background-color: #fff;" data-id="<?php echo $reste[$i]['id']; ?>" data-backdrop="false" data-toggle="modal" data-target="#modifAction" >
-          <p style="text-align: center; font-weight: bold;"><?php echo $reste[$i]['partenaire'];?></p>
-          <p style="text-align: center; font-weight: bold;"><?php echo $reste[$i]['titre'];?></p>
+          <p style="text-align: center; font-weight: bold;"><?php if(strlen($reste[$i]['partenaire'])>25) echo substr($reste[$i]['partenaire'],0,25)."..." ; else echo $reste[$i]['partenaire'];?></p>
+          <p style="text-align: center; font-weight: bold;"><?php if(strlen($reste[$i]['titre'])>25) echo substr($reste[$i]['titre'],0,25)."..." ; else echo $reste[$i]['titre'];?></p>
 
           <?php if(intval($reste[$i]['avancement'])>0) echo "<div class=\"trait_vert\"></div>"; else echo "<div class=\"trait_rouge\"></div>";?>
           <?php if(intval($reste[$i]['avancement'])>=30) echo "<div class=\"trait_vert\"></div>"; else echo "<div class=\"trait_rouge\"></div>";?>

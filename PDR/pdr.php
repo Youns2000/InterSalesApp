@@ -7,17 +7,20 @@ $_SESSION['currentPage'] = "pdr";
 
 $sql_pdr='SELECT * FROM pdr WHERE user="'.$_SESSION['email'].'" ORDER BY id';
 
-$sqlNewPDR = 'INSERT INTO `pdr` (`user`,`categ`,`client`,`titre`,`actions`,`ref`,`numero_serie`,`date_creation`,`pieces`) 
-                 VALUES (?,?,?,?,?,?,?,?,?);';
+$sqlNewAction = 'INSERT INTO `todolist` (`user`,`avancement`,`importance`,`partenaire`,`titre`,`date_creation`,`date_prog`,`fichiers`,`projet`,`detail`) 
+                 VALUES (?,?,?,?,?,?,?,?,?,?);';
+$sqlNewPDR = 'INSERT INTO `pdr` (`user`,`categ`,`client`,`titre`,`actions`,`ref`,`numero_serie`,`date_creation`,`pieces`,`prix`) 
+                 VALUES (?,?,?,?,?,?,?,?,?,?);';
 
-$sqlModifPDR = 'UPDATE pdr SET user=?, categ=?, client=?, titre=?, actions=?, ref=?, numero_serie=?,pieces=? WHERE id=?;';
+$sqlModifPDR = 'UPDATE pdr SET user=?, categ=?, client=?, titre=?, actions=?, ref=?, numero_serie=?,pieces=?, prix=? WHERE id=?;';
+$sqlModifAction = 'UPDATE todolist SET user=?, avancement=?, importance=?, partenaire=?, titre=?, date_prog=?,fichiers=?,projet=?, detail=? WHERE id=?;';
 
 $sql_projets = 'SELECT id,user,nom,code,client,bft,dateCreation,description,etat, montant, objectif, offre, avancement, concurrence
           FROM projets
           WHERE user="'.$_SESSION['email'].'"
           ORDER BY id;';
 
-$sql_todolist = 'SELECT * FROM todolist ORDER BY id;';
+$sql_todolist = 'SELECT * FROM todolist WHERE user="'.$_SESSION['email'].'" ORDER BY id;';
 
 $pdr = array();
 $projets = array();
@@ -57,26 +60,72 @@ try {
     if(isset($_POST['ref0']) or isset($_POST['marque0']) or isset($_POST['piece0']) or isset($_POST['qte0'])){
       $pieces = $pieces.$_POST['ref0']."/".$_POST['marque0']."/".$_POST['piece0']."/".$_POST['qte0'];
     }
-    for ($i=0; isset($_POST['ref'.$i]) or isset($_POST['marque'.$i]) or isset($_POST['piece'.$i]) or isset($_POST['qte'.$i]); $i++) { 
-      $pieces = $pieces."//".$_POST['ref'.$i]."/".$_POST['marque'.$i]."/".$_POST['piece'.$i]."/".$_POST['qte'.$i];
+    for ($i=1; isset($_POST['ref'.$i]) or isset($_POST['marque'.$i]) or isset($_POST['piece'.$i]) or isset($_POST['qte'.$i]); $i++) { 
+      $pieces = $pieces."|".$_POST['ref'.$i]."/".$_POST['marque'.$i]."/".$_POST['piece'.$i]."/".$_POST['qte'.$i];
     }
-    $query->execute(array($_SESSION['email'],$_POST['categ'],$_POST['client'],$_POST['titre'],"",$_POST['ref'],$_POST['numero_serie'],date("Y-m-d"),$pieces));
+    $IDPDR = 0;
+    for (; $IDPDR < count($pdr); $IDPDR++) { 
+      if($pdr[$IDPDR]['id']==$_POST['id_PDR'])break;
+    }
+
+    $actions = $pdr[$IDPDR]['actions'];
+    
+    $query->execute(array($_SESSION['email'],$_POST['categ'],$_POST['client'],$_POST['titre'],$actions,$_POST['ref'],$_POST['numero_serie'],date("Y-m-d"),$pieces,$_POST['prix']));
 
     header('Refresh: 0');
   }
 
   else if(isset($_POST['ModifPDR'])){
-    $query = $db->prepare($sqlModifPDR);
+    
     $pieces = "";
     if(isset($_POST['ref0']) or isset($_POST['marque0']) or isset($_POST['piece0']) or isset($_POST['qte0'])){
       $pieces = $pieces.$_POST['ref0']."/".$_POST['marque0']."/".$_POST['piece0']."/".$_POST['qte0'];
     }
-    for ($i=0; isset($_POST['ref'.$i]) or isset($_POST['marque'.$i]) or isset($_POST['piece'.$i]) or isset($_POST['qte'.$i]); $i++) { 
-      $pieces = $pieces."//".$_POST['ref'.$i]."/".$_POST['marque'.$i]."/".$_POST['piece'.$i]."/".$_POST['qte'.$i];
+    for ($i=1; isset($_POST['ref'.$i]) or isset($_POST['marque'.$i]) or isset($_POST['piece'.$i]) or isset($_POST['qte'.$i]); $i++) { 
+      $pieces = $pieces."|".$_POST['ref'.$i]."/".$_POST['marque'.$i]."/".$_POST['piece'.$i]."/".$_POST['qte'.$i];
     }
-    print_r($pieces);
-    $query->execute(array($_SESSION['email'],$_POST['categ'],$_POST['client'],$_POST['titre'],"",$_POST['ref'],$_POST['numero_serie'],$pieces,$_POST['id_PDR']));
+
+    $IDPDR = 0;
+    for (; $IDPDR < count($pdr); $IDPDR++) { 
+      if($pdr[$IDPDR]['id']==$_POST['id_PDR'])break;
+    }
+
+    $actions = $pdr[$IDPDR]['actions'];
+
+    $query = $db->prepare($sqlModifPDR);
+    $query->execute(array($_SESSION['email'],$_POST['categ'],$_POST['client'],$_POST['titre'],$actions,$_POST['ref'],$_POST['numero_serie'],$pieces,$_POST['prix'],$_POST['id_PDR']));
     
+    header('Refresh: 0');
+  }
+
+  else if(isset($_POST['SaveAction'])){
+    $IDPDR = 0;
+    for (; $IDPDR < count($pdr); $IDPDR++) { 
+      if($pdr[$IDPDR]['id']==$_POST['id_pdr'])break;
+    }
+    $actions = $pdr[$IDPDR]['actions'];
+    
+
+    $query = $db->prepare($sqlNewAction);
+    $query->execute(array($_SESSION['email'],$_POST['avancement'],$_POST['importance'],$_POST['partenaire'],$_POST['titre'],date("Y-m-d"),$_POST['date_prog'],"","",$_POST['detail']));
+
+    $todolist_execute = $db->prepare($sql_todolist);
+    $todolist_execute->execute(array());
+    $todolist = $todolist_execute->fetchAll();
+
+    $idAction = end($todolist)['id'];
+    if($actions=="") $actions = $actions.$idAction;
+    else $actions = $actions."/".$idAction;
+
+    $query = $db->prepare($sqlModifPDR);
+    $query->execute(array($_SESSION['email'],$pdr[$IDPDR]['categ'],$pdr[$IDPDR]['client'],$pdr[$IDPDR]['titre'],$actions,$pdr[$IDPDR]['ref'],$pdr[$IDPDR]['numero_serie'],$pdr[$IDPDR]['pieces'],$pdr[$IDPDR]['prix'],$pdr[$IDPDR]['id']));
+
+    header('Refresh: 0');
+  }
+
+  else if(isset($_POST['ModifAction'])){
+    $query = $db->prepare($sqlModifAction);
+    $query->execute(array($_SESSION['email'],$_POST['avancement'],$_POST['importance'],$_POST['partenaire'],$_POST['titre'],$_POST['date_prog'],"","",$_POST['detail'],$_POST['id_action']));
     header('Refresh: 0');
   }
 
@@ -141,9 +190,9 @@ setlocale(LC_TIME, 'fr_FR', "French");
       <?php for ($i=0; $i < count($total['demandes']); $i++) { ?>
 
         <div class="draggable" id="<?php echo $total['demandes'][$i]['id'];?>" draggable="true">
-          <button type="button" class="open-EditFichePDR" style="height:100%;width:100%;border-radius: 3px; background-color: #fff;" data-id="<?php echo $$total['demandes'][$i]['id']; ?>" data-backdrop="false" data-toggle="modal" data-target="#modifPDR" >
-          <p style="text-align: center; font-weight: bold;"><?php echo $$total['demandes'][$i]['client'];?></p>
-          <p style="text-align: center; font-weight: bold;"><?php echo $$total['demandes'][$i]['titre'];?></p>
+          <button type="button" class="open-EditFichePDR" style="height:100%;width:100%;border-radius: 3px; background-color: #fff;" data-id="<?php echo $total['demandes'][$i]['id']; ?>" data-backdrop="false" data-toggle="modal" data-target="#modifPDR" >
+          <p style="text-align: center; font-weight: bold;"><?php if(strlen($total['demandes'][$i]['client'])>25) echo substr($total['demandes'][$i]['client'],0,25)."..." ; else echo $total['demandes'][$i]['client'];?></p>
+          <p style="text-align: center; font-weight: bold;"><?php if(strlen($total['demandes'][$i]['titre'])>25) echo substr($total['demandes'][$i]['titre'],0,25)."..." ; else echo $total['demandes'][$i]['titre'];?></p>
           </button>
         </div>
 
@@ -160,8 +209,8 @@ setlocale(LC_TIME, 'fr_FR', "French");
 
           <div class="draggable" id="<?php echo $total['sourcing'][$i]['id'];?>" draggable="true">
             <button type="button" class="open-EditFichePDR" style="height:100%;width:100%;border-radius: 3px; background-color: #fff;" data-id="<?php echo $total['sourcing'][$i]['id']; ?>" data-backdrop="false" data-toggle="modal" data-target="#modifPDR" >
-            <p style="text-align: center; font-weight: bold;"><?php echo $total['sourcing'][$i]['client'];?></p>
-            <p style="text-align: center; font-weight: bold;"><?php echo $total['sourcing'][$i]['titre'];?></p>
+            <p style="text-align: center; font-weight: bold;"><?php if(strlen($total['sourcing'][$i]['client'])>25) echo substr($total['sourcing'][$i]['client'],0,25)."..." ; else echo $total['sourcing'][$i]['client'];?></p>
+            <p style="text-align: center; font-weight: bold;"><?php if(strlen($total['sourcing'][$i]['titre'])>25) echo substr($total['sourcing'][$i]['titre'],0,25)."..." ; else echo $total['sourcing'][$i]['titre'];?></p>
             </button>
           </div>
 
@@ -180,8 +229,8 @@ setlocale(LC_TIME, 'fr_FR', "French");
 
           <div class="draggable" id="<?php echo $total['envoyer'][$i]['id'];?>" draggable="true">
             <button type="button" class="open-EditFichePDR" style="height:100%;width:100%;border-radius: 3px; background-color: #fff;" data-id="<?php echo $total['envoyer'][$i]['id']; ?>" data-backdrop="false" data-toggle="modal" data-target="#modifPDR" >
-            <p style="text-align: center; font-weight: bold;"><?php echo $total['envoyer'][$i]['client'];?></p>
-            <p style="text-align: center; font-weight: bold;"><?php echo $total['envoyer'][$i]['titre'];?></p>
+            <p style="text-align: center; font-weight: bold;"><?php if(strlen($total['envoyer'][$i]['client'])>25) echo substr($total['envoyer'][$i]['client'],0,25)."..." ; else echo $total['envoyer'][$i]['client'];?></p>
+            <p style="text-align: center; font-weight: bold;"><?php if(strlen($total['envoyer'][$i]['titre'])>25) echo substr($total['envoyer'][$i]['titre'],0,25)."..." ; else echo $total['envoyer'][$i]['titre'];?></p>
             </button>
           </div>
 
@@ -200,8 +249,8 @@ setlocale(LC_TIME, 'fr_FR', "French");
 
         <div class="draggable" id="<?php echo $total['commandesClient'][$i]['id'];?>" draggable="true">
           <button type="button" class="open-EditFichePDR" style="height:100%;width:100%;border-radius: 3px; background-color: #fff;" data-id="<?php echo $total['commandesClient'][$i]['id']; ?>" data-backdrop="false" data-toggle="modal" data-target="#modifPDR" >
-          <p style="text-align: center; font-weight: bold;"><?php echo $total['commandesClient'][$i]['client'];?></p>
-          <p style="text-align: center; font-weight: bold;"><?php echo $total['commandesClient'][$i]['titre'];?></p>
+          <p style="text-align: center; font-weight: bold;"><?php if(strlen($total['commandesClient'][$i]['client'])>25) echo substr($total['commandesClient'][$i]['client'],0,25)."..." ; else echo $total['commandesClient'][$i]['client'];?></p>
+          <p style="text-align: center; font-weight: bold;"><?php if(strlen($total['commandesClient'][$i]['titre'])>25) echo substr($total['commandesClient'][$i]['titre'],0,25)."..." ; else echo $total['commandesClient'][$i]['titre'];?></p>
           </button>
         </div>
 
@@ -220,8 +269,8 @@ setlocale(LC_TIME, 'fr_FR', "French");
 
         <div class="draggable" id="<?php echo $total['commandesFournisseur'][$i]['id'];?>" draggable="true">
           <button type="button" class="open-EditFichePDR" style="height:100%;width:100%;border-radius: 3px; background-color: #fff;" data-id="<?php echo $total['commandesFournisseur'][$i]['id']; ?>" data-backdrop="false" data-toggle="modal" data-target="#modifPDR" >
-          <p style="text-align: center; font-weight: bold;"><?php echo $total['commandesFournisseur'][$i]['client'];?></p>
-          <p style="text-align: center; font-weight: bold;"><?php echo $total['commandesFournisseur'][$i]['titre'];?></p>
+          <p style="text-align: center; font-weight: bold;"><?php if(strlen($total['commandesFournisseur'][$i]['client'])>25) echo substr($total['commandesFournisseur'][$i]['client'],0,25)."..." ; else echo $total['commandesFournisseur'][$i]['client'];?></p>
+          <p style="text-align: center; font-weight: bold;"><?php if(strlen($total['commandesFournisseur'][$i]['titre'])>25) echo substr($total['commandesFournisseur'][$i]['titre'],0,25)."..." ; else echo $total['commandesFournisseur'][$i]['titre'];?></p>
           </button>
         </div>
 
@@ -240,8 +289,8 @@ setlocale(LC_TIME, 'fr_FR', "French");
 
         <div class="draggable" id="<?php echo $total['livraisons'][$i]['id'];?>" draggable="true">
           <button type="button" class="open-EditFichePDR" style="height:100%;width:100%;border-radius: 3px; background-color: #fff;" data-id="<?php echo $total['livraisons'][$i]['id']; ?>" data-backdrop="false" data-toggle="modal" data-target="#modifPDR" >
-          <p style="text-align: center; font-weight: bold;"><?php echo $total['livraisons'][$i]['client'];?></p>
-          <p style="text-align: center; font-weight: bold;"><?php echo $total['livraisons'][$i]['titre'];?></p>
+          <p style="text-align: center; font-weight: bold;"><?php if(strlen($total['livraisons'][$i]['client'])>25) echo substr($total['livraisons'][$i]['client'],0,25)."..." ; else echo $total['livraisons'][$i]['client'];?></p>
+          <p style="text-align: center; font-weight: bold;"><?php if(strlen($total['livraisons'][$i]['titre'])>25) echo substr($total['livraisons'][$i]['titre'],0,25)."..." ; else echo $total['livraisons'][$i]['titre'];?></p>
           </button>
         </div>
 
@@ -267,6 +316,7 @@ total["envoyer"] = <?php echo json_encode($total['envoyer'])?>;
 total["commandesClient"] = <?php echo json_encode($total['commandesClient'])?>;
 total["commandesFournisseur"] = <?php echo json_encode($total['commandesFournisseur'])?>;
 total["livraisons"] = <?php echo json_encode($total['livraisons'])?>;
+var todolist = <?php echo json_encode($todolist) ?>
 
 $(document).on("click", ".open-EditFichePDR", function () {
     var PDRId = $(this).data('id');
@@ -285,47 +335,80 @@ $(document).on("click", ".open-EditFichePDR", function () {
 
     $("#modifPDR #ref").val( PDR['ref'] );
     $("#modifPDR #numero_serie").val( PDR['numero_serie'] );
+    $("#modifPDR #prix").val( PDR['prix'] );
 
     $("#modifPDR #categList").children('.btn').each(function(){
       if($(this).hasClass("active")) $(this).removeClass('active');
     });
 
+    $("#modifAction #id_pdr").val( PDRId );
+
     $("#modifPDR #"+categ).parent().addClass('active');
     $("#modifPDR #"+categ).prop("checked", true);
-
-    var pieces = [];
-    var tmp = PDR['pieces'].split('//');
-    tmp.forEach(element => {
-      pieces.push(element.split('/'));
-    });
-    
-    if(pieces.length>0){
-      $("#modifPDR #ref0").val(pieces[0][0]);
-      $("#modifPDR #marque0").val(pieces[0][1]);
-      $("#modifPDR #piece0").val(pieces[0][2]);
-      $("#modifPDR #qte0").val(pieces[0][3]);
-      console.log(pieces);
-      for (let index = 1; index < pieces.length; index++) {
-        const element = pieces[index];
-        var piece = "<tr>";
-        piece += "<th scope=\"row\">";
-        piece += "<input style=\"width:100%;\" type=\"text\" class=\"form-control-sm\" name=\"ref"+index+"\" id=\"ref"+index+"\" value=\""+element[0]+"\">";
-        piece += "</th>";
-        piece += "<td scope=\"row\">";
-        piece += "<input style=\"width:100%;\" type=\"text\" class=\"form-control-sm\" name=\"marque"+index+"\" id=\"marque"+index+"\" value=\""+element[1]+"\">";
-        piece += "</td>";
-        piece += "<td scope=\"row\">";
-        piece += "<input style=\"width:100%;\" type=\"text\" class=\"form-control-sm\" name=\"piece"+index+"\" id=\"piece"+index+"\" value=\""+element[2]+"\">";
-        piece += "</td>";
-        piece += "<td scope=\"row\">";
-        piece += "<input style=\"width:100%;\" type=\"text\" class=\"form-control-sm\" name=\"qte"+index+"\" id=\"qte"+index+"\" value=\""+element[3]+"\">";
-        piece += "</td>";
-        piece += "</tr>";
-        // console.log(piece);
-        $("#modifPDR #piecesList").append(piece);
+    if(PDR['pieces']!=""){
+      var pieces = [];
+      var tmp = PDR['pieces'].split('|');
+      tmp.forEach(element => {
+        pieces.push(element.split('/'));
+      }); 
+      $("#modifPDR #piecesList").empty();
+      if(pieces.length>0){
+        for (let index = 0; index < pieces.length; index++) {
+          const element = pieces[index];
+          var piece = "<tr>";
+          piece += "<th scope=\"row\">";
+          piece += "<input style=\"width:100%;\" type=\"text\" class=\"form-control-sm\" name=\"ref"+index+"\" id=\"ref"+index+"\" value=\""+element[0]+"\">";
+          piece += "</th>";
+          piece += "<td scope=\"row\">";
+          piece += "<input style=\"width:100%;\" type=\"text\" class=\"form-control-sm\" name=\"marque"+index+"\" id=\"marque"+index+"\" value=\""+element[1]+"\">";
+          piece += "</td>";
+          piece += "<td scope=\"row\">";
+          piece += "<input style=\"width:100%;\" type=\"text\" class=\"form-control-sm\" name=\"piece"+index+"\" id=\"piece"+index+"\" value=\""+element[2]+"\">";
+          piece += "</td>";
+          piece += "<td scope=\"row\">";
+          piece += "<input style=\"width:100%;\" type=\"text\" class=\"form-control-sm\" name=\"qte"+index+"\" id=\"qte"+index+"\" value=\""+element[3]+"\">";
+          piece += "</td>";
+          piece += "</tr>";
+          $("#modifPDR #piecesList").append(piece);
+        }
       }
     }
+    else{
+      $("#modifPDR #piecesList").empty();
+          var piece = "<tr>";
+          piece += "<th scope=\"row\">";
+          piece += "<input style=\"width:100%;\" type=\"text\" class=\"form-control-sm\" name=\"ref0\" id=\"ref0\" value=\"\">";
+          piece += "</th>";
+          piece += "<td scope=\"row\">";
+          piece += "<input style=\"width:100%;\" type=\"text\" class=\"form-control-sm\" name=\"marque0\" id=\"marque0\" value=\"\">";
+          piece += "</td>";
+          piece += "<td scope=\"row\">";
+          piece += "<input style=\"width:100%;\" type=\"text\" class=\"form-control-sm\" name=\"piece0\" id=\"piece0\" value=\"\">";
+          piece += "</td>";
+          piece += "<td scope=\"row\">";
+          piece += "<input style=\"width:100%;\" type=\"text\" class=\"form-control-sm\" name=\"qte0\" id=\"qte0\" value=\"\">";
+          piece += "</td>";
+          piece += "</tr>";
+          $("#modifPDR #piecesList").append(piece);
+    }
+
+    var Actions = PDR['actions'].split("/");
+    $("#modifPDR #Actions").empty();
+    for (let a = 0; a < Actions.length; a++){
+      let x = 0;
+      for (; x < todolist.length; x++) {
+        if(Actions[a]==todolist[x]['id']) break;
+      }
+      
+      var action = "<tr>";
+      action += "<th scope=\"row\" >";
+      action += "<button type=\"button\" data-id=\""+todolist[x]['id']+"\" data-toggle=\"modal\" data-target=\"#modifAction\" name=\"actionPDR"+a+"\" id=\"actionPDR"+a+"\" class=\"btn btn-secondary btn-sm btn-block open-EditFichePDRActionModif\">Client&nbsp;:&nbsp;<B>"+todolist[x]['partenaire']+"</B> &emsp;&emsp; Titre&nbsp;:&nbsp;<B>"+todolist[x]['titre']+"</B></button>";
+      action += "<input style=\"display: none;\"class=\"form-control\"  name=\"id_Action"+a+"\" type=\"number\"/>";
+      action += "</tr>";
+      $("#modifPDR #Actions").append(action);
+    };
 });
+$('#myInput').trigger('focus')
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.9.0/feather.min.js"></script>
 </body>

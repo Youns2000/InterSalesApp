@@ -38,6 +38,8 @@
   $sql_rapports = 'SELECT id,code,num,projet,commandes,visitesClient,offres,remarques
           FROM rapports
           ORDER BY id;';
+  
+  $sql_todolist='SELECT * FROM todolist WHERE user="'.$_SESSION['email'].'" ORDER BY id';
 
   $sqlEnregistrer = 'INSERT INTO `proformas` (`id`, `DateCreation`, `DateValid`, `EmisPar` , `Client`, `DelaiLivraison`, `PortDest`, `Engins`, `Options`, `monnaie`) VALUES (NULL, ?, ?, ?, ?, ?, ?, ?, ?);';
 
@@ -58,6 +60,7 @@
           $proformas=array();
           $projets=array();
           $rapports=array();
+          $todolist=array();
           $db = include 'db_mysql.php';
 
           $etats = ["Prosp","Demande","Offre","Nég","Conclu","LC Open"];
@@ -95,6 +98,10 @@
              $stmt8 = $db->prepare($sql_rapports);
              $stmt8->execute(array());
              $rapports = $stmt8->fetchAll();
+
+             $todolist_execute = $db->prepare($sql_todolist);
+             $todolist_execute->execute(array());
+             $todolist = $todolist_execute->fetchAll();
              unset($db);
 
             if(/*(isset($_POST['inputClientName']) or isset($_POST['inputClientWilaya']) or isset($_POST['inputClientCode'])) and*/ isset($_POST['visualiser'])){
@@ -616,6 +623,24 @@
               <div class="card-header">
                 <h5 class="card-title">Actions à faire</h5>
               </div>
+              
+              <ul style="list-style:none;width:100%;padding-inline-start:0px;">
+              <?php for ($i=0; $i < count($todolist); $i++) {
+                if($todolist[$i]['projet']==$projets[$_GET['pr']]['code']){?>
+                <li style="margin-left:0;">
+                  <a class="btn" href="https://www.google.fr">
+                  <?php if(strlen($todolist[$i]['titre'])>32) echo substr($todolist[$i]['titre'],0,32)."<B>...</B>" ; else echo $todolist[$i]['titre'];?>
+                  <?php if(intval($todolist[$i]['avancement'])>0) echo "<div class=\"trait_vert\"></div>"; else echo "<div class=\"trait_rouge\"></div>";?>
+                  <?php if(intval($todolist[$i]['avancement'])>=30) echo "<div class=\"trait_vert\"></div>"; else echo "<div class=\"trait_rouge\"></div>";?>
+                  <?php if(intval($todolist[$i]['avancement'])>=70) echo "<div class=\"trait_vert\"></div>"; else echo "<div class=\"trait_rouge\"></div>";?>
+                  <?php if(intval($todolist[$i]['avancement'])>=100) echo "<div class=\"trait_vert\"></div>"; else echo "<div class=\"trait_rouge\"></div>";?>
+                  </a>
+                </li>
+                <?php }}?>
+              </ul>
+              
+
+
 
             </div>
            </form>

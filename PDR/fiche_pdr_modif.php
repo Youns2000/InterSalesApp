@@ -101,20 +101,11 @@
                         <th scope="col" style="text-align:center;">Actions</th>
                       </tr>
                     </thead> 
-                    <tbody >
-                      <tr>
-                        <th scope="row" >
-                          <button type="button"  class="btn btn-secondary btn-sm btn-block">TEST</button>
-                        </th>
-                      </tr>
-                      <tr>
-                        <th scope="row" >
-                          <button type="button"  class="btn btn-secondary btn-sm btn-block">TEST</button>
-                        </th>
-                      </tr>
+                    <tbody id="Actions">
                     </tbody>
                   </table>
-                  <button type="button" style="background-color:#e9ecef;" class="btn btn-sm btn-block">Ajouter une Action</button>
+                  <button type="button" style="background-color:#e9ecef;" data-toggle="modal" data-target="#newAction" class="btn btn-sm btn-block open-EditFicheActionInPDR">Ajouter une Action</button>
+                  
 
               </div>       
 
@@ -154,12 +145,60 @@
                   <button type="submit" name="ModifPDR" id="ModifPDR" class="btn btn-success btn-sm btn-block">Enregistrer</button>
               </div>
           </div>
-          <input style="display: none;" id="id_PDR" class="form-control"  name="id_PDR" type="number"/>
-
-
-            
+          <input style="display: none;" id="id_PDR" class="form-control"  name="id_PDR" type="number"/>            
     </div>
   </div>
 </div>
 </div>
 </form>
+
+<script>
+$(document).on("click", ".open-EditFicheActionInPDR", function () {
+
+  console.log($("#id_PDR").val());
+  $("#newAction #id_pdr").val( $("#id_PDR").val() );
+
+});
+
+$(document).on("click", ".open-EditFichePDRActionModif", function () {
+  var ActionId = $(this).data('id');
+  console.log(ActionId);
+  let i = 0
+  for (; i < todolist.length; i++){
+    if(todolist[i]['id']==ActionId)break;
+  }
+  
+  var action = todolist[i];
+  $("#modifAction #titre").val( action['titre'] );
+  $("#modifAction #partenaire").val( action['partenaire'] );
+  $("#modifAction #projet").val( action['projet'] );
+
+  let date_creation = new Date(action['date_creation']);
+  let date_prog = new Date(action['date_prog']);
+  // let date_diff = (date_prog - date_creation)/86400000;
+  $("#modifAction #date_creation").text(action['date_creation']);
+  $("#modifAction #date_prog").val( action['date_prog']);
+  // $("#modifAction #depuis").text( date_diff+" jours" );
+
+  $("#modifAction #id_action").val( ActionId );
+
+  $("#modifAction #detail").val( action['detail'] );
+
+  $("#modifAction .carre1 ").children().children().children('.btn').each(function(){
+    if($(this).hasClass("active")) $(this).removeClass('active');
+  });
+  $("#modifAction .carre2 ").children().children('.btn').each(function(){
+    if($(this).hasClass("active")) $(this).removeClass('active');
+  });
+  $("#modifAction #avancement"+action['avancement']).addClass('active');
+  $("#modifAction #avancement"+action['avancement']).children().prop("checked", true);
+
+  $("#modifAction #importance"+action['importance']).addClass('active');
+  $("#modifAction #importance"+action['importance']).children().prop("checked", true);
+  
+});
+
+</script>
+
+<?php include("fiche_action_pdr.php");?>
+<?php include("fiche_action_modif_pdr.php");?>

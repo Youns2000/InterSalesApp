@@ -1,13 +1,13 @@
 <form method="post">
-<div class="modal fade" id="modifAction" role="dialog">
+<div style="margin-left:50px;" class="modal fade" id="modifAction" role="dialog" data-backdrop="static">
   <div class="modal-dialog modal-dialog-centered modal-xl">
-    
+  
     <!-- Modal content-->
     <div class="modal-content">
 
       <div class="modal-header">
         <h5>Fiche d'Action</h5>
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <button type="button" id="closeModalActionM" class="close" >&times;</button>
       </div>
 
       <div class="modal-body"> 
@@ -65,10 +65,9 @@
               <label>Partenaire:</label>
               <input id="partenaire" name="partenaire" style="display: inline-block;" required></input>
             </div>
-            <div class="forms">
+            <!-- <div class="forms">
               <label>Projet:</label>
-              <!-- <input id="projet" name="projet" style="display: inline-block;"></input> -->
-              <select class="custom-select d-block w-100" name="projet" id="projet">
+              <select class="custom-select d-block w-100" name="projet" id="projet" required>
                 <option selected value>...</option>
                 <?php 
                 for ($i=0; $i < count($projets); $i++) { 
@@ -78,7 +77,7 @@
                 ?>
                 
               </select>
-            </div>
+            </div> -->
           </div>
 
           <div class="group">
@@ -104,6 +103,13 @@
           </div>
     </div>
   </div>
+  
 </div>
 </div>
 </form>
+
+<script>
+$('#closeModalActionM').click(function() {
+    $('#modifAction').modal('hide');
+});
+</script>

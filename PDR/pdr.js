@@ -19,7 +19,7 @@ draggables.forEach(draggable => {
                 }
             }
         });
-
+        window.location.reload();
         draggable.classList.remove('dragging')
     })
 })

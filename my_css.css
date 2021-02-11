@@ -134,3 +134,14 @@ li {
   margin-top: 0.5%;
   margin-left: 7%;
 }
+
+.trait_vert {
+  display: inline-block;
+  width: 20px;
+  border-top: 2.5px solid rgb(27, 207, 36);
+}
+.trait_rouge {
+  display: inline-block;
+  width: 20px;
+  border-top: 2.5px solid rgb(207, 27, 27);
+}

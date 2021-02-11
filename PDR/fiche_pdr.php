@@ -97,7 +97,7 @@
 
 
                   <br/>
-                  <table class="table">
+                  <!-- <table class="table">
                     <thead class="thead-light">
                       <tr>
                         <th scope="col" style="text-align:center;">Actions</th>
@@ -111,7 +111,7 @@
                       </tr>
                     </tbody>
                   </table>
-                  <button type="button" style="background-color:#e9ecef;" class="btn btn-sm btn-block">Ajouter une Action</button>
+                  <button type="button" style="background-color:#e9ecef;" class="btn btn-sm btn-block">Ajouter une Action</button> -->
 
               </div>       
 
