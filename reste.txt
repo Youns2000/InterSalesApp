@@ -4,7 +4,7 @@
 -projets : ajouter nouvelle action depuis "actions à faire"
 -projets : ajouter nouveau projet depuis carré rouge "projets du client"
 -todolist : on peut selectionner 2 etats
--agenda : retirer
+-todolist : pourcentages
 
 -fluidifier le chargement des images
 -filtrer connections au site par adresse MAC ou type d'appareil

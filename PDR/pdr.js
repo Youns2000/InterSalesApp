@@ -17,9 +17,12 @@ draggables.forEach(draggable => {
                 if (rep != 'OK') {
                     alert(rep);
                 }
+                else {
+                    window.location.reload();
+                }
             }
         });
-        window.location.reload();
+
         draggable.classList.remove('dragging')
     })
 })
