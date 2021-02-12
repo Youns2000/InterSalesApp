@@ -528,13 +528,13 @@
 
 <!----------------------------------------------------------------------STATUT DU PROJET------------------------------------------------------------------------------->
             <div class="col-lg-4">
-            
-            <div class="card mb-4 text-white bg-card-vert shadow-sm">
+            <form method="post">
+            <div class="card mb-4 text-white bg-card-vert shadow-sm h-100">
               <div class="card-header">
                 <h5 class="card-title">Statut du Projet</h5>
               </div>
               
-              <form method="post">
+              
               <div class="btn-group btn-group-toggle" data-toggle="buttons">
               <?php 
               
@@ -611,39 +611,41 @@
                   <button type="submit" id="okprojetModif" name="okprojetModif" class="btn bg-card-vert btn-success">OK</button>
                 </div>
               </div>
-              </form>
+              
             </div>
-            
-          </div>  
+            </form>
+          </div>
 
 <!----------------------------------------------------------------------ACTIONS-------------------------------------------------------------------------------------->
           <div class="col-lg-4">
-            <form method="post">
-            <div class="card mb-4 text-white bg-card-jaune shadow-sm">
+
+            <div class="card mb-4 text-white bg-card-jaune shadow-sm h-100">
               <div class="card-header">
                 <h5 class="card-title">Actions à faire</h5>
               </div>
-              
               <ul style="list-style:none;width:100%;padding-inline-start:0px;">
               <?php for ($i=0; $i < count($todolist); $i++) {
                 if($todolist[$i]['projet']==$projets[$_GET['pr']]['code']){?>
                 <li style="margin-left:0;">
-                  <a class="btn" href="https://www.google.fr">
+                  <button class="btn open-EditFicheAction" data-id="<?php echo $todolist[$i]['id']; ?>" data-toggle="modal" data-target="#modifAction">
                   <?php if(strlen($todolist[$i]['titre'])>32) echo substr($todolist[$i]['titre'],0,32)."<B>...</B>" ; else echo $todolist[$i]['titre'];?>
                   <?php if(intval($todolist[$i]['avancement'])>0) echo "<div class=\"trait_vert\"></div>"; else echo "<div class=\"trait_rouge\"></div>";?>
                   <?php if(intval($todolist[$i]['avancement'])>=30) echo "<div class=\"trait_vert\"></div>"; else echo "<div class=\"trait_rouge\"></div>";?>
                   <?php if(intval($todolist[$i]['avancement'])>=70) echo "<div class=\"trait_vert\"></div>"; else echo "<div class=\"trait_rouge\"></div>";?>
                   <?php if(intval($todolist[$i]['avancement'])>=100) echo "<div class=\"trait_vert\"></div>"; else echo "<div class=\"trait_rouge\"></div>";?>
-                  </a>
+                  </button>
                 </li>
                 <?php }}?>
               </ul>
-              
-
-
-
+              <div class="d-flex flex-column mt-auto">
+                <div class="btn-group" role="group">
+                <button type="button" data-backdrop="false" data-toggle="modal" data-target="#newAction" class="btn bg-card-jaune btn-warning">Nouvelle action</button>
+                </div>
+              </div>
             </div>
-           </form>
+
+           <?php include("ToDoList/fiche_action_modif.php"); ?>
+           <?php include("ToDoList/fiche_action.php"); ?>
           </div> 
        </div>    
       </div>
