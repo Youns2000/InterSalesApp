@@ -490,7 +490,7 @@
           background: #366092;
           color:#fff;
           border-radius:0;
-          transition:background 0.20s linear;
+          transition: background 0.20s linear;
       }
 
     </style>
@@ -663,9 +663,8 @@
     
 <!----------------------------------------------------------------------CONFIGURATION---------------------------------------------------------------------------------->
 
-    <!-- <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4"> -->
       <div class="col-lg-7 pad2">
-      <div class="container">
+        <div class="container">
         <!-- <div class="row"> -->
           
           <!-- <div class="col-lg-9"> -->
@@ -989,7 +988,7 @@
         </div>
         </div>
       </div>
-   <!--  </main> -->
+
   </div>
 </div>
 <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>

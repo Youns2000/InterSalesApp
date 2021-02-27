@@ -22,6 +22,7 @@
   $sql_clients='SELECT NomSociete,CodeClient,Adresse,CodePostal,Ville,Wilaya,Pays,NIF,EmailResp1,EmailResp2
           FROM clients
           ORDER BY id;';
+
   $sql_pays ='SELECT code , alpha2 , alpha3, nom_en_gb, nom_fr_fr
           FROM pays
           ORDER BY id;';
@@ -30,14 +31,10 @@
           FROM proformas
           ORDER BY id;';
 
-  $sql_projets = 'SELECT id,nom,code,client,bft,dateCreation,description,etat
+  $sql_projets = 'SELECT *
           FROM projets
+          WHERE user="'.$_SESSION['email'].'"
           ORDER BY id;';
-
-  $modifProforma = "UPDATE Users
-                  SET mail='v.durand@edhec.com'
-                  WHERE id=2";
-  /*$sth = $dbco->prepare(*/
 
   $sqlEnregistrer = 'INSERT INTO `proformas` (`id`, `code`, `DateCreation`, `DateValid`, `EmisPar` , `Client`, `projet` ,`DelaiLivraison`, `PortDest`, `Engins`, `Options`, `monnaie`) VALUES (NULL, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);';
 
@@ -87,16 +84,17 @@
              $projets = $stmt7->fetchAll();
              unset($db);
 
-            if(/*(isset($_POST['inputClientName']) or isset($_POST['inputClientWilaya']) or isset($_POST['inputClientCode'])) and*/ isset($_POST['visualiser'])){
-                   /* $i = 0;
-                    while($i<count($clients)){
-                      if( ($clients[$i]['NomSociete']==$_POST['inputClientName'] and $clients[$i]['Wilaya']==$_POST['inputClientWilaya']) or $clients[$i]['NomSociete']==$_POST['inputClientCode'])
-                      {*/
+            if(isset($_POST['visualiser'])){
                         $i=0;
                         $y=0;
+                        for (; $y < count($projets); $y++) { 
+                          if($projets[$y]['id'] == $_GET['pr']) break;
+                        }
                         for (; $i < count($clients); $i++) { 
                           if($clients[$i]['CodeClient'] == $projets[$y]['client']) break;
                         }
+
+                        
                           $_SESSION['CodeClient'] = $clients[$i]['CodeClient'];
                           $_SESSION['NomClient'] = $clients[$i]['NomSociete'];
                           $_SESSION['AdresseClient'] = $clients[$i]['Adresse'];
@@ -197,32 +195,38 @@
               
           }
             
-
-            else if(isset($_POST['nbConfBase'])){
+            else if(isset($_POST['nbConfBase']) and isset($_POST['saveTmp'])){
               if(creationPanier()){
                 $x=0;
-
-                while($_GET['enginM']!=$engins[$x]['Marque'] and $_GET['enginT']!=$engins[$x]['Type']){
+                
+                while($_GET['enginM']!=$engins[$x]['Marque'] or $_GET['enginT']!=$engins[$x]['Type']){
                   $x++;
                 }
 
-                $nbOptions=0;
-                for ($i=0; $i < count($options); $i++) { 
-                  if($options[$i]['Engin']==$engins[$x]['id']) $nbOptions++;
+                $options_tmp = [];
+                for ($i=0; $i < count($options); $i++) {
+                  if($options[$i]['Engin']==$engins[$x]['id']){
+                    for ($a=0; $a < 10; $a++){
+                      if($options[$i+$a]['Nom']!="") array_push($options_tmp,$a);
+                    }
+                    break;
+                  }
                 }
 
                 $optionsCode="";
-                for ($i=0; $i < $nbOptions; $i++) { 
-                  $str=$_GET['enginM'].$_GET['enginT'].'Option'.($i+1);
-                  
+                for ($i=0; $i < count($options_tmp); $i++) { 
+                  $str=$_GET['enginM'].$_GET['enginT'].'Option'.($options_tmp[$i]+1);
+                  $str = strtr($str,' ','_');
+
                   $val = strval($_POST[$str]);
                   if($val==NULL) $val="0";
                   $optionsCode= $optionsCode.$val."/";
                 }
                 $optionsCode=$optionsCode."/";
-                modifierQTeArticle($engins[$x]['Ref']."/".$engins[$x]['Categorie']."/".$engins[$x]['Marque']."/".$engins[$x]['Type']."/".$engins[$x]['Origine']."/".$engins[$x]['ConfBase'],$_POST['nbConfBase'],$engins[$x]['Prix'],$engins[$x]['prix_transport'],$optionsCode);
-                //echo $_SESSION['panier']['options'][0];
+                $title = $engins[$x]['Ref']."/".$engins[$x]['Categorie']."/".$engins[$x]['Marque']."/".$engins[$x]['Type']."/".$engins[$x]['Origine']."/".$engins[$x]['ConfBase'];
+                modifierQTeArticle($title,$_POST['nbConfBase'],$engins[$x]['Prix'],$engins[$x]['prix_transport'],$optionsCode);
               }
+              header('Refresh: 0');
             }
             else if(isset($_POST['modifmdp'])){
               $db = include 'db_mysql.php';
@@ -279,6 +283,24 @@
       .nav-link-clicked {
         color : #000000e6;
       }
+      .pad{
+        padding-top: 50px;
+      }
+      .pad1{
+        padding-top: 50px;
+        -ms-flex: 0 0 16%;
+        flex: 0 0 16%;
+        max-width: 16%;
+      }
+      .pad2{
+        padding-top: 60px;
+        -ms-flex: 0 0 65%;
+        flex: 0 0 65%;
+        max-width: 65%;
+      }
+      .d-flex{
+        display: block !important;
+      }
     </style>
 
 
@@ -323,6 +345,12 @@
       }
     </script>   
     <link href="my_css.css" rel="stylesheet">
+    <style type="text/css">
+      .card-header{
+        color: white;
+        background-color: #366092;
+      }
+    </style>
   </head>
 
 
@@ -335,17 +363,20 @@
 </header>
 
 <!------------------------------------------------------------------------MENU_GAUCHE------------------------------------------------------------------------------------>
-<form method="post">
-    <div class="row">
-      <nav class="col-md-0 d-md-block sidebar">
+<div class="row">
+
+
+      <!-- <nav class="col-md-0 d-md-block sidebar"> -->
+      <div class="col-lg-2 pad1">
         <div class="d-flex" id="wrapper">
             <div class="" id="sidebar-wrapper">
               <div class="list-group list-group-flush">
                 <?php
                 $i=0;
-                while ($i<count($categ)) { 
-                  if($_GET['categ']==htmlspecialchars($categ[$i][0])) echo '<a href="proforma.php?pr='.$_GET['pr'].'&categ='.htmlspecialchars($categ[$i][0]).'" name="' .str_replace(' ', '-',$categ[$i][0]) .'" class="list-group-item list-group-item-action bg-clair active">'.$categ[$i][0].'</a>';
-                  else echo '<a href="proforma.php?pr='.$_GET['pr'].'&categ='.htmlspecialchars($categ[$i][0]).'" name="' .str_replace(' ', '-',$categ[$i][0]) .'" class="list-group-item list-group-item-action bg-clair">'.$categ[$i][0].'</a>';
+
+                while ($i<count($categ)) {
+                  if($_GET['categ']==htmlspecialchars($categ[$i][0])) echo '<a href="proforma.php?pr='.$_GET['pr'].'&categ='.htmlspecialchars($categ[$i][0]).'" name="' .str_replace(' ', '-',$categ[$i][0]) .'" class="list-group-item list-group-item-action bg-clair active" style="padding-top: 0.1rem; padding-bottom: 0.1rem; padding-left:0.1rem;"> '."<img style=\"margin-right: 10px;\" src=\"logos/categories/".$categ[$i][0].".JPG\" height=\"40px\" width=\"40px\"/>".$categ[$i][0].'</a>';
+                  else echo '<a href="proforma.php?pr='.$_GET['pr'].'&categ='.htmlspecialchars($categ[$i][0]).'" name="' .str_replace(' ', '-',$categ[$i][0]) .'" class="list-group-item list-group-item-action bg-clair" style="padding-top: 0.1rem; padding-bottom: 0.1rem; padding-left:0.6rem">'."<img src=\"logos/categories/".$categ[$i][0].".JPG\" style=\"margin-right: 10px;\" height=\"40px\" width=\"40px\"/>".$categ[$i][0].'</a>';
                   $i++;
                 }
                 ?>
@@ -354,12 +385,12 @@
           <?php if($_SESSION['statut']=="admin"){ ?>
                 
                 <button type="button" data-backdrop="false" data-toggle="modal" data-target="#ajouter_c" class="btn btn-light bg-clair btn-sm"><span data-feather="plus-circle"></button>
-
                 <div class="modal fade" id="ajouter_c" role="dialog">
                   <div class="modal-dialog modal-dialog-centered">
                   
                     <!-- Modal content-->
                     <div class="modal-content">
+                    <form method="post">
 
                       <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -372,6 +403,7 @@
                       <div class="modal-footer">
                         <button name = "ajouterCateg" type="submit" class="btn btn-default">OK</button>
                       </div>
+                      </form>
                     </div>
                   </div>
                 </div>
@@ -380,141 +412,119 @@
             </div>
           </div>
       </div>
-    </nav>
-  </div>
-</div>
-</form>
-
-
-<!-- 
-<form method="post">
-<div class="container-fluid">
-  <div class="row">
-    <nav class="col-md-2 d-none d-md-block bg-light sidebar">
-      <div class="sidebar-sticky">
-        <ul class="nav flex-column">
-              <?php
-              $i=0;
-              while ($i<count($categ)) {
-                ?>
-                <button class="nav-item" type=""><a class="nav-link" href="proforma.php?pr=<?php echo $_GET['pr']; ?>&categ=<?php echo htmlspecialchars($categ[$i][0]); ?>" name=<?php echo str_replace(' ', '-',$categ[$i][0]) ?> ><?php echo $categ[$i][0] ?></a></button>
-                <?php
-                $i++;
-              }
-              ?>
-        </ul>
-
- 
-        <?php if($_SESSION['statut']=="admin"){ ?>
-        <div>
-        <button type="button" data-backdrop="false" data-toggle="modal" data-target="#ajouter_c" class="btn btn-light btn-sm"><span data-feather="plus-circle"></button>
-
-        <div class="modal fade" id="ajouter_c" role="dialog">
-          <div class="modal-dialog modal-dialog-centered">
-          
-            <div class="modal-content">
-
-              <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-              </div>
-
-              <div class="modal-body">
-                <p>Nouvelle Catégorie : <input id="newCateg" name="newCateg" type="text"/></p>
-              </div>
-
-              <div class="modal-footer">
-                <button name = "ajouterCateg" type="submit" class="btn btn-default">OK</button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    <?php } ?>
-      </div>
-    </nav>
-  </div>
-</div>
-</form> -->
+    <!-- </nav> -->
+    </div>
 
 
 
-<!----------------------------------------------------------------------LISTE_ENGINS-------------------------------------------------------------------------------------->
 
-    <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4 padding-top-0">
-      <div class="container-fluid content-row">
-        <div class="row">
-          <div class="col-lg-4">
-            <form method="post">
-            <div class="card mb-4 shadow-sm">
-              <div class="card-header">
-                <h5 class="card-title"><?php echo $_GET['categ'] ?></h5>
-              </div>
-              <ul class="nav flex-column">
-              <?php
-                $j=0;
-                while($j<count($engins)){
-                  if($engins[$j]['Categorie']==$_GET['categ']){
-                   ?>
 
-                      <a class="<?php  if(isset($_GET['enginM'] ) and htmlspecialchars($engins[$j]['Marque'])." ".htmlspecialchars($engins[$j]['Type']) == $_GET['enginM']." ".$_GET['enginT']){ echo "list-group-item list-group-item-action bg-clair active";} else{ echo "nav-link";} ?> " href="proforma.php?pr=<?php echo $_GET['pr']; ?>&categ=<?php echo htmlspecialchars($_GET['categ']);?>&enginM=<?php echo htmlspecialchars($engins[$j]['Marque']);?>&enginT=<?php echo htmlspecialchars($engins[$j]['Type']);?>"> <?php echo $engins[$j]['Marque'].' '.$engins[$j]['Type']; ?> </a>
+  <!----------------------------------------------------------------------LISTE_ENGINS-------------------------------------------------------------------------------------->
 
-                    <?php
-                  }
-                  $j++;
-                }
-               if($_SESSION['statut']=="admin"){  ?>
-                <div>
-                <button type="button" data-backdrop="false" data-toggle="modal" data-target="#ajouter_eng" class="btn btn-light btn-sm"><span data-feather="plus-circle"></button>
-
-                <div class="modal fade" id="ajouter_eng" role="dialog">
-                  <div class="modal-dialog modal-dialog-centered">
+  <div class="col-lg-2 pad">
+          <div class="d-flex" id="wrapper">
+              <div class="" id="sidebar-wrapper">
+                <div class="list-group list-group-flush">
+                  <?php
+                  $j=0;
+                  while($j<count($engins)){
+                    if($engins[$j]['Categorie']==$_GET['categ']){
+                      ?>
+                        <a <?php  
+                            if(isset($_GET['enginM'] ) and htmlspecialchars($engins[$j]['Marque'])." ".htmlspecialchars($engins[$j]['Type']) == $_GET['enginM']." ".$_GET['enginT']){
+                                echo "class=\"list-group-item list-group-item-action bg-clair active float\" ";
+                              } 
+                                else{ 
+                                  echo "class=\"list-group-item list-group-item-action bg-clair float\" ";
+                                } 
+                                ?>  
+                                href="proforma.php?pr=<?php echo $_GET['pr']; ?>&categ=<?php echo htmlspecialchars($_GET['categ']);?>&enginM=<?php echo htmlspecialchars($engins[$j]['Marque']);?>&enginT=<?php echo htmlspecialchars($engins[$j]['Type']);?>"> <?php echo $engins[$j]['Marque'].' '.$engins[$j]['Type']; ?> </a>
+                      <?php
+                    }
+                    $j++;
+                  } ?>
                   
-                    <!-- Modal content-->
-                    <div class="modal-content">
 
-                      <div class="modal-header">
-                        <h4>CREATION NOUVEAU PRODUIT</h4>
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                      </div>
+            <?php if($_SESSION['statut']=="admin"){  ?>
+                  <button type="button" data-backdrop="false" data-toggle="modal" data-target="#ajouter_eng" class="btn btn-light bg-clair btn-sm"><span data-feather="plus-circle"/></button>
 
-                      <div class="modal-body">
-                        <p>  Marque  : <input class="form-control" id="marqueNew" name="marqueNew" type="text" required/></p>
-                        <p>   Type   : <input class="form-control" id="typeNew" name="typeNew" type="text"/></p>
-                        <p>Référence : <input class="form-control" id="referenceNew" name="referenceNew" type="text"/></p>
-                        <p>Prix : <input class="form-control" id="prixNew" name="prixNew" type="text"/></p>
-                        <p>Prix Transport : <input class="form-control" id="prix_transportNew" name="prix_transportNew" type="text"/></p>
-                        <select class="custom-select d-block w-100" name="origineNew" required>
-                          <option selected value>Choisir l'origine du produit...</option>
-                          <?php
-                          for ($i=0; $pays[$i]['nom_fr_fr']!=""; $i++) {
-                          ?>
-                          <option value = "<?php echo $pays[$i]['nom_fr_fr']?>"><?php echo $pays[$i]['nom_fr_fr']?></option>
-                        <?php }?>
-                        </select>
-                        <p>Numéro de série : <input class="form-control" id="numserieNew" name="numserieNew" type="text"/></p>
-                        <p>Année de fabrication : <input class="form-control" id="anneefabNew" name="anneefabNew" type="text"/></p>
-                        <p>Type moteur : <input class="form-control" id="typemoteurNew" name="typemoteurNew" type="text"/></p>
-                        <p>Numéro de série moteur : <input class="form-control" id="numseriemoteurNew" name="numseriemoteurNew" type="text"/></p>
-                        <label for="configNew">Configuration :</label>
-                        <textarea class="form-control" id="configNew" name="configNew" rows="3"></textarea>
-                      </div>
+                  <div class="modal fad" id="ajouter_eng" role="dialog">
+                    <div class="modal-dialog modal-dialog-centered  modal-xl">
+                    
+                      <!-- Modal content-->
+                      <div class="modal-content">
+                      <form method="post">
 
-                      <div class="modal-footer">
-                        <button name = "ajouterEng" type="submit" class="btn btn-default">OK</button>
+                        <div class="modal-header">
+                          <h4>CREATION NOUVEAU PRODUIT</h4>
+                          <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        </div>
+
+                        <div class="modal-body">
+                          <div class="row">
+                            <div class="col-6">
+                              <p><B>  Marque  : </B><input class="form-control" id="marqueNew" name="marqueNew" type="text" required/></p>
+                              <p><B>   Type   : </B><input class="form-control" id="typeNew" name="typeNew" type="text"/></p>
+                              <p><B>Référence : </B><input class="form-control" id="referenceNew" name="referenceNew" type="text"/></p>
+                              <p><B>Prix : </B><input class="form-control" id="prixNew" name="prixNew" type="text"/></p>
+                              <p><B>Prix Transport : </B><input class="form-control" id="prix_transportNew" name="prix_transportNew" type="text"/></p>
+                              <select class="custom-select d-block w-100" name="origineNew" required>
+                                <option selected value>Choisir l'origine du produit...</option>
+                                <?php
+                                for ($i=0; $pays[$i]['nom_fr_fr']!=""; $i++) {
+                                ?>
+                                <option value = "<?php echo $pays[$i]['nom_fr_fr']?>"><?php echo $pays[$i]['nom_fr_fr']?></option>
+                              <?php }?>
+                              </select>
+                              </br>
+                              <p><B>Numéro de série : </B><input class="form-control" id="numserieNew" name="numserieNew" type="text"/></p>
+                              <p><B>Année de fabrication : </B><input class="form-control" id="anneefabNew" name="anneefabNew" type="text"/></p>
+                              <p><B>Type moteur : </B><input class="form-control" id="typemoteurNew" name="typemoteurNew" type="text"/></p>
+                              <p><B>Numéro de série moteur : </B><input class="form-control" id="numseriemoteurNew" name="numseriemoteurNew" type="text"/></p>
+                              <label for="configNew"><B>Configuration :</B></label>
+                              <textarea class="form-control" id="configNew" name="configNew" rows="3"></textarea>
+                            </div> 
+                            <div class="col-6">
+                              <?php
+                              for ($i=0; $i < 10; $i++) {
+                                echo "<p>  <B>Option ".($i+1).":</B>"  ;             
+                                echo "<input class=\"form-control\" placeholder=\"Description\" name=\"nomOption".$i."\" type=\"text\"/>";
+                                echo "<td><input type=\"number\"  step=\"0.01\" style=\"font-weight: bold; width:150;\" placeholder=\"Prix\" name=\"prixOption".$i."\"/><B>€</B></td>&nbsp&nbsp&nbsp;";
+                                echo "<td><input type=\"number\"  step=\"0.01\" style=\"font-weight: bold; width:150;\" placeholder=\"Prix Transport\" name=\"prixTransportOption".$i."\"/><B>€</B></td>";
+                                echo "<select class=\"custom-select d-block w-100\" name=\"origineOption".$i."\" >";
+                                echo "<option selected value>Choisir l'origine de l'option...</option>";
+                                for ($j=0; $pays[$j]['nom_fr_fr']!=""; $j++) {   
+                                  echo "<option value = ".$pays[$j]['nom_fr_fr'].">".$pays[$j]['nom_fr_fr']."</option>";
+                                }
+                                echo "</select>";
+                                echo "</p>";
+                              }
+                              ?>
+                            </div>   
+                          </div>
+                        </div>
+
+                        <div class="modal-footer">
+                          <button name = "ajouterEng" type="submit" class="btn btn-default">Ajouter le produit</button>
+                        </div>
+                      </form>
                       </div>
                     </div>
                   </div>
-                </div>
+                <?php } ?>
               </div>
-              <?php } ?>
-            </ul>
             </div>
-          </form>
-          </div>
+        </div>
+      <!-- </nav> -->
+      </div>
+    <!-- </div> -->
 
+    <!-- <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4 padding-top-0"> -->
+    
+    <div class="col-lg-7 pad2">
 <!---------------------------------------------------------------------CONFIG/OPTIONS/SUBMIT--------------------------------------------------------------------------------->
 
-          <div class="col-lg-8">
+          <!-- <div class="col-lg-8"> -->
               
               <div calss="container">
                   <form class="form-horizontal" method="post" >
@@ -525,15 +535,15 @@
                       </div>
                       <div class="row">
                           <?php
-                          if(isset($_GET['enginM'])){
+                          if(isset($_GET['enginM']) and creationPanier()){
                             $x=0;
                             while(($_GET['enginM']!=$engins[$x]['Marque'] or $_GET['enginT']!=$engins[$x]['Type']) and $x<count($engins)-1){
                               $x++;
                             }?>
                             <div class="col-lg-2">
-                              <input type="number" name="nbConfBase" class="form-control" placeholder="" value=<?php echo qteArticle($engins[$x]['Ref']."/".$engins[$x]['Categorie']."/".$engins[$x]['Marque']."/".$engins[$x]['Type']."/".$engins[$x]['Origine']."/".$engins[$x]['ConfBase']) ?> >
+                              <input type="number" placeholder="0" name="nbConfBase" class="form-control" placeholder="" value=<?php echo qteArticle($engins[$x]['Ref']."/".$engins[$x]['Categorie']."/".$engins[$x]['Marque']."/".$engins[$x]['Type']."/".$engins[$x]['Origine']."/".$engins[$x]['ConfBase']) ?> >
                             </div>
-                            <div class="col-lg-10">
+                            <div class="col-lg-9">
                             <p align="justify"><?php echo $engins[$x]['ConfBase'];?></p>
                             </div>
                             <?php
@@ -550,7 +560,7 @@
                         </div>
                         <div calss="container">
                         <?php
-                          if(isset($_GET['enginM'])){
+                          if(isset($_GET['enginM']) and creationPanier()){
                                 $x=0;
                                 while(($_GET['enginM']!=$engins[$x]['Marque'] or $_GET['enginT']!=$engins[$x]['Type']) and $x<count($engins)-1){
                                       $x++;
@@ -558,14 +568,12 @@
                                 $y=0;
                                 $option=1;
                                 while($y<count($options)){
-                                  if($options[$y]['Engin']==$engins[$x]['id']){
-                                    /*echo qteOption($engins[$x]['Ref']."/".$engins[$x]['Categorie']."/".$engins[$x]['Marque']."/".$engins[$x]['Type']."/".$engins[$x]['Origine']."/".$engins[$x]['ConfBase'],$option);*/
-                                  ?>
+                                  if($options[$y]['Engin']==$engins[$x]['id'] and $options[$y]['Nom']!=""){?>
                                       <div class="row">
                                         <div class="col-lg-2">
-                                          <input type="number" name="<?php echo $_GET['enginM'].$_GET['enginT']."Option".($option) ?>" class="form-control" placeholder="" value=<?php echo qteOption($engins[$x]['Ref']."/".$engins[$x]['Categorie']."/".$engins[$x]['Marque']."/".$engins[$x]['Type']."/".$engins[$x]['Origine']."/".$engins[$x]['ConfBase'],$option) ?>>
+                                          <input type="number" placeholder="0" name="<?php echo $_GET['enginM'].$_GET['enginT']."Option".($option) ?>" class="form-control" placeholder="" value=<?php echo qteOption($engins[$x]['Ref']."/".$engins[$x]['Categorie']."/".$engins[$x]['Marque']."/".$engins[$x]['Type']."/".$engins[$x]['Origine']."/".$engins[$x]['ConfBase'],$option) ?> >
                                         </div>
-                                        <div class="col-lg-10">
+                                        <div class="col-lg-9">
                                           <p align="justify"><?php  echo $options[$y]['Nom']; ?></p>
                                         </div>
                                       </div>
@@ -579,7 +587,7 @@
                       </div>
                       </div>
                     </div>
-                    <button class="btn btn-lg btn-block btn-primary" type="submit">Sauvegarder</button>
+                    <button class="btn btn-lg btn-block btn-primary" name="saveTmp" type="submit">Sauvegarder</button>
                   </form>    
             </div>
             </div>
@@ -665,9 +673,9 @@
             </div>
             
       </div>
-    </main>
-  </div>
-</div>
+    <!-- </main> -->
+  <!-- </div>
+</div> -->
 <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
       <script>window.jQuery || document.write('<script src="js/vendor/jquery.slim.min.js"><\/script>')</script><script src="/docs/4.4/dist/js/bootstrap.bundle.min.js" integrity="sha384-6khuMg9gaYr5AxOqhkVIODVIvm9ynTT5J4V1cfthmT+emCG6yVmEZsRHdxlotUnm" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.9.0/feather.min.js"></script>

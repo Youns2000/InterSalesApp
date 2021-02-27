@@ -9,6 +9,7 @@
     require('mail_php.php');
     require('pdf_proforma.php');
     require('fonctions_ip.php');
+    supprimePanier();
 
   $sql_categ='SELECT CatégoriesProduits, Ports, Devises
           FROM others
@@ -260,7 +261,7 @@
                   <?php
                 }
 
-                }     
+                }
 
             else if(isset($_POST['nbConfBase'])){
               if(creationPanier()){
@@ -450,34 +451,66 @@
 
                             <hr width="100%" color="grey">
 
-                            <p><B>PROJET</B></p>
-                            <p>Nom : <input id="newProjetName" name="newProjetName" type="text" required/></p>
+                            <p style="text-align:center;"><B>PROJET</B></p>
+                            <div style="display:inline-block;">
+                              <div style="display:inline-block;">
+                                <B>Nom : </B>
+                              </div>
+                              <div style="display:inline-block;" >
+                                <input id="newProjetName" name="newProjetName" class="form-control" type="text" required/>
+                              </div>
+                            </div>
                             <!-- <p>Code : <input id="newProjetCode" name="newProjetCode" type="text" required/></p> -->
-                            <p>B : <select class="custom-select d-block w-100" name="newProjetB" required>
-                              <option selected value>...</option>
-                              <option value ="1" >1</option>
-                              <option value ="2" >2</option>
-                              <option value ="3" >3</option>
-                            </select>
-                            F : <select class="custom-select d-block w-100" name="newProjetF" required>
-                              <option selected value>...</option>
-                              <option value ="1" >1</option>
-                              <option value ="2" >2</option>
-                              <option value ="3" >3</option>
-                            </select>
-                            T : <select class="custom-select d-block w-100" name="newProjetT" required>
-                              <option selected value>...</option>
-                              <option value ="1" >1</option>
-                              <option value ="2" >2</option>
-                              <option value ="3" >3</option>
-                            </select></p>
-
-                            <p><select class="custom-select-2 d-block w-100" name="newProjetEtat" >
-                              <option selected value>Choisir un état...</option>
-                              <option value ="0" >En cours</option>
-                              <option value ="1" >Reporté</option>
-                              <option value ="2" >Terminé</option>
-                            </select></p>
+                            <div style="display:inline-block;">
+                              <div style="display:inline-block;">
+                                <B> B : </B>
+                              </div>
+                              <div style="display:inline-block;">
+                                <select class="custom-select d-block w-100" name="newProjetB" required>
+                                  <option selected value>...</option>
+                                  <option value ="1" >1</option>
+                                  <option value ="2" >2</option>
+                                  <option value ="3" >3</option>
+                                </select>
+                              </div>
+                            </div>
+                            <div style="display:inline-block;">
+                              <div style="display:inline-block;">
+                                <B>F :</B>
+                              </div>
+                              <div style="display:inline-block;">
+                                <select class="custom-select d-block w-100" name="newProjetF" required>
+                                    <option selected value>...</option>
+                                    <option value ="1" >1</option>
+                                    <option value ="2" >2</option>
+                                    <option value ="3" >3</option>
+                                  </select>
+                              </div>
+                            </div>
+                            <div style="display:inline-block;">
+                              <div style="display:inline-block;">
+                                <B>T :</B>
+                              </div>
+                              <div style="display:inline-block;">
+                                <select class="custom-select d-block w-100" name="newProjetT" required>
+                                  <option selected value>...</option>
+                                  <option value ="1" >1</option>
+                                  <option value ="2" >2</option>
+                                  <option value ="3" >3</option>
+                                </select>
+                              </div>
+                            </div>
+                            <div style="display:inline-block;">
+                              <select class="custom-select d-block w-100" name="newProjetEtat" >
+                                <option selected value>Choisir un état...</option>
+                                <?php 
+                                for ($i=0; $i < count($etats); $i++) { 
+                                  echo "<option value =\"".$etats[$i]."\" >".$etats[$i]."</option>";
+                                }
+                                ?>
+                                
+                              </select>
+                            </div>
                             
                             <textarea class="form-control" id="newProjetText" name="newProjetText" rows="3"></textarea>
                             

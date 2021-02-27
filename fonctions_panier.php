@@ -103,8 +103,8 @@ function qteArticle($libelleProduit){
 function qteOption($libelleProduit,$numOption){
    if (creationPanier() && !isVerrouille())
    {
-      $positionProduit = array_search($libelleProduit,  $_SESSION['panier']['libelleProduit']);
-      if ($positionProduit !== false)
+      $positionProduit = array_search($libelleProduit,$_SESSION['panier']['libelleProduit']);
+      if ($positionProduit != false)
          {
             $optionsCode = $_SESSION['panier']['options'][$positionProduit];
             $y=0;
