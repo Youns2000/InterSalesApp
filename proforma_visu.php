@@ -8,6 +8,7 @@ require('fonctions_panier.php');
 require('mail_php.php');
 require('pdf_proforma.php');
 require('fonctions_ip.php');
+// require('fpdf/fpdf.php');
 
 $sql_data='SELECT email , mdp , nom , prenom , Statut FROM comptes WHERE email = ? ORDER BY id;';
 
@@ -79,7 +80,7 @@ try {
               $p=0;
               for (; $p < count($projets) and $projets[$p]['id']!=$_GET['pr']; $p++);
               for (; $i < count($clients); $i++) { 
-                if($projets[$p]['client'] == $clients[$i]['CodeClient']) break;
+                if($projets[$p-1]['client'] == $clients[$i]['CodeClient']) break;
               }
 
               //if( ($clients[$i]['NomSociete']==$_POST['inputClientName'] and $clients[$i]['Wilaya']==$_POST['inputClientWilaya']) or $clients[$i]['NomSociete']==$_POST['inputClientCode']){

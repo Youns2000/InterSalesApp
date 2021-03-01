@@ -11,4 +11,5 @@
 ABSOLUMENT TOUT TESTER!!!
 
 
-<input type="number" placeholder="0" name="<?php echo $_GET['enginM'].$_GET['enginT']."Option".($option) ?>" class="form-control" placeholder="" value=<?php echo qteOption($engins[$x]['Ref']."/".$engins[$x]['Categorie']."/".$engins[$x]['Marque']."/".$engins[$x]['Type']."/".$engins[$x]['Origine']."/".$engins[$x]['ConfBase'],$option) ?>>
+-independance proforma
+-referencement proforma

@@ -10,6 +10,8 @@
     require('pdf_proforma.php');
     require('fonctions_ip.php');
 
+    creationPanier();
+
   $sql_categ='SELECT CatégoriesProduits, Ports, Devises
           FROM others
           ORDER BY id;';
@@ -85,57 +87,58 @@
              unset($db);
 
             if(isset($_POST['visualiser'])){
-                        $i=0;
-                        $y=0;
-                        for (; $y < count($projets); $y++) { 
-                          if($projets[$y]['id'] == $_GET['pr']) break;
-                        }
-                        for (; $i < count($clients); $i++) { 
-                          if($clients[$i]['CodeClient'] == $projets[$y]['client']) break;
-                        }
+                  $i=0;
+                  $y=0;
+                  for (; $y < count($projets); $y++) { 
+                    if($projets[$y]['id'] == $_GET['pr']) break;
+                  }
+                  // var_dump("last:".$y);
+                  for (; $i < count($clients); $i++) {
+                    if($clients[$i]['CodeClient'] == $projets[$y-1]['client']) break;
+                  }
+                  // var_dump($clients[$i]['CodeClient']);
+                  // var_dump($projets[$y]['client']);
+                  // var_dump($projets[$y+2]['client']);
+                  
+                    $_SESSION['CodeClient'] = $clients[$i]['CodeClient'];
+                    $_SESSION['NomClient'] = $clients[$i]['NomSociete'];
+                    $_SESSION['AdresseClient'] = $clients[$i]['Adresse'];
+                    $_SESSION['WilayaClient'] = $clients[$i]['Wilaya'];
+                    $_SESSION['VilleClient'] = $clients[$i]['Ville'];
+                    $_SESSION['CodePostalClient'] = $clients[$i]['CodePostal'];
+                    $_SESSION['PaysClient'] = $clients[$i]['Pays'];
+                    $_SESSION['NIF'] = $clients[$i]['NIF'];
+                    $_SESSION['EmailResp1'] = $clients[$i]['EmailResp1'];
+                    $_SESSION['EmailResp2'] = $clients[$i]['EmailResp2'];
+                    $_SESSION['port_dest'] = $_POST['getPorts'];
+                    $_SESSION['Monnaie'] = $_POST['getDevise'];
+                    $_SESSION['dateValid'] = $_POST['datevalidite'];
+                    $_SESSION['delaiLiv'] = $_POST['delailivraison'];
+                    $_SESSION['id_proforma'] = strval($proformas[count($proformas)-1]['id']+1);
+                    for ($p=0; $p < count($pays); $p++) {
+                      $_SESSION['pays'][$p] = $pays[$p]['alpha2'];
+                    }
+                    for ($o=0; $o < count($options); $o++) { 
+                      $_SESSION['options']['Engin'][$o] = $options[$o]['Engin'];
+                      $_SESSION['options']['Nom'][$o] = $options[$o]['Nom'];
+                      $_SESSION['options']['Prix'][$o] = $options[$o]['Prix'];
+                      $_SESSION['options']['prix_transport'][$o] = $options[$o]['prix_transport'];
+                    }
 
-                        
-                          $_SESSION['CodeClient'] = $clients[$i]['CodeClient'];
-                          $_SESSION['NomClient'] = $clients[$i]['NomSociete'];
-                          $_SESSION['AdresseClient'] = $clients[$i]['Adresse'];
-                          $_SESSION['WilayaClient'] = $clients[$i]['Wilaya'];
-                          $_SESSION['VilleClient'] = $clients[$i]['Ville'];
-                          $_SESSION['CodePostalClient'] = $clients[$i]['CodePostal'];
-                          $_SESSION['PaysClient'] = $clients[$i]['Pays'];
-                          $_SESSION['NIF'] = $clients[$i]['NIF'];
-                          $_SESSION['EmailResp1'] = $clients[$i]['EmailResp1'];
-                          $_SESSION['EmailResp2'] = $clients[$i]['EmailResp2'];
-                          $_SESSION['port_dest'] = $_POST['getPorts'];
-                          $_SESSION['Monnaie'] = $_POST['getDevise'];
-                          $_SESSION['dateValid'] = $_POST['datevalidite'];
-                          $_SESSION['delaiLiv'] = $_POST['delailivraison'];
-                          $_SESSION['id_proforma'] = strval($proformas[count($proformas)-1]['id']+1);
-                          for ($p=0; $p < count($pays); $p++) {
-                            $_SESSION['pays'][$p] = $pays[$p]['alpha2'];
-                          }
-                          for ($o=0; $o < count($options); $o++) { 
-                            $_SESSION['options']['Engin'][$o] = $options[$o]['Engin'];
-                            $_SESSION['options']['Nom'][$o] = $options[$o]['Nom'];
-                            $_SESSION['options']['Prix'][$o] = $options[$o]['Prix'];
-                            $_SESSION['options']['prix_transport'][$o] = $options[$o]['prix_transport'];
-                          }
-                          //getProforma(false);
-                          //header('Location: pdf_proforma.php');
-                          //exit();
-                          //$_SESSION['pdf_temp'] = getProforma(true);
-                          getProforma(false,false);
-                          getProforma(false,true);
-                         if(intval($_SESSION['id_compte'])<10) $_SESSION['currentProforma'] = '0'.$_SESSION['id_compte'].$_SESSION['id_proforma'].date("my");
-                          else $_SESSION['currentProforma'] = $_SESSION['id_compte'].$_SESSION['id_proforma'].date("my");
-                          header('Location: proforma_visu.php?pr='.$_GET['pr']);
-                          exit();
+                    getProforma(false,false);
+                    getProforma(false,true);
+
+                    if(intval($_SESSION['id_compte'])<10) $_SESSION['currentProforma'] = '0'.$_SESSION['id_compte'].$_SESSION['id_proforma'].date("my");
+                    else $_SESSION['currentProforma'] = $_SESSION['id_compte'].$_SESSION['id_proforma'].date("my");
+                    header('Location: proforma_visu.php?pr='.$_GET['pr']);
+                    exit();
 /*                      }
-                      else{
-                        $i++;
-                      }*/
+                else{
+                  $i++;
+                }*/
               }
             
-            else if(/*(isset($_POST['inputClientName']) or isset($_POST['inputClientWilaya']) or isset($_POST['inputClientCode'])) and*/ isset($_POST['enregistrer'])){
+            else if(isset($_POST['enregistrer'])){
               if (compterArticles()>0) {
                   try {
                      $db = include 'db_mysql.php';
@@ -163,7 +166,6 @@
                 }
             }
 
-            
           else if(isset($_POST['ajouterCateg'])){
             if($_POST['newCateg']!="" && $_POST['newCateg'][0]!=" "){
             try {
@@ -192,7 +194,6 @@
                   catch (Exception $e){
                      print "Erreur ! " . $e->getMessage() . "<br/>";
                   }
-              
           }
             
             else if(isset($_POST['nbConfBase']) and isset($_POST['saveTmp'])){
@@ -225,8 +226,10 @@
                 $optionsCode=$optionsCode."/";
                 $title = $engins[$x]['Ref']."/".$engins[$x]['Categorie']."/".$engins[$x]['Marque']."/".$engins[$x]['Type']."/".$engins[$x]['Origine']."/".$engins[$x]['ConfBase'];
                 modifierQTeArticle($title,$_POST['nbConfBase'],$engins[$x]['Prix'],$engins[$x]['prix_transport'],$optionsCode);
+                
               }
-              header('Refresh: 0');
+              
+              // header('Refresh: 0');
             }
             else if(isset($_POST['modifmdp'])){
               $db = include 'db_mysql.php';
@@ -673,6 +676,8 @@
             </div>
             
       </div>
+      <div class="container justify-content-center">
+                  
     <!-- </main> -->
   <!-- </div>
 </div> -->

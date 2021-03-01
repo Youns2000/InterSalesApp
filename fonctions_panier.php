@@ -66,21 +66,20 @@ function modifierQTeArticle($libelleProduit,$qteProduit,$prixProduit,$prixTransp
       {
          //Recharche du produit dans le panier
          $positionProduit = array_search($libelleProduit,  $_SESSION['panier']['libelleProduit']);
-
          if ($positionProduit !== false)
          {
             $_SESSION['panier']['qteProduit'][$positionProduit] = $qteProduit ;
             $_SESSION['panier']['options'][$positionProduit] = $optionsCode ;
          }
          else
-      {
-         //Sinon on ajoute le produit
-         array_push( $_SESSION['panier']['libelleProduit'],$libelleProduit);
-         array_push( $_SESSION['panier']['qteProduit'],$qteProduit);
-         array_push( $_SESSION['panier']['prixProduit'],$prixProduit);
-         array_push( $_SESSION['panier']['prixTransport'],$prixTransport);
-         array_push( $_SESSION['panier']['options'],$optionsCode);
-      }
+         {
+            //Sinon on ajoute le produit
+            array_push( $_SESSION['panier']['libelleProduit'],$libelleProduit);
+            array_push( $_SESSION['panier']['qteProduit'],$qteProduit);
+            array_push( $_SESSION['panier']['prixProduit'],$prixProduit);
+            array_push( $_SESSION['panier']['prixTransport'],$prixTransport);
+            array_push( $_SESSION['panier']['options'],$optionsCode);
+         }
       }
       else
       supprimerArticle($libelleProduit);
@@ -104,19 +103,23 @@ function qteOption($libelleProduit,$numOption){
    if (creationPanier() && !isVerrouille())
    {
       $positionProduit = array_search($libelleProduit,$_SESSION['panier']['libelleProduit']);
-      if ($positionProduit != false)
+      // var_dump($positionProduit);
+      if ($positionProduit !== false)
          {
             $optionsCode = $_SESSION['panier']['options'][$positionProduit];
-            $y=0;
-            for ($i=1; $i < $numOption; $i++) {              
-               while ($optionsCode[$y]!='/') $y++;
-               if($optionsCode[$y+1]!='/') $y++;
+            if($optionsCode!=""){
+               $y=0;
+               for ($i=1; $i < $numOption; $i++) {              
+                  while ($optionsCode[$y]!='/') $y++;
+                  if($optionsCode[$y+1]!='/') $y++;
+               }
+               $qte="";
+               for ($i=$y;$optionsCode[$i]!='/'; $i++) { 
+                  $qte = $qte.$optionsCode[$i];
+               }
+               return $qte;
             }
-            $qte="";
-            for ($i=$y;$optionsCode[$i]!='/'; $i++) { 
-               $qte = $qte.$optionsCode[$i];
-            }
-            return $qte;
+            else return -1;
          }
    }
 }
