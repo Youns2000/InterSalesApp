@@ -224,15 +224,17 @@ if($code == true)
   return $pdf->Output('S');
 
 else if($code == false){
+  $f="";
   if(intval($_SESSION['id_compte'])<10){ 
-    if($bon==false) $pdf->Output('F',"proformas/".'0'.$_SESSION['id_compte'].$_SESSION['id_proforma'].date("my").".pdf");
-    else $pdf->Output('F',"bons/".'0'.$_SESSION['id_compte'].$_SESSION['id_proforma'].date("my").".pdf");
+    if($bon==false) $f="proformas/".'0'.$_SESSION['id_compte'].$_SESSION['id_proforma'].date("my").".pdf";
+    else $f="bons/".'0'.$_SESSION['id_compte'].$_SESSION['id_proforma'].date("my").".pdf";
   }
   else {
-    if($bon==false) $pdf->Output('F',"proformas/".$_SESSION['id_compte'].$_SESSION['id_proforma'].date("my").".pdf"); 
-    else $pdf->Output('F',"bons/".$_SESSION['id_compte'].$_SESSION['id_proforma'].date("my").".pdf"); 
+    if($bon==false) $f="proformas/".$_SESSION['id_compte'].$_SESSION['id_proforma'].date("my").".pdf"; 
+    else $f="bons/".$_SESSION['id_compte'].$_SESSION['id_proforma'].date("my").".pdf"; 
   }
-  
+  if(file_exists($f)) unlink($f);
+  $pdf->Output('F',$f); 
 }
 
 
