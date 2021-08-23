@@ -27,7 +27,6 @@ function RepEfface($dir)
                 unlink($dir.'/'.$elem);
             }
         }
-            
     }
     
     $handle = opendir($dir);

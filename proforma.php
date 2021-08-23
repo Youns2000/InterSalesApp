@@ -89,12 +89,12 @@
             if(isset($_POST['visualiser'])){
                   $i=0;
                   $y=0;
-                  for (; $y < count($projets); $y++) { 
+                  for (; $y < count($projets); $y++) {
                     if($projets[$y]['id'] == $_GET['pr']) break;
                   }
                   // var_dump("last:".$y);
                   for (; $i < count($clients); $i++) {
-                    if($clients[$i]['CodeClient'] == $projets[$y-1]['client']) break;
+                    if($clients[$i]['CodeClient'] == $projets[$y]['client']) break;
                   }
                   // var_dump($clients[$i]['CodeClient']);
                   // var_dump($projets[$y]['client']);
@@ -102,6 +102,7 @@
                   
                     $_SESSION['CodeClient'] = $clients[$i]['CodeClient'];
                     $_SESSION['NomClient'] = $clients[$i]['NomSociete'];
+                    echo $_SESSION['NomClient'];
                     $_SESSION['AdresseClient'] = $clients[$i]['Adresse'];
                     $_SESSION['WilayaClient'] = $clients[$i]['Wilaya'];
                     $_SESSION['VilleClient'] = $clients[$i]['Ville'];

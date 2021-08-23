@@ -107,7 +107,6 @@
                 echo "exist:".$exist;
                 if($exist==false){
                         try {
-
                           $db = include 'db_mysql.php';
                           $stmtenr = $db->prepare($sqlAddEng);
                           $stmtenr->execute(array($_GET['categ'], $_POST['marqueNew'], $_POST['typeNew'],$_POST['referenceNew'],$_POST['prixNew'],$_POST['prix_transportNew'],$_POST['origineNew'],$_POST['numserieNew'],$_POST['anneefabNew'],$_POST['typemoteurNew'],$_POST['numseriemoteurNew'],$_POST['configNew']));
@@ -125,8 +124,7 @@
                            print "Erreur ! " . $e->getMessage() . "<br/>";
                         }
                   }
-                
-            }   
+            }
 
             else if (isset($_POST['submitbrochure'])) {
                   if(isset($_FILES["brochure"]) && $_FILES["brochure"]["error"] == 0){
